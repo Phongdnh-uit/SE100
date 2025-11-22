@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: se100
+  profiles:
+    active: dev
