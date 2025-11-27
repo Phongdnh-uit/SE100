@@ -24,7 +24,8 @@ public enum ErrorCode {
   ACCOUNT_LOCKED(2200, HttpStatus.LOCKED, "Account Locked"),
   ACCOUNT_DISABLED(2201, HttpStatus.FORBIDDEN, "Account Disabled"),
   EMAIL_NOT_VERIFIED(2202, HttpStatus.PRECONDITION_REQUIRED, "Email Not Verified"),
-  OPERATION_NOT_ALLOWED(2300, HttpStatus.BAD_REQUEST, "Operation Not Allowed");
+  OPERATION_NOT_ALLOWED(2300, HttpStatus.BAD_REQUEST, "Operation Not Allowed"),
+  DATA_INTEGRITY_VIOLATION(2301, HttpStatus.CONFLICT, "Data Integrity Violation");
 
   private final int code;
   private final HttpStatus httpCode;

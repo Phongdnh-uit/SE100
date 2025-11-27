@@ -6,25 +6,21 @@ import lombok.Builder;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.core.user.OAuth2User;
+import uit.se100.enums.RoleEnum;
 
 @Builder
 @Getter
-public class CustomUserDetails implements UserDetails, OAuth2User {
+public class CustomUserDetails implements UserDetails {
   private Long id;
   private String password;
+  private String username;
   private String email;
   private String phone;
-  private Long roleId;
+  private RoleEnum role;
 
   private final Set<? extends GrantedAuthority> authorities;
 
   private final Map<String, Object> attributes;
-
-  @Override
-  public String getName() {
-    return String.valueOf(id);
-  }
 
   @Override
   public String getUsername() {

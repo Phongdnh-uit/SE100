@@ -11,8 +11,8 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.security.oauth2.jwt.JwtException;
 import org.springframework.stereotype.Component;
-
 import uit.se100.configs.JwtConfig;
+import uit.se100.entities.authentication.User;
 import uit.se100.exceptions.errors.ApiException;
 import uit.se100.exceptions.errors.ErrorCode;
 
@@ -26,13 +26,16 @@ public class TokenProvider {
   @Value("${jwt.access-token.expiration}")
   private Long expirationTime;
 
-  public String generateAccessToken(Long userId) {
+  public String generateAccessToken(User user) {
     Instant now = Instant.now();
     JwtClaimsSet claims =
         JwtClaimsSet.builder()
             .issuer("self")
             .issuedAt(now)
-            .subject(String.valueOf(userId))
+            .subject(String.valueOf(user.getId()))
+            .claim("username", user.getUsername())
+            .claim("role", user.getRole())
+            .claim("email", user.getEmail())
             .expiresAt(now.plusSeconds(expirationTime))
             .build();
     JwsHeader jwsHeader = JwsHeader.with(JwtConfig.JWT_ALGORITHM).build();
