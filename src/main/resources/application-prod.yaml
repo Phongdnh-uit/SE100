@@ -1,5 +1,25 @@
 spring:
-  application:
-    name: se100
-  profiles:
-    active: dev
+  datasource:
+    url: jdbc:mysql://mysql-se100:3306/mydatabase
+    username: myuser
+    password: secret
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: update
+
+  docker:
+    compose:
+      enabled: false
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+jwt:
+  secret: xin_chao_ban!_day_la_du_an_uit_land_cho_do_an_1_cua_minh!_xin_cam_on_ban_da_doc_du_an_nay
+  refresh-token:
+    expiration: 172800
+  access-token:
+    expiration: 18000
