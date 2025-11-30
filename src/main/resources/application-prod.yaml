@@ -23,3 +23,7 @@ jwt:
     expiration: 172800
   access-token:
     expiration: 18000
+
+app:
+  client:
+    base-url: http://localhost:3000
