@@ -3,7 +3,6 @@ package uit.se100.configs;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -28,7 +27,6 @@ public class SecurityConfig implements WebMvcConfigurer {
   }
 
   @Bean
-  @Order(2)
   SecurityFilterChain filterChain(HttpSecurity http, CustomJwtConverter jwtConverter)
       throws Exception {
     http.csrf(AbstractHttpConfigurer::disable)
