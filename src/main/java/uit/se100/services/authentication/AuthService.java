@@ -16,7 +16,7 @@ public interface AuthService {
   UserResponse register(RegisterRequest request);
 
   // void resetPassword(ResetPasswordRequest request);
-  //
+
   // void changePassword(ChangePasswordRequest request);
 
   UserResponse getCurrentUser();

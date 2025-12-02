@@ -58,6 +58,7 @@ public class AuthServiceImpl implements AuthService {
     LoginResponse response = new LoginResponse();
     response.setAccessToken(jwt);
     response.setRefreshToken(refreshToken);
+    response.setUser(userMapper.entityToResponse(user));
     return response;
   }
 
@@ -72,6 +73,7 @@ public class AuthServiceImpl implements AuthService {
     LoginResponse response = new LoginResponse();
     response.setAccessToken(jwt);
     response.setRefreshToken(newRefreshToken);
+    response.setUser(userMapper.entityToResponse(refreshToken.getUser()));
     return response;
   }
 
