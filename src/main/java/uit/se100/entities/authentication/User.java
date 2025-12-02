@@ -1,10 +1,14 @@
 package uit.se100.entities.authentication;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import uit.se100.entities.BaseEntity;
@@ -30,4 +34,11 @@ public class User extends BaseEntity {
   @Column(nullable = false)
   @Enumerated(EnumType.STRING)
   private RoleEnum role;
+
+  @OneToMany(
+      mappedBy = "user",
+      cascade = CascadeType.ALL,
+      orphanRemoval = true,
+      fetch = jakarta.persistence.FetchType.LAZY)
+  private List<RefreshToken> refreshTokens = new ArrayList<>();
 }
