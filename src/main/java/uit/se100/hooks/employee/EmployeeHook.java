@@ -25,23 +25,35 @@ public class EmployeeHook implements GenericHook<Employee, Long, EmployeeRequest
 
     @Override
     public void enrichCreate(EmployeeRequest input, Employee entity, Map<String, Object> context) {
-        UserRequest userRequest = input.accountRequest();
-        userRequest.setRole(RoleEnum.EMPLOYEE);
+        if (input.getAccountRequest() == null && input.getAccountId() == null)
+            throw new ApiException(ErrorCode.DATA_INTEGRITY_VIOLATION,
+                    "Request must be have accountRequest or accountId");
 
-//        Save user request
-        UserResponse userResponse = userService.create(userRequest);
+        UserRequest userRequest = input.getAccountRequest();
+        Long userId = input.getAccountId();
+        if (userRequest != null) userId = this.createAccount(userRequest, entity);
 
-//        update user in entity
-        User userInDb = userRepository.findById(userResponse.getId())
+        User userInDb = userRepository.findById(userId)
                 .orElseThrow(() -> new ApiException(ErrorCode.RESOURCE_NOT_FOUND));
 
         entity.setUser(userInDb);
+        //        Add default data
+        addDefaultData(entity);
 
-//        Add default data
-        addDefaultDate(entity);
     }
 
-    public void addDefaultDate(Employee entity) {
+    Long createAccount(UserRequest input, Employee entity) {
+        input.setRole(RoleEnum.EMPLOYEE);
+
+//        Save user request
+        UserResponse userResponse = userService.create(input);
+
+        return userResponse.getId();
+//        update user in entity
+
+    }
+
+    public void addDefaultData(Employee entity) {
         if (entity.getTotalFlightHours() == null) entity.setTotalFlightHours(0);
     }
 

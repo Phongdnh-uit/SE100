@@ -3,23 +3,27 @@ package uit.se100.dtos.employee;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 import uit.se100.dtos.user.UserRequest;
 import uit.se100.enums.employee.EmployeePosition;
 
-public record EmployeeRequest(
+@Data
+public class EmployeeRequest {
 
-        @NotNull
-        UserRequest accountRequest,
+    // For who want to create new account
+    private UserRequest accountRequest;
 
-        @NotBlank
-        @Size(max = 100)
-        String fullName,
+    // Account already exists
+    private Long accountId;
 
-        @NotNull
-        EmployeePosition position,
+    @NotBlank
+    @Size(max = 100)
+    private String fullName;
 
-        @NotBlank
-        @Size(max = 50)
-        String workExperience
-) {
+    @NotNull
+    private EmployeePosition position;
+
+    @NotBlank
+    @Size(max = 50)
+    private String workExperience;
 }
