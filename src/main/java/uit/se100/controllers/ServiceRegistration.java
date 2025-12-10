@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uit.se100.dtos.aircraft.AircraftRequest;
 import uit.se100.dtos.aircraft.AircraftResponse;
+import uit.se100.dtos.employee.EmployeeRequest;
+import uit.se100.dtos.employee.EmployeeResponse;
 import uit.se100.dtos.flight.FlightRequest;
 import uit.se100.dtos.flight.FlightResponse;
 import uit.se100.dtos.passenger.PassengerRequest;
@@ -16,21 +18,25 @@ import uit.se100.dtos.user.UserRequest;
 import uit.se100.dtos.user.UserResponse;
 import uit.se100.entities.aircraft.Aircraft;
 import uit.se100.entities.authentication.User;
+import uit.se100.entities.employee.Employee;
 import uit.se100.entities.flight.Flight;
 import uit.se100.entities.passenger.Passenger;
 import uit.se100.entities.route.Route;
 import uit.se100.hooks.aircraft.AircraftHook;
+import uit.se100.hooks.employee.EmployeeHook;
 import uit.se100.hooks.flight.FlightHook;
 import uit.se100.hooks.passenger.PassengerHook;
 import uit.se100.hooks.route.RouteHook;
 import uit.se100.hooks.user.UserHook;
 import uit.se100.mappers.aircraft.AircraftMapper;
+import uit.se100.mappers.employee.EmployeeMapper;
 import uit.se100.mappers.flight.FlightMapper;
 import uit.se100.mappers.passenger.user.PassengerMapper;
 import uit.se100.mappers.route.RouteMapper;
 import uit.se100.mappers.user.UserMapper;
 import uit.se100.repositories.aircraft.AircraftRepository;
 import uit.se100.repositories.authentication.UserRepository;
+import uit.se100.repositories.employee.EmployeeRepository;
 import uit.se100.repositories.flight.FlightRepository;
 import uit.se100.repositories.passenger.PassengerRepository;
 import uit.se100.repositories.route.RouteRepository;
@@ -81,5 +87,13 @@ public class ServiceRegistration {
                 context.getBean(FlightRepository.class),
                 context.getBean(FlightMapper.class),
                 context.getBean(FlightHook.class));
+    }
+
+    @Bean
+    CrudService<Employee, Long, EmployeeRequest, EmployeeResponse> employeeService() {
+        return new GenericService<Employee, Long, EmployeeRequest, EmployeeResponse>(
+                context.getBean(EmployeeRepository.class),
+                context.getBean(EmployeeMapper.class),
+                context.getBean(EmployeeHook.class));
     }
 }
