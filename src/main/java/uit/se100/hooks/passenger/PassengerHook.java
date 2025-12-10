@@ -26,6 +26,8 @@ public class PassengerHook implements GenericHook<Passenger, Long, PassengerRequ
 
     @Override
     public void enrichCreate(PassengerRequest input, Passenger entity, Map<String, Object> context) {
+        if (input.accountRequest() == null) return;
+
         UserRequest userRequest = input.accountRequest();
         userRequest.setRole(RoleEnum.PASSENGER);
 
