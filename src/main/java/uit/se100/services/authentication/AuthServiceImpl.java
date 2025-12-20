@@ -6,7 +6,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import uit.se100.dtos.authentication.ChangePasswordRequest;
 import uit.se100.dtos.authentication.LoginRequest;
 import uit.se100.dtos.authentication.LoginResponse;
 import uit.se100.dtos.authentication.RefreshTokenRequest;
@@ -33,6 +35,7 @@ public class AuthServiceImpl implements AuthService {
   private final RefreshTokenService refreshTokenService;
   private final UserMapper userMapper;
   private final UserHook userHook;
+  private final PasswordEncoder passwordEncoder;
 
   @Override
   public LoginResponse login(LoginRequest request) {
@@ -113,5 +116,20 @@ public class AuthServiceImpl implements AuthService {
             .findById(userId)
             .orElseThrow(() -> new ApiException(ErrorCode.DATA_INTEGRITY_VIOLATION));
     return userMapper.entityToResponse(user);
+  }
+
+  @Override
+  public void changePassword(ChangePasswordRequest request) {
+    Long userId = SecurityUtil.getCurrentUserId();
+    User user =
+        userRepository
+            .findById(userId)
+            .orElseThrow(() -> new ApiException(ErrorCode.RESOURCE_NOT_FOUND));
+    if (!passwordEncoder.matches(request.getOldPassword(), user.getPasswordHash())) {
+      throw new ApiException(
+          ErrorCode.VALIDATION_ERROR, Map.of("oldPassword", "Invalid current password"));
+    }
+    user.setPasswordHash(passwordEncoder.encode(request.getNewPassword()));
+    userRepository.save(user);
   }
 }
