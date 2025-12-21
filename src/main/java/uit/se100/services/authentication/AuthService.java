@@ -1,5 +1,6 @@
 package uit.se100.services.authentication;
 
+import uit.se100.dtos.authentication.ChangePasswordRequest;
 import uit.se100.dtos.authentication.LoginRequest;
 import uit.se100.dtos.authentication.LoginResponse;
 import uit.se100.dtos.authentication.RefreshTokenRequest;
@@ -16,8 +17,8 @@ public interface AuthService {
   UserResponse register(RegisterRequest request);
 
   // void resetPassword(ResetPasswordRequest request);
-  //
-  // void changePassword(ChangePasswordRequest request);
+
+  void changePassword(ChangePasswordRequest request);
 
   UserResponse getCurrentUser();
 }
