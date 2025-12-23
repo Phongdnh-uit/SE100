@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:mysql://mysql-se100:3306/mydatabase
-    username: myuser
-    password: secret
+    url: jdbc:mysql://${DB_HOST}:${DB_PORT}/${DB_NAME}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
@@ -12,18 +12,27 @@ spring:
   docker:
     compose:
       enabled: false
+  mail:
+    sender: ${MAIL_SENDER}
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
 
 logging:
   level:
     org.springframework.security: DEBUG
 
+server:
+  port: ${APP_PORT:8080}
+
 jwt:
-  secret: xin_chao_ban!_day_la_du_an_uit_land_cho_do_an_1_cua_minh!_xin_cam_on_ban_da_doc_du_an_nay
+  secret: ${JWT_SECRET}
   refresh-token:
-    expiration: 172800
+    expiration: ${JWT_REFRESH_EXPIRATION:604800}
   access-token:
-    expiration: 18000
+    expiration: ${JWT_ACCESS_EXPIRATION:900}
 
 app:
   client:
-    base-url: http://localhost:3000
+    base-url: ${APP_CLIENT_BASE_URL}
