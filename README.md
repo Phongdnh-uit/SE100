@@ -1,5 +1,7 @@
 # OOAD Project
+
 ## Docker Setup
+
 Hướng dẫn chạy project **OOAD** bằng Docker và Docker Compose.
 
 ## 📦 Getting Started
@@ -22,21 +24,19 @@ To get a local copy of this project up and running, follow these steps.
 
 2. **Get into docker directory for production**
 
-
    ```bash
    cd docker/prod
    ```
 
 3. **Set up environment variables:**
 
-   Create a `.env` file in the root directory and add the following variables:
+   Create a `.env` file in the directory and use example.env to configure your environment variables.:
 
    ```env
    ....
    ```
 
 4. **Run docker compose for server and database MYSQL**
-
 
    ```bash
    docker compose up --build
