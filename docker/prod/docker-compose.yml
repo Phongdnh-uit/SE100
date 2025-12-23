@@ -12,6 +12,8 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+    networks:
+      - app-network
 
   mysql:
     image: mysql:latest
@@ -32,6 +34,12 @@ services:
       timeout: 5s
     volumes:
       - mysql-data:/var/lib/mysql
+    networks:
+      - app-network
 
 volumes:
   mysql-data:
+
+networks:
+  app-network:
+    driver: bridge
