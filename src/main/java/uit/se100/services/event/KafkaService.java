@@ -1,4 +1,4 @@
-package uit.se100.services.events;
+package uit.se100.services.event;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
