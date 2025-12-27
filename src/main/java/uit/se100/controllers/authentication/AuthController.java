@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uit.se100.dtos.ApiResponse;
+import uit.se100.dtos.authentication.ChangePasswordRequest;
 import uit.se100.dtos.authentication.LoginRequest;
 import uit.se100.dtos.authentication.LoginResponse;
 import uit.se100.dtos.authentication.RefreshTokenRequest;
@@ -52,5 +53,12 @@ public class AuthController {
   @GetMapping("/me")
   public ResponseEntity<ApiResponse<UserResponse>> getCurrentUser() {
     return ResponseEntity.ok(ApiResponse.ok(authService.getCurrentUser()));
+  }
+
+  @PostMapping("/change-password")
+  public ResponseEntity<ApiResponse<Void>> changePassword(
+      @Valid @RequestBody ChangePasswordRequest request) {
+    authService.changePassword(request);
+    return ResponseEntity.ok(ApiResponse.ok(null));
   }
 }
