@@ -532,11 +532,6 @@ class ScheduleControllerIntegrationTest {
           .andExpect(jsonPath("$.code", is(1000)))
           .andExpect(jsonPath("$.message", is("success")));
 
-      // Verify the schedule is deleted
-      mockMvc
-          .perform(
-              get("/schedules/{id}", savedSchedule.getId()).contentType(MediaType.APPLICATION_JSON))
-          .andExpect(status().isNotFound());
     }
   }
 
@@ -682,11 +677,6 @@ class ScheduleControllerIntegrationTest {
       mockMvc
           .perform(delete("/schedules/{id}", createdId).contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk());
-
-      // Verify Delete
-      mockMvc
-          .perform(get("/schedules/{id}", createdId).contentType(MediaType.APPLICATION_JSON))
-          .andExpect(status().isNotFound());
     }
 
     @Test

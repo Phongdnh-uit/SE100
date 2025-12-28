@@ -1,13 +1,6 @@
 package uit.se100.entities.flight;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import uit.se100.entities.BaseEntity;
@@ -33,6 +26,6 @@ public class Flight extends BaseEntity {
   @Enumerated(EnumType.STRING)
   private FlightStatus status;
 
-  @OneToOne(mappedBy = "flight")
+  @OneToOne(mappedBy = "flight", cascade = CascadeType.ALL,orphanRemoval = true)
   private Schedule schedule;
 }

@@ -3,6 +3,8 @@ package uit.se100.exceptions;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,6 +23,14 @@ public class GlobalExceptionHandler {
     response.setMessage(ex.getMessage() != null ? ex.getMessage() : ex.getErrorCode().getMessage());
     response.setErrors(ex.getFieldErrors());
     return ResponseEntity.status(ex.getErrorCode().getHttpCode()).body(response);
+  }
+
+  @ExceptionHandler({BadCredentialsException.class, UsernameNotFoundException.class})
+  public ResponseEntity<ApiResponse<Void>> handleAuthenticationException(Exception ex) {
+    ApiResponse<Void> response = new ApiResponse<>();
+    response.setCode(ErrorCode.INVALID_CREDENTIALS.getCode());
+    response.setMessage(ErrorCode.INVALID_CREDENTIALS.getMessage());
+    return ResponseEntity.status(ErrorCode.INVALID_CREDENTIALS.getHttpCode()).body(response);
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)

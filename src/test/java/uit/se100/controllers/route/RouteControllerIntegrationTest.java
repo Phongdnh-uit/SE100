@@ -17,7 +17,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import uit.se100.dtos.route.RouteRequest;
 import uit.se100.entities.route.Route;
+import uit.se100.repositories.aircraft.AircraftRepository;
+import uit.se100.repositories.flight.FlightRepository;
 import uit.se100.repositories.route.RouteRepository;
+import uit.se100.repositories.schedule.ScheduleRepository;
 
 @SpringBootTest(
     properties = {
@@ -41,9 +44,19 @@ class RouteControllerIntegrationTest {
 
   @Autowired private RouteRepository routeRepository;
 
+  @Autowired private AircraftRepository aircraftRepository;
+
+  @Autowired private FlightRepository flightRepository;
+
+  @Autowired private ScheduleRepository scheduleRepository;
+
   @BeforeEach
   void setUp() {
-    routeRepository.deleteAll();
+
+      scheduleRepository.deleteAll();
+      flightRepository.deleteAll();
+      routeRepository.deleteAll();
+      aircraftRepository.deleteAll();
   }
 
   private Route createAndSaveRoute(String origin, String destination) {
