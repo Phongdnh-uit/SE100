@@ -10,9 +10,8 @@ import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import uit.se100.entities.BaseEntity;
-import uit.se100.entities.flight.Flight;
+import uit.se100.entities.aircraft.Aircraft;
 import uit.se100.enums.seat.SeatClass;
-import uit.se100.enums.seat.SeatStatus;
 
 @Getter
 @Setter
@@ -20,8 +19,8 @@ import uit.se100.enums.seat.SeatStatus;
 @Table(name = "seats")
 public class Seat extends BaseEntity {
   @ManyToOne
-  @JoinColumn(name = "flight_id", nullable = false)
-  private Flight flight;
+  @JoinColumn(name = "aircraft_id", nullable = false)
+  private Aircraft aircraft;
 
   @Column(nullable = false)
   private String seatNumber;
@@ -29,8 +28,4 @@ public class Seat extends BaseEntity {
   @Column(nullable = false)
   @Enumerated(EnumType.STRING)
   private SeatClass seatClass;
-
-  @Column(nullable = false)
-  @Enumerated(EnumType.STRING)
-  private SeatStatus status;
 }

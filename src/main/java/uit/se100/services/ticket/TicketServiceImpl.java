@@ -118,7 +118,7 @@ public class TicketServiceImpl implements TicketService {
 
         if (seat != null) {
             // Seat available
-            seat.setStatus(SeatStatus.RESERVED);
+            // seat.setStatus(SeatStatus.RESERVED);
             ticket.setSeat(seat);
             ticket.setStatus(TicketStatus.RESERVED);
             seatRepository.save(seat);

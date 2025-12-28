@@ -26,6 +26,6 @@ public class Flight extends BaseEntity {
   @Enumerated(EnumType.STRING)
   private FlightStatus status;
 
-  @OneToOne(mappedBy = "flight", cascade = CascadeType.ALL,orphanRemoval = true)
+  @OneToOne(mappedBy = "flight", cascade = CascadeType.ALL, orphanRemoval = true)
   private Schedule schedule;
 }
