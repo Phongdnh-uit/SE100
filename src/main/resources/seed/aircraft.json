@@ -1,0 +1,62 @@
+[
+  {
+    "type": "Narrow-body",
+    "seatCapacity": 180,
+    "registrationNumber": "VN-A320-001",
+    "manufacturer": "Airbus",
+    "model": "A320",
+    "manufactureYear": 2018,
+    "serialNumber": "A320SN001",
+    "status": "ACTIVE"
+  },
+  {
+    "type": "Narrow-body",
+    "seatCapacity": 180,
+    "registrationNumber": "VN-A320-002",
+    "manufacturer": "Airbus",
+    "model": "A320",
+    "manufactureYear": 2019,
+    "serialNumber": "A320SN002",
+    "status": "ACTIVE"
+  },
+  {
+    "type": "Narrow-body",
+    "seatCapacity": 220,
+    "registrationNumber": "VN-A321-001",
+    "manufacturer": "Airbus",
+    "model": "A321",
+    "manufactureYear": 2020,
+    "serialNumber": "A321SN001",
+    "status": "ACTIVE"
+  },
+  {
+    "type": "Narrow-body",
+    "seatCapacity": 220,
+    "registrationNumber": "VN-A321-002",
+    "manufacturer": "Airbus",
+    "model": "A321",
+    "manufactureYear": 2021,
+    "serialNumber": "A321SN002",
+    "status": "MAINTENANCE"
+  },
+  {
+    "type": "Wide-body",
+    "seatCapacity": 300,
+    "registrationNumber": "VN-B787-001",
+    "manufacturer": "Boeing",
+    "model": "787 Dreamliner",
+    "manufactureYear": 2017,
+    "serialNumber": "B787SN001",
+    "status": "ACTIVE"
+  },
+  {
+    "type": "Wide-body",
+    "seatCapacity": 305,
+    "registrationNumber": "VN-B787-002",
+    "manufacturer": "Boeing",
+    "model": "787 Dreamliner",
+    "manufactureYear": 2016,
+    "serialNumber": "B787SN002",
+    "status": "INACTIVE"
+  }
+]

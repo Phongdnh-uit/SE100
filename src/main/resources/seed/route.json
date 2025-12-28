@@ -1,0 +1,34 @@
+[
+  {
+    "origin": "TP.HCM",
+    "destination": "Hà Nội"
+  },
+  {
+    "origin": "Hà Nội",
+    "destination": "TP.HCM"
+  },
+  {
+    "origin": "TP.HCM",
+    "destination": "Đà Nẵng"
+  },
+  {
+    "origin": "Đà Nẵng",
+    "destination": "Hà Nội"
+  },
+  {
+    "origin": "Hà Nội",
+    "destination": "Singapore"
+  },
+  {
+    "origin": "TP.HCM",
+    "destination": "Bangkok"
+  },
+  {
+    "origin": "TP.HCM",
+    "destination": "Seoul"
+  },
+  {
+    "origin": "Hà Nội",
+    "destination": "Tokyo"
+  }
+]
