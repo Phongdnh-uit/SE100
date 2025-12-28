@@ -1,17 +1,12 @@
 package uit.se100.entities.flight;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import uit.se100.entities.BaseEntity;
 import uit.se100.entities.aircraft.Aircraft;
 import uit.se100.entities.route.Route;
+import uit.se100.entities.schedule.Schedule;
 import uit.se100.enums.flight.FlightStatus;
 
 @Getter
@@ -30,4 +25,7 @@ public class Flight extends BaseEntity {
   @Column(name = "status", nullable = false)
   @Enumerated(EnumType.STRING)
   private FlightStatus status;
+
+  @OneToOne(mappedBy = "flight", cascade = CascadeType.ALL,orphanRemoval = true)
+  private Schedule schedule;
 }

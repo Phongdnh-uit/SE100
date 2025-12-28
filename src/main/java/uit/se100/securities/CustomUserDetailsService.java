@@ -20,11 +20,17 @@ public class CustomUserDetailsService implements UserDetailsService {
   @Override
   public UserDetails loadUserByUsername(String credential) throws UsernameNotFoundException {
     boolean isEmail = emailValidator.isValid(credential, null);
+    boolean isPhone = credential != null && credential.matches("^\\d+$");
     User user = null;
     if (isEmail) {
       user =
           userRepository
               .findOne((root, _, builder) -> builder.equal(root.get("email"), credential))
+              .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+    } else if (isPhone) {
+      user =
+          userRepository
+              .findOne((root, _, builder) -> builder.equal(root.get("phone"), credential))
               .orElseThrow(() -> new UsernameNotFoundException("User not found"));
     } else {
       user =

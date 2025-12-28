@@ -12,6 +12,13 @@ spring:
   docker:
     compose:
       enabled: false
+  mail:
+    sender: ${MAIL_SENDER}
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+
 logging:
   level:
     org.springframework.security: DEBUG
