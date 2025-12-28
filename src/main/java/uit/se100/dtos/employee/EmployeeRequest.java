@@ -31,5 +31,4 @@ public class EmployeeRequest {
     @Min(0)
     private Integer totalFlightHours;
 
-//    private Integer maxFlightHoursPerMonth;
 }
