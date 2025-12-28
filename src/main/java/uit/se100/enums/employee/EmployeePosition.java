@@ -2,9 +2,9 @@ package uit.se100.enums.employee;
 
 public enum EmployeePosition {
 
-    PILOT(12000),
-    COPILOT(8000),
-    ATTENDANT(0),
+    PILOT(100),
+    COPILOT(100),
+    ATTENDANT(80),
     OPERATOR(0),
     TICKETING(0),
     OTHER(0);
