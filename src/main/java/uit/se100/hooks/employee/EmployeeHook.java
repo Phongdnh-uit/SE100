@@ -55,6 +55,8 @@ public class EmployeeHook implements GenericHook<Employee, Long, EmployeeRequest
 
     public void addDefaultData(Employee entity) {
         if (entity.getTotalFlightHours() == null) entity.setTotalFlightHours(0);
+
+        entity.setMaxFlightHoursPerMonth(entity.getPosition().getMaxFlightHours());
     }
 
 }

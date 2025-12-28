@@ -33,6 +33,6 @@ public class Employee extends BaseEntity {
     @Column(name = "total_flight_hours")
     private Integer totalFlightHours;
 
-//    private Integer maxFlightHoursPerMonth;
+    private Integer maxFlightHoursPerMonth;
 
 }
