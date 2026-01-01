@@ -5,12 +5,20 @@ import lombok.Getter;
 import lombok.Setter;
 import uit.se100.enums.flight.FlightStatus;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class FlightRequest {
-  @NotNull private Long routeId;
+    @NotNull
+    private Long routeId;
 
-  @NotNull private Long aircraftId;
+    @NotNull
+    private Long aircraftId;
 
-  @NotNull private FlightStatus status;
+    @NotNull
+    private FlightStatus status;
+
+    @NotNull
+    private List<PriceSeatClassDto> priceSeatClass;
 }
