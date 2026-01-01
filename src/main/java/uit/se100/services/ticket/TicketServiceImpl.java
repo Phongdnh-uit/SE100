@@ -103,7 +103,7 @@ public class TicketServiceImpl implements TicketService {
                 .orElseThrow(() -> new ApiException(ErrorCode.RESOURCE_NOT_FOUND, "Flight not found"));
 
         // Try to find available seat
-        Seat seat = seatRepository.findAvailableSeat(request.flightId(), request.seatClass()).orElse(null);
+        // Seat seat = seatRepository.findAvailableSeat(request.flightId(), request.seatClass()).orElse(null);
 
 
         var price = this.getPriceFromSeatClass(request.seatClass());
@@ -116,16 +116,16 @@ public class TicketServiceImpl implements TicketService {
         ticket.setPrice(price);
         ticket.setBookedAt(Instant.now());
 
-        if (seat != null) {
-            // Seat available
-            // seat.setStatus(SeatStatus.RESERVED);
-            ticket.setSeat(seat);
-            ticket.setStatus(TicketStatus.RESERVED);
-            seatRepository.save(seat);
-        } else {
-            // No seat available, add to waiting list
-            ticket.setStatus(TicketStatus.WAITING);
-        }
+        // if (seat != null) {
+        //     // Seat available
+        //     // seat.setStatus(SeatStatus.RESERVED);
+        //     ticket.setSeat(seat);
+        //     ticket.setStatus(TicketStatus.RESERVED);
+        //     seatRepository.save(seat);
+        // } else {
+        //     // No seat available, add to waiting list
+        //     ticket.setStatus(TicketStatus.WAITING);
+        // }
 
         ticketRepository.save(ticket);
 
