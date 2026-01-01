@@ -6,11 +6,12 @@ import uit.se100.dtos.ticket.ReserveTicketRequest;
 import uit.se100.dtos.ticket.TicketResponse;
 import uit.se100.entities.ticket.Ticket;
 import uit.se100.mappers.flight.FlightMapper;
+import uit.se100.mappers.flight.FlightSeatMapper;
 import uit.se100.mappers.passenger.user.PassengerMapper;
-import uit.se100.mappers.seat.SeatMapper;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {SeatMapper.class, FlightMapper.class, PassengerMapper.class})
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE, uses = {FlightSeatMapper.class, FlightMapper.class, PassengerMapper.class})
 public interface TicketMapper {
     Ticket toTicket(ReserveTicketRequest request);
+
     TicketResponse toResponse(Ticket ticket);
 }
