@@ -5,8 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import uit.se100.entities.BaseEntity;
 import uit.se100.entities.flight.Flight;
+import uit.se100.entities.flight.FlightSeat;
 import uit.se100.entities.passenger.Passenger;
-import uit.se100.entities.seat.Seat;
 import uit.se100.enums.seat.SeatClass;
 import uit.se100.enums.ticket.TicketStatus;
 
@@ -30,8 +30,8 @@ public class Ticket extends BaseEntity {
     private Passenger passenger;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seat_id")
-    private Seat seat;
+    @JoinColumn(name = "flight_seat_id")
+    private FlightSeat seat;
 
     // ===== Business fields =====
 
