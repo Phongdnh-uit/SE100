@@ -5,6 +5,7 @@ import uit.se100.dtos.authentication.LoginRequest;
 import uit.se100.dtos.authentication.LoginResponse;
 import uit.se100.dtos.authentication.RefreshTokenRequest;
 import uit.se100.dtos.authentication.RegisterRequest;
+import uit.se100.dtos.authentication.ResetPasswordRequest;
 import uit.se100.dtos.user.UserResponse;
 
 public interface AuthService {
@@ -16,7 +17,9 @@ public interface AuthService {
 
   UserResponse register(RegisterRequest request);
 
-  // void resetPassword(ResetPasswordRequest request);
+  void sendResetPasswordEmail(String email);
+
+  void resetPassword(ResetPasswordRequest request);
 
   void changePassword(ChangePasswordRequest request);
 

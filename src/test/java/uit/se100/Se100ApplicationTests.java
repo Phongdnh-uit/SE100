@@ -14,7 +14,11 @@ import org.springframework.boot.test.context.SpringBootTest;
       "spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect",
       "jwt.secret=xin_chao_ban!_day_la_du_an_uit_land_cho_do_an_1_cua_minh!_xin_cam_on_ban_da_doc_du_an_nay",
       "jwt.refresh-token.expiration=172800",
-      "jwt.access-token.expiration=18000"
+      "jwt.access-token.expiration=18000",
+      "spring.mail.host=smtp.gmail.com",
+      "spring.mail.port=587",
+      "spring.mail.username=test@gmail.com",
+      "spring.mail.password=password",
     })
 class Se100ApplicationTests {
 
