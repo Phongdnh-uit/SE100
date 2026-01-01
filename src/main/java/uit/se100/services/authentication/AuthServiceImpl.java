@@ -25,6 +25,8 @@ import uit.se100.enums.authentication.VerificationType;
 import uit.se100.exceptions.errors.ApiException;
 import uit.se100.exceptions.errors.ErrorCode;
 import uit.se100.hooks.user.UserHook;
+import uit.se100.mappers.employee.EmployeeMapper;
+import uit.se100.mappers.passenger.user.PassengerMapper;
 import uit.se100.mappers.user.UserMapper;
 import uit.se100.repositories.authentication.UserRepository;
 import uit.se100.securities.SecurityUtil;
@@ -43,6 +45,8 @@ public class AuthServiceImpl implements AuthService {
   private final PasswordEncoder passwordEncoder;
   private final VerificationService verificationService;
   private final MailService mailService;
+  private final PassengerMapper passengerMapper;
+  private final EmployeeMapper employeeMapper;
 
   @Override
   public LoginResponse login(LoginRequest request) {
@@ -69,6 +73,12 @@ public class AuthServiceImpl implements AuthService {
     response.setAccessToken(jwt);
     response.setRefreshToken(refreshToken);
     response.setUser(userMapper.entityToResponse(user));
+    if (user.getPassenger() != null) {
+      response.setPassenger(passengerMapper.entityToResponse(user.getPassenger()));
+    }
+    if (user.getEmployee() != null) {
+      response.setEmployee(employeeMapper.entityToResponse(user.getEmployee()));
+    }
     return response;
   }
 
