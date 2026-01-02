@@ -122,6 +122,21 @@ public class AuthServiceImpl implements AuthService {
     userHook.enrichCreate(userRequest, user, Map.of());
     user.setRole(RoleEnum.PASSENGER);
     user = userRepository.save(user);
+    // send verification email
+    String code =
+        verificationService.generateVerificationCode(
+            VerificationType.EMAIL_VERIFICATION,
+            AppConstant.ACTIVATION_TOKEN_EXPIRE_SECONDS,
+            user.getId());
+    String activationLink =
+        String.format("%s/activate-account?code=%s", AppConstant.FRONTEND_BASE_URL, code);
+    Map<String, Object> templateParams =
+        Map.of("activationUrl", activationLink, "user", user, "username", user.getUsername());
+    mailService.sendEmailFromTemplate(
+        user.getEmail(),
+        AppConstant.ACTIVATION_EMAIL_SUBJECT,
+        AppConstant.ACTIVATION_EMAIL_TEMPLATE,
+        templateParams);
     return userMapper.entityToResponse(user);
   }
 
