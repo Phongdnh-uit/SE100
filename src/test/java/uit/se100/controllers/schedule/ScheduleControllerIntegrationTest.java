@@ -13,10 +13,10 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import uit.se100.BaseIntegrationTest;
 import uit.se100.dtos.schedule.ScheduleRequest;
 import uit.se100.entities.aircraft.Aircraft;
 import uit.se100.entities.flight.Flight;
@@ -29,21 +29,8 @@ import uit.se100.repositories.flight.FlightRepository;
 import uit.se100.repositories.route.RouteRepository;
 import uit.se100.repositories.schedule.ScheduleRepository;
 
-@SpringBootTest(
-    properties = {
-      "spring.datasource.url=jdbc:h2:mem:scheduledb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE",
-      "spring.datasource.driverClassName=org.h2.Driver",
-      "spring.datasource.username=sa",
-      "spring.datasource.password=",
-      "spring.jpa.hibernate.ddl-auto=create-drop",
-      "spring.jpa.show-sql=true",
-      "spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect",
-      "jwt.secret=xin_chao_ban!_day_la_du_an_uit_land_cho_do_an_1_cua_minh!_xin_cam_on_ban_da_doc_du_an_nay",
-      "jwt.refresh-token.expiration=172800",
-      "jwt.access-token.expiration=18000"
-    })
 @AutoConfigureMockMvc
-class ScheduleControllerIntegrationTest {
+class ScheduleControllerIntegrationTest extends BaseIntegrationTest {
 
   @Autowired private MockMvc mockMvc;
 
@@ -531,7 +518,6 @@ class ScheduleControllerIntegrationTest {
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.code", is(1000)))
           .andExpect(jsonPath("$.message", is("success")));
-
     }
   }
 
@@ -736,4 +722,3 @@ class ScheduleControllerIntegrationTest {
     }
   }
 }
-
