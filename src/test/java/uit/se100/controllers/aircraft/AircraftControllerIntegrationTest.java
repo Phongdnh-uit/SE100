@@ -11,30 +11,18 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+
+import uit.se100.BaseIntegrationTest;
 import uit.se100.dtos.aircraft.AircraftRequest;
 import uit.se100.entities.aircraft.Aircraft;
 import uit.se100.enums.aircraft.AircraftStatus;
 import uit.se100.repositories.aircraft.AircraftRepository;
 
-@SpringBootTest(
-    properties = {
-      "spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE",
-      "spring.datasource.driverClassName=org.h2.Driver",
-      "spring.datasource.username=sa",
-      "spring.datasource.password=",
-      "spring.jpa.hibernate.ddl-auto=create-drop",
-      "spring.jpa.show-sql=true",
-      "spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect",
-      "jwt.secret=xin_chao_ban!_day_la_du_an_uit_land_cho_do_an_1_cua_minh!_xin_cam_on_ban_da_doc_du_an_nay",
-      "jwt.refresh-token.expiration=172800",
-      "jwt.access-token.expiration=18000"
-    })
 @AutoConfigureMockMvc
-class AircraftControllerIntegrationTest {
+class AircraftControllerIntegrationTest extends BaseIntegrationTest {
 
   @Autowired private MockMvc mockMvc;
 
@@ -278,14 +266,7 @@ class AircraftControllerIntegrationTest {
     void shouldCreateNewAircraft() throws Exception {
       AircraftRequest request =
           createAircraftRequest(
-              "Wide-body",
-              350,
-              "VN-A100",
-              "Boeing",
-              "787-9",
-              2023,
-              "SN100",
-              AircraftStatus.ACTIVE);
+              "Wide-body", 350, "VN-A100", "Boeing", "787-9", 2023, "SN100", AircraftStatus.ACTIVE);
 
       mockMvc
           .perform(
@@ -326,7 +307,14 @@ class AircraftControllerIntegrationTest {
     void shouldReturnValidationErrorWhenSeatCapacityIsNull() throws Exception {
       AircraftRequest request =
           createAircraftRequest(
-              "Wide-body", null, "VN-A100", "Boeing", "787-9", 2023, "SN100", AircraftStatus.ACTIVE);
+              "Wide-body",
+              null,
+              "VN-A100",
+              "Boeing",
+              "787-9",
+              2023,
+              "SN100",
+              AircraftStatus.ACTIVE);
 
       mockMvc
           .perform(
@@ -415,7 +403,8 @@ class AircraftControllerIntegrationTest {
     @DisplayName("Should return validation error when status is null")
     void shouldReturnValidationErrorWhenStatusIsNull() throws Exception {
       AircraftRequest request =
-          createAircraftRequest("Wide-body", 350, "VN-A100", "Boeing", "787-9", 2023, "SN100", null);
+          createAircraftRequest(
+              "Wide-body", 350, "VN-A100", "Boeing", "787-9", 2023, "SN100", null);
 
       mockMvc
           .perform(
@@ -476,14 +465,7 @@ class AircraftControllerIntegrationTest {
     void shouldReturnErrorWhenUpdatingNonExistentAircraft() throws Exception {
       AircraftRequest updateRequest =
           createAircraftRequest(
-              "Wide-body",
-              350,
-              "VN-A100",
-              "Boeing",
-              "787-9",
-              2023,
-              "SN100",
-              AircraftStatus.ACTIVE);
+              "Wide-body", 350, "VN-A100", "Boeing", "787-9", 2023, "SN100", AircraftStatus.ACTIVE);
 
       mockMvc
           .perform(
@@ -740,4 +722,3 @@ class AircraftControllerIntegrationTest {
     }
   }
 }
-

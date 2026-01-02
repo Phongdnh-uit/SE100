@@ -10,7 +10,7 @@ public interface AppConstant {
 
   String ACTIVATION_EMAIL_TEMPLATE = "activation-email";
   String ACTIVATION_EMAIL_SUBJECT = "Activate your account";
-  Integer aCTIVATION_TOKEN_EXPIRE_SECONDS = 5 * 60; // 5 minutes
+  Integer ACTIVATION_TOKEN_EXPIRE_SECONDS = 5 * 60; // 5 minutes
   String RESET_PASSWORD_EMAIL_TEMPLATE = "reset-password-email";
   String RESET_PASSWORD_EMAIL_SUBJECT = "Reset your password";
   Integer RESET_PASSWORD_TOKEN_EXPIRE_SECONDS = 5 * 60; // 5 minutes

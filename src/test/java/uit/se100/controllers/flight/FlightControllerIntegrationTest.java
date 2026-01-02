@@ -5,41 +5,33 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
+import uit.se100.BaseIntegrationTest;
 import uit.se100.dtos.flight.FlightRequest;
+import uit.se100.dtos.flight.PriceSeatClassDto;
 import uit.se100.entities.aircraft.Aircraft;
 import uit.se100.entities.flight.Flight;
 import uit.se100.entities.route.Route;
 import uit.se100.enums.aircraft.AircraftStatus;
 import uit.se100.enums.flight.FlightStatus;
+import uit.se100.enums.seat.SeatClass;
 import uit.se100.repositories.aircraft.AircraftRepository;
 import uit.se100.repositories.flight.FlightRepository;
 import uit.se100.repositories.route.RouteRepository;
 
-@SpringBootTest(
-    properties = {
-      "spring.datasource.url=jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE",
-      "spring.datasource.driverClassName=org.h2.Driver",
-      "spring.datasource.username=sa",
-      "spring.datasource.password=",
-      "spring.jpa.hibernate.ddl-auto=create-drop",
-      "spring.jpa.show-sql=true",
-      "spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect",
-      "jwt.secret=xin_chao_ban!_day_la_du_an_uit_land_cho_do_an_1_cua_minh!_xin_cam_on_ban_da_doc_du_an_nay",
-      "jwt.refresh-token.expiration=172800",
-      "jwt.access-token.expiration=18000"
-    })
 @AutoConfigureMockMvc
-class FlightControllerIntegrationTest {
+class FlightControllerIntegrationTest extends BaseIntegrationTest {
 
   @Autowired private MockMvc mockMvc;
 
@@ -110,12 +102,34 @@ class FlightControllerIntegrationTest {
     return flightRepository.save(flight);
   }
 
-  private FlightRequest createFlightRequest(Long routeId, Long aircraftId, FlightStatus status) {
+  private List<PriceSeatClassDto> createDefaultPriceSeatClass() {
+    PriceSeatClassDto economy = new PriceSeatClassDto();
+    economy.setSeatClass(SeatClass.ECONOMY);
+    economy.setPrice(new BigDecimal("1000000"));
+
+    PriceSeatClassDto business = new PriceSeatClassDto();
+    business.setSeatClass(SeatClass.BUSINESS);
+    business.setPrice(new BigDecimal("3000000"));
+
+    PriceSeatClassDto firstClass = new PriceSeatClassDto();
+    firstClass.setSeatClass(SeatClass.FIRST_CLASS);
+    firstClass.setPrice(new BigDecimal("5000000"));
+
+    return Arrays.asList(economy, business, firstClass);
+  }
+
+  private FlightRequest createFlightRequest(
+      Long routeId, Long aircraftId, FlightStatus status, List<PriceSeatClassDto> priceSeatClass) {
     FlightRequest request = new FlightRequest();
     request.setRouteId(routeId);
     request.setAircraftId(aircraftId);
     request.setStatus(status);
+    request.setPriceSeatClass(priceSeatClass);
     return request;
+  }
+
+  private FlightRequest createFlightRequest(Long routeId, Long aircraftId, FlightStatus status) {
+    return createFlightRequest(routeId, aircraftId, status, createDefaultPriceSeatClass());
   }
 
   @Nested
@@ -359,7 +373,8 @@ class FlightControllerIntegrationTest {
     @Test
     @DisplayName("Should return validation error when routeId is null")
     void shouldReturnValidationErrorWhenRouteIdIsNull() throws Exception {
-      FlightRequest request = createFlightRequest(null, savedAircraft.getId(), FlightStatus.OPEN);
+      FlightRequest request =
+          createFlightRequest(null, savedAircraft.getId(), FlightStatus.OPEN);
 
       mockMvc
           .perform(
@@ -372,7 +387,8 @@ class FlightControllerIntegrationTest {
     @Test
     @DisplayName("Should return validation error when aircraftId is null")
     void shouldReturnValidationErrorWhenAircraftIdIsNull() throws Exception {
-      FlightRequest request = createFlightRequest(savedRoute.getId(), null, FlightStatus.OPEN);
+      FlightRequest request =
+          createFlightRequest(savedRoute.getId(), null, FlightStatus.OPEN);
 
       mockMvc
           .perform(
@@ -385,7 +401,22 @@ class FlightControllerIntegrationTest {
     @Test
     @DisplayName("Should return validation error when status is null")
     void shouldReturnValidationErrorWhenStatusIsNull() throws Exception {
-      FlightRequest request = createFlightRequest(savedRoute.getId(), savedAircraft.getId(), null);
+      FlightRequest request =
+          createFlightRequest(savedRoute.getId(), savedAircraft.getId(), null);
+
+      mockMvc
+          .perform(
+              post("/flights")
+                  .contentType(MediaType.APPLICATION_JSON)
+                  .content(objectMapper.writeValueAsString(request)))
+          .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Should return validation error when priceSeatClass is null")
+    void shouldReturnValidationErrorWhenPriceSeatClassIsNull() throws Exception {
+      FlightRequest request =
+          createFlightRequest(savedRoute.getId(), savedAircraft.getId(), FlightStatus.OPEN, null);
 
       mockMvc
           .perform(
@@ -412,7 +443,8 @@ class FlightControllerIntegrationTest {
     @Test
     @DisplayName("Should return error when aircraft not found")
     void shouldReturnErrorWhenAircraftNotFound() throws Exception {
-      FlightRequest request = createFlightRequest(savedRoute.getId(), 99999L, FlightStatus.OPEN);
+      FlightRequest request =
+          createFlightRequest(savedRoute.getId(), 99999L, FlightStatus.OPEN);
 
       mockMvc
           .perform(
@@ -544,6 +576,30 @@ class FlightControllerIntegrationTest {
           .andExpect(jsonPath("$.code", is(1000)))
           .andExpect(jsonPath("$.data.status", is("CANCELED")));
     }
+
+    @Test
+    @DisplayName("Should update flight with different price seat class")
+    void shouldUpdateFlightWithDifferentPriceSeatClass() throws Exception {
+      Flight savedFlight = createAndSaveFlight(savedRoute, savedAircraft, FlightStatus.OPEN);
+
+      PriceSeatClassDto economy = new PriceSeatClassDto();
+      economy.setSeatClass(SeatClass.ECONOMY);
+      economy.setPrice(new BigDecimal("2000000"));
+
+      FlightRequest updateRequest = createFlightRequest(
+          savedRoute.getId(),
+          savedAircraft.getId(),
+          FlightStatus.OPEN,
+          List.of(economy));
+
+      mockMvc
+          .perform(
+              put("/flights/{id}", savedFlight.getId())
+                  .contentType(MediaType.APPLICATION_JSON)
+                  .content(objectMapper.writeValueAsString(updateRequest)))
+          .andExpect(status().isOk())
+          .andExpect(jsonPath("$.code", is(1000)));
+    }
   }
 
   @Nested
@@ -567,6 +623,16 @@ class FlightControllerIntegrationTest {
           .perform(
               get("/flights/{id}", savedFlight.getId()).contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @DisplayName("Should succeed when deleting non-existent flight")
+    void shouldSucceedWhenDeletingNonExistentFlight() throws Exception {
+      // JPA's deleteById is silently successful even if the entity doesn't exist
+      mockMvc
+          .perform(delete("/flights/{id}", 99999L).contentType(MediaType.APPLICATION_JSON))
+          .andExpect(status().isOk())
+          .andExpect(jsonPath("$.code", is(1000)));
     }
   }
 
@@ -628,6 +694,26 @@ class FlightControllerIntegrationTest {
           .perform(get("/flights/{id}", flight3.getId()).contentType(MediaType.APPLICATION_JSON))
           .andExpect(status().isOk())
           .andExpect(jsonPath("$.data.status", is("DEPARTED")));
+    }
+
+    @Test
+    @DisplayName("Should handle bulk delete with single id")
+    void shouldHandleBulkDeleteWithSingleId() throws Exception {
+      Flight flight = createAndSaveFlight(savedRoute, savedAircraft, FlightStatus.OPEN);
+
+      mockMvc
+          .perform(
+              delete("/flights/bulk")
+                  .param("ids", flight.getId().toString())
+                  .contentType(MediaType.APPLICATION_JSON))
+          .andExpect(status().isOk())
+          .andExpect(jsonPath("$.code", is(1000)))
+          .andExpect(jsonPath("$.message", is("success")));
+
+      // Verify the flight is deleted
+      mockMvc
+          .perform(get("/flights/{id}", flight.getId()).contentType(MediaType.APPLICATION_JSON))
+          .andExpect(status().isNotFound());
     }
   }
 
@@ -757,4 +843,3 @@ class FlightControllerIntegrationTest {
     }
   }
 }
-

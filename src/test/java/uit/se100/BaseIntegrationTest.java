@@ -1,6 +1,5 @@
 package uit.se100;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(
@@ -22,8 +21,4 @@ import org.springframework.boot.test.context.SpringBootTest;
       "spring.mail.sender=password",
       "app.client.base-url=http://localhost:3000"
     })
-class Se100ApplicationTests {
-
-  @Test
-  void contextLoads() {}
-}
+public abstract class BaseIntegrationTest {}

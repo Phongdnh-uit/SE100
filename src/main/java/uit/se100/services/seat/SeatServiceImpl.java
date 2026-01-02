@@ -43,9 +43,10 @@ public class SeatServiceImpl implements SeatService {
         errors.put(seatClass.name(), "From row must be less than or equal to To row");
       }
       // check excludedRows in range
-      for (int row = classSeatRequest.getFromRow();
-          row <= classSeatRequest.getToRow() && !classSeatRequest.getExcludedRows().contains(row);
-          row++) {
+      for (int row = classSeatRequest.getFromRow(); row <= classSeatRequest.getToRow(); row++) {
+        if (classSeatRequest.getExcludedRows().contains(row)) {
+          continue; // skip excluded rows
+        }
         List<String> layout = classSeatRequest.getLayoutType().getSeatLetters();
         // generate seat numbers
         for (String seatLetter : layout) {
