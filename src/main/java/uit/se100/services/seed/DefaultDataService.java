@@ -16,6 +16,7 @@ public class DefaultDataService {
     private final DatabaseCleanupService databaseCleanupService;
     private final RouteSeedService routeSeedService;
     private final PassengerSeedService passengerSeedService;
+    private final EmployeeSeedService employeeSeedService;
 
 
     public void loadDefaultData() {
@@ -24,5 +25,6 @@ public class DefaultDataService {
         aircraftSeedService.seed();
         routeSeedService.seed();
         passengerSeedService.seed();
+        employeeSeedService.seed();
     }
 }

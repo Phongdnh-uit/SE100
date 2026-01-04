@@ -23,6 +23,7 @@ public class EmployeeHook implements GenericHook<Employee, Long, EmployeeRequest
     private final CrudService<User, Long, UserRequest, UserResponse> userService;
     private final UserRepository userRepository;
 
+
     @Override
     public void enrichCreate(EmployeeRequest input, Employee entity, Map<String, Object> context) {
         if (input.getAccountRequest() == null && input.getAccountId() == null)

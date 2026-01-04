@@ -37,6 +37,6 @@ public class Passenger extends BaseEntity {
     private TierEnum tier;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = true)
     private User user;
 }

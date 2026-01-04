@@ -3,12 +3,14 @@ package uit.se100.utils;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 
 import java.io.InputStream;
 import java.util.List;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JsonSeedReader {
@@ -22,6 +24,7 @@ public class JsonSeedReader {
                     .constructCollectionType(List.class, clazz);
             return objectMapper.readValue(is, type);
         } catch (Exception e) {
+            log.error(e.getMessage());
             throw new RuntimeException("Cannot read seed file: " + path, e);
         }
     }
