@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
@@ -99,6 +101,8 @@ class FlightControllerIntegrationTest extends BaseIntegrationTest {
     flight.setRoute(route);
     flight.setAircraft(aircraft);
     flight.setStatus(status);
+    flight.setDepartureTime(Instant.now().plus(1, ChronoUnit.DAYS));
+    flight.setArrivalTime(Instant.now().plus(1, ChronoUnit.DAYS).plus(2, ChronoUnit.HOURS));
     return flightRepository.save(flight);
   }
 
@@ -125,6 +129,8 @@ class FlightControllerIntegrationTest extends BaseIntegrationTest {
     request.setAircraftId(aircraftId);
     request.setStatus(status);
     request.setPriceSeatClass(priceSeatClass);
+    request.setDepartureTime(Instant.now().plus(1, ChronoUnit.DAYS));
+    request.setArrivalTime(Instant.now().plus(1, ChronoUnit.DAYS).plus(2, ChronoUnit.HOURS));
     return request;
   }
 
@@ -417,6 +423,36 @@ class FlightControllerIntegrationTest extends BaseIntegrationTest {
     void shouldReturnValidationErrorWhenPriceSeatClassIsNull() throws Exception {
       FlightRequest request =
           createFlightRequest(savedRoute.getId(), savedAircraft.getId(), FlightStatus.OPEN, null);
+
+      mockMvc
+          .perform(
+              post("/flights")
+                  .contentType(MediaType.APPLICATION_JSON)
+                  .content(objectMapper.writeValueAsString(request)))
+          .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Should return validation error when departureTime is null")
+    void shouldReturnValidationErrorWhenDepartureTimeIsNull() throws Exception {
+      FlightRequest request =
+          createFlightRequest(savedRoute.getId(), savedAircraft.getId(), FlightStatus.OPEN);
+      request.setDepartureTime(null);
+
+      mockMvc
+          .perform(
+              post("/flights")
+                  .contentType(MediaType.APPLICATION_JSON)
+                  .content(objectMapper.writeValueAsString(request)))
+          .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Should return validation error when arrivalTime is null")
+    void shouldReturnValidationErrorWhenArrivalTimeIsNull() throws Exception {
+      FlightRequest request =
+          createFlightRequest(savedRoute.getId(), savedAircraft.getId(), FlightStatus.OPEN);
+      request.setArrivalTime(null);
 
       mockMvc
           .perform(
