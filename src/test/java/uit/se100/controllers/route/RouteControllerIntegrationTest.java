@@ -20,7 +20,6 @@ import uit.se100.entities.route.Route;
 import uit.se100.repositories.aircraft.AircraftRepository;
 import uit.se100.repositories.flight.FlightRepository;
 import uit.se100.repositories.route.RouteRepository;
-import uit.se100.repositories.schedule.ScheduleRepository;
 
 @AutoConfigureMockMvc
 class RouteControllerIntegrationTest extends BaseIntegrationTest {
@@ -35,12 +34,8 @@ class RouteControllerIntegrationTest extends BaseIntegrationTest {
 
   @Autowired private FlightRepository flightRepository;
 
-  @Autowired private ScheduleRepository scheduleRepository;
-
   @BeforeEach
   void setUp() {
-
-    scheduleRepository.deleteAll();
     flightRepository.deleteAll();
     routeRepository.deleteAll();
     aircraftRepository.deleteAll();

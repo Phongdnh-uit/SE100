@@ -14,8 +14,6 @@ import uit.se100.dtos.passenger.PassengerRequest;
 import uit.se100.dtos.passenger.PassengerResponse;
 import uit.se100.dtos.route.RouteRequest;
 import uit.se100.dtos.route.RouteResponse;
-import uit.se100.dtos.schedule.ScheduleRequest;
-import uit.se100.dtos.schedule.ScheduleResponse;
 import uit.se100.dtos.seat.SeatRequest;
 import uit.se100.dtos.seat.SeatResponse;
 import uit.se100.dtos.user.UserRequest;
@@ -26,14 +24,12 @@ import uit.se100.entities.employee.Employee;
 import uit.se100.entities.flight.Flight;
 import uit.se100.entities.passenger.Passenger;
 import uit.se100.entities.route.Route;
-import uit.se100.entities.schedule.Schedule;
 import uit.se100.entities.seat.Seat;
 import uit.se100.hooks.aircraft.AircraftHook;
 import uit.se100.hooks.employee.EmployeeHook;
 import uit.se100.hooks.flight.FlightHook;
 import uit.se100.hooks.passenger.PassengerHook;
 import uit.se100.hooks.route.RouteHook;
-import uit.se100.hooks.schedule.ScheduleHook;
 import uit.se100.hooks.seat.SeatHook;
 import uit.se100.hooks.user.UserHook;
 import uit.se100.mappers.aircraft.AircraftMapper;
@@ -41,7 +37,6 @@ import uit.se100.mappers.employee.EmployeeMapper;
 import uit.se100.mappers.flight.FlightMapper;
 import uit.se100.mappers.passenger.user.PassengerMapper;
 import uit.se100.mappers.route.RouteMapper;
-import uit.se100.mappers.schedule.ScheduleMapper;
 import uit.se100.mappers.seat.SeatMapper;
 import uit.se100.mappers.user.UserMapper;
 import uit.se100.repositories.aircraft.AircraftRepository;
@@ -50,7 +45,6 @@ import uit.se100.repositories.employee.EmployeeRepository;
 import uit.se100.repositories.flight.FlightRepository;
 import uit.se100.repositories.passenger.PassengerRepository;
 import uit.se100.repositories.route.RouteRepository;
-import uit.se100.repositories.schedule.ScheduleRepository;
 import uit.se100.repositories.seat.SeatRepository;
 import uit.se100.services.CrudService;
 import uit.se100.services.GenericService;
@@ -116,11 +110,11 @@ public class ServiceRegistration {
         context.getBean(EmployeeHook.class));
   }
 
-  @Bean
-  CrudService<Schedule, Long, ScheduleRequest, ScheduleResponse> scheduleService() {
-    return new GenericService<Schedule, Long, ScheduleRequest, ScheduleResponse>(
-        context.getBean(ScheduleRepository.class),
-        context.getBean(ScheduleMapper.class),
-        context.getBean(ScheduleHook.class));
-  }
+  // @Bean
+  // CrudService<Schedule, Long, ScheduleRequest, ScheduleResponse> scheduleService() {
+  //   return new GenericService<Schedule, Long, ScheduleRequest, ScheduleResponse>(
+  //       context.getBean(ScheduleRepository.class),
+  //       context.getBean(ScheduleMapper.class),
+  //       context.getBean(ScheduleHook.class));
+  // }
 }

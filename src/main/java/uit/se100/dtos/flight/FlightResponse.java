@@ -1,5 +1,6 @@
 package uit.se100.dtos.flight;
 
+import java.time.Instant;
 import lombok.Getter;
 import lombok.Setter;
 import uit.se100.dtos.aircraft.AircraftResponse;
@@ -15,4 +16,7 @@ public class FlightResponse extends BaseEntity {
   private AircraftResponse aircraft;
   private FlightStatus status;
   private ScheduleResponse schedule;
+  private Instant departureTime;
+  private Instant arrivalTime;
+  private Long durationMinutes;
 }
