@@ -7,18 +7,17 @@ import uit.se100.constants.AppConstant;
 import uit.se100.dtos.ticket.ReserveTicketRequest;
 import uit.se100.dtos.ticket.TicketResponse;
 import uit.se100.entities.flight.Flight;
+import uit.se100.entities.flight.FlightSeat;
 import uit.se100.entities.passenger.Passenger;
-import uit.se100.entities.seat.Seat;
 import uit.se100.entities.ticket.Ticket;
 import uit.se100.enums.seat.SeatClass;
-import uit.se100.enums.seat.SeatStatus;
 import uit.se100.enums.ticket.TicketStatus;
 import uit.se100.exceptions.errors.ApiException;
 import uit.se100.exceptions.errors.ErrorCode;
 import uit.se100.mappers.ticket.TicketMapper;
 import uit.se100.repositories.flight.FlightRepository;
+import uit.se100.repositories.flight.FlightSeatRepository;
 import uit.se100.repositories.passenger.PassengerRepository;
-import uit.se100.repositories.seat.SeatRepository;
 import uit.se100.repositories.ticket.TicketRepository;
 import uit.se100.securities.CustomUserDetails;
 import uit.se100.utils.SecurityUtils;
@@ -31,7 +30,7 @@ import java.time.Instant;
 public class TicketServiceImpl implements TicketService {
 
     private final TicketRepository ticketRepository;
-    private final SeatRepository seatRepository;
+    private final FlightSeatRepository flightSeatRepository;
     private final PassengerRepository passengerRepository;
     private final FlightRepository flightRepository;
     private final TicketMapper ticketMapper;
@@ -103,7 +102,7 @@ public class TicketServiceImpl implements TicketService {
                 .orElseThrow(() -> new ApiException(ErrorCode.RESOURCE_NOT_FOUND, "Flight not found"));
 
         // Try to find available seat
-        Seat seat = seatRepository.findAvailableSeat(request.flightId(), request.seatClass()).orElse(null);
+        FlightSeat seat = flightSeatRepository.findAvailableSeat(request.flightId(), request.seatClass()).orElse(null);
 
 
         var price = this.getPriceFromSeatClass(request.seatClass());
@@ -118,10 +117,10 @@ public class TicketServiceImpl implements TicketService {
 
         if (seat != null) {
             // Seat available
-            seat.setStatus(SeatStatus.RESERVED);
+            // seat.setStatus(SeatStatus.RESERVED);
             ticket.setSeat(seat);
             ticket.setStatus(TicketStatus.RESERVED);
-            seatRepository.save(seat);
+            flightSeatRepository.save(seat);
         } else {
             // No seat available, add to waiting list
             ticket.setStatus(TicketStatus.WAITING);

@@ -12,6 +12,7 @@ import lombok.Getter;
 import lombok.Setter;
 import uit.se100.entities.BaseEntity;
 import uit.se100.entities.flight.Flight;
+import uit.se100.entities.seat.Seat;
 import uit.se100.enums.aircraft.AircraftStatus;
 
 @Getter
@@ -46,4 +47,7 @@ public class Aircraft extends BaseEntity {
 
   @OneToMany(mappedBy = "aircraft")
   private List<Flight> flights = new ArrayList<>();
+
+  @OneToMany(mappedBy = "aircraft")
+  private List<Seat> seats = new ArrayList<>();
 }

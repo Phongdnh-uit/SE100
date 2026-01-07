@@ -1,0 +1,72 @@
+[
+  {
+    "accountRequest": {
+      "email": "nguyenvana@gmail.com",
+      "password": "Password@123",
+      "username": "nguyenvana",
+      "role": "PASSENGER"
+    },
+    "fullName": "Nguyễn Văn A",
+    "dateOfBirth": "1998-05-12",
+    "nationality": "Vietnam",
+    "idNumber": "079098001234",
+    "address": "Quận 1, TP. Hồ Chí Minh",
+    "phone": "0909123456"
+  },
+  {
+    "accountRequest": {
+      "email": "tranthib@gmail.com",
+      "password": "Password@123",
+      "username": "tranthib",
+      "role": "PASSENGER"
+    },
+    "fullName": "Trần Thị B",
+    "dateOfBirth": "2000-09-20",
+    "nationality": "Vietnam",
+    "idNumber": "079100009876",
+    "address": "Quận Hải Châu, Đà Nẵng",
+    "phone": "0912345678"
+  },
+  {
+    "accountRequest": {
+      "email": "leminhc@gmail.com",
+      "password": "Password@123",
+      "username": "leminhc",
+      "role": "PASSENGER"
+    },
+    "fullName": "Lê Minh C",
+    "dateOfBirth": "1995-02-03",
+    "nationality": "Vietnam",
+    "idNumber": "079095004321",
+    "address": "TP. Thủ Đức, TP. Hồ Chí Minh",
+    "phone": "0988123456"
+  },
+  {
+    "accountRequest": {
+      "email": "phamthid@gmail.com",
+      "password": "Password@123",
+      "username": "phamthid",
+      "role": "PASSENGER"
+    },
+    "fullName": "Phạm Thị D",
+    "dateOfBirth": "2002-12-15",
+    "nationality": "Vietnam",
+    "idNumber": "079102006789",
+    "address": "TP. Biên Hòa, Đồng Nai",
+    "phone": "0977123456"
+  },
+  {
+    "accountRequest": {
+      "email": "hoangvane@gmail.com",
+      "password": "Password@123",
+      "username": "hoangvane",
+      "role": "PASSENGER"
+    },
+    "fullName": "Hoàng Văn E",
+    "dateOfBirth": "1990-07-01",
+    "nationality": "Vietnam",
+    "idNumber": "079090001111",
+    "address": "Quận Ninh Kiều, Cần Thơ",
+    "phone": "0933123456"
+  }
+]

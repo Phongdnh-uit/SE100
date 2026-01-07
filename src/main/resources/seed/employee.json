@@ -1,0 +1,62 @@
+[
+  {
+    "accountRequest": {
+      "email": "pilot1@airline.com",
+      "username": "pilot1",
+      "password": "Password@123",
+      "role": "EMPLOYEE"
+    },
+    "fullName": "Nguyễn Hoàng Phi",
+    "position": "PILOT",
+    "workExperience": "10 years flying Airbus A320",
+    "totalFlightHours": 8500
+  },
+  {
+    "accountRequest": {
+      "email": "pilot2@airline.com",
+      "username": "pilot2",
+      "password": "Password@123",
+      "role": "EMPLOYEE"
+    },
+    "fullName": "Trần Minh Quân",
+    "position": "COPILOT",
+    "workExperience": "6 years as co-pilot Boeing 737",
+    "totalFlightHours": 4200
+  },
+  {
+    "accountRequest": {
+      "email": "attendant1@airline.com",
+      "username": "attendant1",
+      "password": "Password@123",
+      "role": "EMPLOYEE"
+    },
+    "fullName": "Lê Thị Hồng",
+    "position": "FLIGHT_ATTENDANT",
+    "workExperience": "4 years cabin crew",
+    "totalFlightHours": 1500
+  },
+  {
+    "accountRequest": {
+      "email": "ground1@airline.com",
+      "username": "ground1",
+      "password": "Password@123",
+      "role": "EMPLOYEE"
+    },
+    "fullName": "Phạm Văn Dũng",
+    "position": "GROUND_STAFF",
+    "workExperience": "8 years ground operations",
+    "totalFlightHours": 0
+  },
+  {
+    "accountRequest": {
+      "email": "manager1@airline.com",
+      "username": "manager1",
+      "password": "Password@123",
+      "role": "EMPLOYEE"
+    },
+    "fullName": "Võ Thị Mai",
+    "position": "MANAGER",
+    "workExperience": "12 years airline management",
+    "totalFlightHours": 0
+  }
+]

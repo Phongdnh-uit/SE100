@@ -31,6 +31,8 @@ public class PassengerHook implements GenericHook<Passenger, Long, PassengerRequ
         UserRequest userRequest = input.accountRequest();
         userRequest.setRole(RoleEnum.PASSENGER);
 
+        userRequest.setPhone(input.phone());
+
 //        Save user request
         UserResponse userResponse = userService.create(userRequest);
 

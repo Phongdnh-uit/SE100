@@ -6,6 +6,10 @@ import uit.se100.dtos.seat.SeatRequest;
 import uit.se100.dtos.seat.SeatResponse;
 import uit.se100.entities.seat.Seat;
 import uit.se100.mappers.GenericMapper;
+import uit.se100.mappers.aircraft.AircraftMapper;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(
+    componentModel = "spring",
+    unmappedTargetPolicy = ReportingPolicy.IGNORE,
+    uses = {AircraftMapper.class})
 public interface SeatMapper extends GenericMapper<Seat, SeatRequest, SeatResponse> {}

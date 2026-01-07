@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kích hoạt tài khoản</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; color: #333; }
+        .container { width: 80%; margin: 20px auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; }
+        .header { text-align: center; border-bottom: 2px solid #4CAF50; padding-bottom: 10px; }
+        .content { padding: 20px 0; }
+        .button {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #4CAF50;
+            color: white !important;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .footer { font-size: 12px; color: #777; margin-top: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Chào mừng bạn đến với UITFLIGHT!</h2>
+        </div>
+        <div class="content">
+            <p>Chào <strong th:text="${username}">Người dùng</strong>,</p>
+            <p>Cảm ơn bạn đã đăng ký thành viên. Để hoàn tất quá trình thiết lập tài khoản, vui lòng xác nhận địa chỉ email của bạn bằng cách nhấn vào nút bên dưới:</p>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <a th:href="${activationUrl}" class="button">Kích hoạt tài khoản</a>
+            </div>
+
+            <p>Hoặc copy link này vào trình duyệt của bạn:</p>
+            <p th:text="${activationUrl}">http://example.com/activate</p>
+
+            <p>Liên kết này sẽ hết hạn sau <strong>24 giờ</strong>.</p>
+        </div>
+        <div class="footer">
+            <p>Nếu bạn không thực hiện đăng ký này, vui lòng bỏ qua email này.</p>
+            <p>&copy; 2026 [Tên Công Ty]. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
