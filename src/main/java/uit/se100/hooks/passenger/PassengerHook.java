@@ -24,6 +24,7 @@ public class PassengerHook implements GenericHook<Passenger, Long, PassengerRequ
     private final CrudService<User, Long, UserRequest, UserResponse> userService;
     private final UserRepository userRepository;
 
+
     @Override
     public void enrichCreate(PassengerRequest input, Passenger entity, Map<String, Object> context) {
         if (input.accountRequest() == null) return;
