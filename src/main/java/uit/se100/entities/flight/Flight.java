@@ -2,6 +2,8 @@ package uit.se100.entities.flight;
 
 import jakarta.persistence.*;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import uit.se100.entities.BaseEntity;
@@ -33,4 +35,11 @@ public class Flight extends BaseEntity {
   private Instant arrivalTime;
 
   private Long durationMinutes;
+
+  @OneToMany(
+      mappedBy = "flight",
+      cascade = CascadeType.ALL,
+      orphanRemoval = true,
+      fetch = FetchType.LAZY)
+  private List<FlightSeat> flightSeats = new ArrayList<>();
 }
