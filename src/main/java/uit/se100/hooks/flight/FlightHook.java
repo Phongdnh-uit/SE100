@@ -34,6 +34,7 @@ public class FlightHook implements GenericHook<Flight, Long, FlightRequest, Flig
   @Override
   public void enrichCreate(FlightRequest input, Flight entity, Map<String, Object> context) {
     enrich(input, entity);
+    context.put("priceSeatClass", input.getPriceSeatClass());
   }
 
   @Override
