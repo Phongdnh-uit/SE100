@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import uit.se100.constants.AppConstant;
 import uit.se100.dtos.authentication.ChangePasswordRequest;
+import uit.se100.dtos.authentication.CurrentUserResponse;
 import uit.se100.dtos.authentication.LoginRequest;
 import uit.se100.dtos.authentication.LoginResponse;
 import uit.se100.dtos.authentication.RefreshTokenRequest;
@@ -141,13 +142,21 @@ public class AuthServiceImpl implements AuthService {
   }
 
   @Override
-  public UserResponse getCurrentUser() {
+  public CurrentUserResponse getCurrentUser() {
     Long userId = SecurityUtil.getCurrentUserId();
     User user =
         userRepository
             .findById(userId)
             .orElseThrow(() -> new ApiException(ErrorCode.DATA_INTEGRITY_VIOLATION));
-    return userMapper.entityToResponse(user);
+    CurrentUserResponse response = new CurrentUserResponse();
+    response.setUser(userMapper.entityToResponse(user));
+    if (user.getPassenger() != null) {
+      response.setPassenger(passengerMapper.entityToResponse(user.getPassenger()));
+    }
+    if (user.getEmployee() != null) {
+      response.setEmployee(employeeMapper.entityToResponse(user.getEmployee()));
+    }
+    return response;
   }
 
   @Override
