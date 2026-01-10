@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uit.se100.dtos.ApiResponse;
 import uit.se100.dtos.authentication.ChangePasswordRequest;
@@ -16,6 +17,7 @@ import uit.se100.dtos.authentication.LoginRequest;
 import uit.se100.dtos.authentication.LoginResponse;
 import uit.se100.dtos.authentication.RefreshTokenRequest;
 import uit.se100.dtos.authentication.RegisterRequest;
+import uit.se100.dtos.authentication.ResetPasswordRequest;
 import uit.se100.dtos.user.UserResponse;
 import uit.se100.services.authentication.AuthService;
 
@@ -60,6 +62,20 @@ public class AuthController {
   public ResponseEntity<ApiResponse<Void>> changePassword(
       @Valid @RequestBody ChangePasswordRequest request) {
     authService.changePassword(request);
+    return ResponseEntity.ok(ApiResponse.ok(null));
+  }
+
+  @PostMapping("/send-reset-password-email")
+  public ResponseEntity<ApiResponse<Void>> sendResetPasswordEmail(
+      @Valid @RequestParam("email") String email) {
+    authService.sendResetPasswordEmail(email);
+    return ResponseEntity.ok(ApiResponse.ok(null));
+  }
+
+  @PostMapping("/reset-password")
+  public ResponseEntity<ApiResponse<Void>> resetPassword(
+      @Valid @RequestBody ResetPasswordRequest request) {
+    authService.resetPassword(request);
     return ResponseEntity.ok(ApiResponse.ok(null));
   }
 }
