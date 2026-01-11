@@ -152,7 +152,7 @@ public class StatisticsService {
     public TicketStatusSummaryDTO getTicketStatusSummary() {
         Object[] result = statisticsRepository.findTicketStatusSummary();
         
-        if (result == null || result[0] == null) {
+        if (result == null || result.length == 0) {
             return TicketStatusSummaryDTO.builder()
                     .refundedCount(0L)
                     .changedCount(0L)
@@ -161,9 +161,14 @@ public class StatisticsService {
                     .build();
         }
 
-        Long canceledCount = result[0] != null ? ((Number) result[0]).longValue() : 0L;
-        Long changedCount = result[1] != null ? ((Number) result[1]).longValue() : 0L;
-        Long refundedCount = result[2] != null ? ((Number) result[2]).longValue() : 0L;
+        Object[] row = result;
+        if (result.length == 1 && result[0] instanceof Object[]) {
+            row = (Object[]) result[0];
+        }
+
+        Long canceledCount = row.length > 0 && row[0] != null ? ((Number) row[0]).longValue() : 0L;
+        Long changedCount = row.length > 1 && row[1] != null ? ((Number) row[1]).longValue() : 0L;
+        Long refundedCount = row.length > 2 && row[2] != null ? ((Number) row[2]).longValue() : 0L;
 
         return TicketStatusSummaryDTO.builder()
                 .refundedCount(refundedCount)
@@ -328,7 +333,22 @@ public class StatisticsService {
     public AircraftStatusStatisticsDTO getAircraftStatusStatistics() {
         Object[] result = statisticsRepository.findAircraftStatusStatistics();
         
-        if (result == null || result[3] == null || ((Number) result[3]).longValue() == 0) {
+        if (result == null || result.length == 0) {
+            return AircraftStatusStatisticsDTO.builder()
+                    .activeCount(0L)
+                    .maintenanceCount(0L)
+                    .inactiveCount(0L)
+                    .totalAircraftCount(0L)
+                    .build();
+        }
+
+        Object[] row = result;
+        if (result.length == 1 && result[0] instanceof Object[]) {
+            row = (Object[]) result[0];
+        }
+
+        Long totalCount = row.length > 3 && row[3] != null ? ((Number) row[3]).longValue() : 0L;
+        if (totalCount == 0) {
             return AircraftStatusStatisticsDTO.builder()
                     .activeCount(0L)
                     .maintenanceCount(0L)
@@ -338,10 +358,10 @@ public class StatisticsService {
         }
 
         return AircraftStatusStatisticsDTO.builder()
-                .activeCount(result[0] != null ? ((Number) result[0]).longValue() : 0L)
-                .maintenanceCount(result[1] != null ? ((Number) result[1]).longValue() : 0L)
-                .inactiveCount(result[2] != null ? ((Number) result[2]).longValue() : 0L)
-                .totalAircraftCount(((Number) result[3]).longValue())
+                .activeCount(row.length > 0 && row[0] != null ? ((Number) row[0]).longValue() : 0L)
+                .maintenanceCount(row.length > 1 && row[1] != null ? ((Number) row[1]).longValue() : 0L)
+                .inactiveCount(row.length > 2 && row[2] != null ? ((Number) row[2]).longValue() : 0L)
+                .totalAircraftCount(totalCount)
                 .build();
     }
 

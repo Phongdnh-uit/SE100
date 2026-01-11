@@ -1,7 +1,6 @@
 package uit.se100.controllers.statistics;
 
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -10,22 +9,11 @@ import uit.se100.dtos.ApiResponse;
 import uit.se100.dtos.statistics.*;
 import uit.se100.services.statistics.StatisticsService;
 
-import java.time.Instant;
 import java.util.List;
 
-/**
- * REST Controller for Statistics module.
- * Base path: /api/statistics
- * 
- * Provides endpoints for all statistical reports:
- * - Flight reports (available seats, passengers, load factor)
- * - Ticket & revenue reports (status summary, revenue by flight/route/time)
- * - Baggage reports
- * - Operations reports (aircraft status, crew statistics)
- */
-@Tag(name = "Statistics", description = "Statistics and reporting endpoints")
+@Tag(name = "Statistics")
 @RestController
-@RequestMapping("/api/statistics")
+@RequestMapping("/statistics")
 @RequiredArgsConstructor
 public class StatisticsController {
 
