@@ -22,6 +22,8 @@ public class Route extends BaseEntity {
   @Column(nullable = false)
   private String destination;
 
+  private boolean isExternal = false;
+
   @OneToMany(mappedBy = "route")
   private List<Flight> flights = new ArrayList<>();
 }
