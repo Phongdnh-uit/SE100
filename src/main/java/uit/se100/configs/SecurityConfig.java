@@ -42,7 +42,7 @@ public class SecurityConfig implements WebMvcConfigurer {
                                         .requestMatchers(HttpMethod.PATCH, SecurityConstant.PUBLIC_PATCH_URLS).permitAll()
                                         .requestMatchers(HttpMethod.DELETE, SecurityConstant.PUBLIC_DELETE_URLS).permitAll()
                                         .anyRequest()
-                                        .permitAll())
+                                        .authenticated())
                 .oauth2ResourceServer(
                         oauth2 -> oauth2.jwt(jwt -> jwt.jwtAuthenticationConverter(jwtConverter)))
                 .formLogin(AbstractHttpConfigurer::disable)
