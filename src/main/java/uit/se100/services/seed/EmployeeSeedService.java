@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class EmployeerSeedService {
+public class EmployeeSeedService {
 
     private final JsonSeedReader jsonSeedReader;
     private final CrudService<Employee, Long, EmployeeRequest, EmployeeResponse> employeeService;

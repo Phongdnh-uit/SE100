@@ -4,7 +4,8 @@
       "email": "pilot1@airline.com",
       "username": "pilot1",
       "password": "Password@123",
-      "role": "EMPLOYEE"
+      "role": "EMPLOYEE",
+      "phone": "0912345118"
     },
     "fullName": "Nguyễn Hoàng Phi",
     "position": "PILOT",
@@ -16,7 +17,8 @@
       "email": "pilot2@airline.com",
       "username": "pilot2",
       "password": "Password@123",
-      "role": "EMPLOYEE"
+      "role": "EMPLOYEE",
+      "phone": "0912312678"
     },
     "fullName": "Trần Minh Quân",
     "position": "COPILOT",
@@ -28,10 +30,11 @@
       "email": "attendant1@airline.com",
       "username": "attendant1",
       "password": "Password@123",
-      "role": "EMPLOYEE"
+      "role": "EMPLOYEE",
+      "phone": "0912345248"
     },
     "fullName": "Lê Thị Hồng",
-    "position": "FLIGHT_ATTENDANT",
+    "position": "ATTENDANT",
     "workExperience": "4 years cabin crew",
     "totalFlightHours": 1500
   },
@@ -40,10 +43,11 @@
       "email": "ground1@airline.com",
       "username": "ground1",
       "password": "Password@123",
-      "role": "EMPLOYEE"
+      "role": "EMPLOYEE",
+      "phone": "0912345656"
     },
     "fullName": "Phạm Văn Dũng",
-    "position": "GROUND_STAFF",
+    "position": "TICKETING",
     "workExperience": "8 years ground operations",
     "totalFlightHours": 0
   },
@@ -52,10 +56,11 @@
       "email": "manager1@airline.com",
       "username": "manager1",
       "password": "Password@123",
-      "role": "EMPLOYEE"
+      "role": "EMPLOYEE",
+      "phone": "0912345687"
     },
     "fullName": "Võ Thị Mai",
-    "position": "MANAGER",
+    "position": "OPERATOR",
     "workExperience": "12 years airline management",
     "totalFlightHours": 0
   }
