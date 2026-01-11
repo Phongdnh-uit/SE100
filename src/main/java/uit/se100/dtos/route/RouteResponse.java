@@ -9,4 +9,5 @@ import uit.se100.entities.BaseEntity;
 public class RouteResponse extends BaseEntity {
   private String origin;
   private String destination;
+  private boolean isExternal;
 }

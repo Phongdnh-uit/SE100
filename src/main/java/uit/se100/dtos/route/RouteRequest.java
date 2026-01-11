@@ -9,4 +9,5 @@ import lombok.Setter;
 public class RouteRequest {
   @NotBlank private String origin;
   @NotBlank private String destination;
+  private boolean isExternal = false;
 }
