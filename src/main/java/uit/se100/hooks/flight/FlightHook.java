@@ -62,11 +62,13 @@ public class FlightHook implements GenericHook<Flight, Long, FlightRequest, Flig
     entity.setRoute(route);
     entity.setAircraft(aircraft);
     // calculate duration
-    if (input.getArrivalTime() != null && input.getDepartureTime() != null) {
-      long duration =
-          input.getArrivalTime().getEpochSecond() - input.getDepartureTime().getEpochSecond();
-      entity.setDurationMinutes(duration / 60);
+    if (input.getArrivalTime().isBefore(input.getDepartureTime())) {
+      throw new ApiException(
+          ErrorCode.VALIDATION_ERROR, "Arrival time must be after departure time");
     }
+    long duration =
+        input.getArrivalTime().getEpochSecond() - input.getDepartureTime().getEpochSecond();
+    entity.setDurationMinutes(duration / 60);
   }
 
   // create flight seat from flight
