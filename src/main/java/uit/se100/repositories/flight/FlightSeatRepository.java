@@ -4,8 +4,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import uit.se100.entities.flight.FlightSeat;
 import uit.se100.enums.seat.SeatClass;
+import uit.se100.projections.SeatAvailableProjection;
 import uit.se100.repositories.SimpleRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface FlightSeatRepository extends SimpleRepository<FlightSeat, Long> {
@@ -20,5 +22,17 @@ public interface FlightSeatRepository extends SimpleRepository<FlightSeat, Long>
     Optional<FlightSeat> findAvailableSeat(
             @Param("flightId") Long flightId,
             @Param("seatClass") SeatClass seatClass
+    );
+
+    @Query("""
+                SELECT 
+                    fs.seatClass AS seatClass,
+                    COUNT(fs.id) AS availableSeats
+                FROM FlightSeat fs
+                WHERE fs.flight.id = :flightId
+                GROUP BY fs.seatClass
+            """)
+    List<SeatAvailableProjection> countSeatsByClass(
+            @Param("flightId") Long flightId
     );
 }
