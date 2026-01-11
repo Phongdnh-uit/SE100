@@ -3,8 +3,10 @@ package uit.se100.controllers.ticket;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import uit.se100.dtos.PageResponse;
 import uit.se100.dtos.ticket.ReserveTicketRequest;
 import uit.se100.dtos.ticket.TicketResponse;
 import uit.se100.services.ticket.TicketService;
@@ -20,5 +22,11 @@ public class TickerController {
     @ResponseStatus(HttpStatus.CREATED)
     public TicketResponse create(@RequestBody @Valid ReserveTicketRequest reserveTicketRequest) {
         return this.ticketService.reserveTicket(reserveTicketRequest);
+    }
+
+    @GetMapping("/own")
+    @ResponseStatus(HttpStatus.OK)
+    public PageResponse<TicketResponse> getOwnTickets(Pageable pageable) {
+        return this.ticketService.findByPassengerId(pageable);
     }
 }
