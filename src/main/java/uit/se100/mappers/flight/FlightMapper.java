@@ -1,7 +1,6 @@
 package uit.se100.mappers.flight;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 import uit.se100.dtos.flight.FlightRequest;
 import uit.se100.dtos.flight.FlightResponse;
@@ -12,6 +11,5 @@ import uit.se100.mappers.GenericMapper;
 public interface FlightMapper extends GenericMapper<Flight, FlightRequest, FlightResponse> {
 
   @Override
-  @Mapping(target = "schedule.flight", ignore = true)
   FlightResponse entityToResponse(Flight entity);
 }
