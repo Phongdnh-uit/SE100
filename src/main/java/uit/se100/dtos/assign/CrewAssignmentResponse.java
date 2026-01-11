@@ -9,4 +9,5 @@ import uit.se100.dtos.flight.FlightResponse;
 public class CrewAssignmentResponse {
   private Long id;
   private FlightResponse flight;
+  private Long employeeId;
 }
