@@ -50,4 +50,5 @@ public interface TicketRepository extends SimpleRepository<Ticket, Long> {
 //    );
 
     Page<Ticket> findByPassengerId(Long passengerId, Pageable pageable);
+
 }
