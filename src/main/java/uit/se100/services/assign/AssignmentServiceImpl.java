@@ -1,6 +1,7 @@
 package uit.se100.services.assign;
 
 import jakarta.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -12,7 +13,9 @@ import uit.se100.dtos.PageResponse;
 import uit.se100.dtos.assign.AssignmentRequest;
 import uit.se100.dtos.assign.CrewAssignmentResponse;
 import uit.se100.entities.assign.CrewAssignment;
+import uit.se100.entities.employee.Employee;
 import uit.se100.enums.employee.EmployeePosition;
+import uit.se100.enums.flight.FlightStatus;
 import uit.se100.exceptions.errors.ApiException;
 import uit.se100.exceptions.errors.ErrorCode;
 import uit.se100.mappers.assign.CrewAssignmentMapper;
@@ -38,6 +41,29 @@ public class AssignmentServiceImpl implements AssignmentService {
       errors.put("flightId", "Flight does not exist.");
       throw new ApiException(ErrorCode.VALIDATION_ERROR, errors);
     }
+    // Chỉ cho phép phân công nhân viên cho các chuyến bay có trạng thái OPEN hoặc DELAYED
+    if (flightOpt.get().getStatus() != FlightStatus.OPEN
+        && flightOpt.get().getStatus() != FlightStatus.DELAYED) {
+      errors.put("flightId", "Can only assign employees to OPEN or DELAYED flights.");
+      throw new ApiException(ErrorCode.VALIDATION_ERROR, errors);
+    }
+    // Phải hủy và trừ hết giờ bay của các nhân viên đã được phân công cho chuyến bay này
+    var existingAssignments = flightOpt.get().getCrewAssignments();
+    var employeesToUpdate = new ArrayList<Employee>();
+    for (var assignment : existingAssignments) {
+      var employee = assignment.getEmployee();
+      Long flightDurationInHours = flightOpt.get().getDurationMinutes() / 60;
+      Integer updatedFlightHours =
+          Math.toIntExact(employee.getTotalFlightHours() - flightDurationInHours);
+      employee.setTotalFlightHours(updatedFlightHours);
+      employeesToUpdate.add(employee);
+    }
+    // Xóa các phân công hiện tại trước khi thêm mới
+    flightOpt.get().getCrewAssignments().clear();
+    // Cập nhật lại giờ bay của nhân viên
+    employeeRepository.saveAll(employeesToUpdate);
+
+    // Tiếp theo, thực hiện phân công nhân viên mới
     var employees =
         employeeRepository.findAll(
             (root, query, builder) ->
@@ -91,15 +117,22 @@ public class AssignmentServiceImpl implements AssignmentService {
       throw new ApiException(ErrorCode.VALIDATION_ERROR, errors);
     }
 
-    // proceed to assign
-    // drop existing assignments
-    flightOpt.get().getCrewAssignments().clear();
+    // Tạo các phân công mới
+    var newAssignments = new ArrayList<CrewAssignment>();
     for (var employee : employees) {
       CrewAssignment assignment = new CrewAssignment();
-      assignment.setFlight(flightOpt.get());
       assignment.setEmployee(employee);
-      flightOpt.get().getCrewAssignments().add(assignment);
+      assignment.setFlight(flightOpt.get());
+      newAssignments.add(assignment);
+      // Cập nhật giờ bay cho nhân viên
+      Long updatedFlightHours = employee.getTotalFlightHours() + flightDurationInHours;
+      employee.setTotalFlightHours(Math.toIntExact(updatedFlightHours));
     }
+    assignmentRepository.saveAll(newAssignments);
+    // Cập nhật lại giờ bay của nhân viên
+    employeeRepository.saveAll(employees);
+    // Cập nhật lại danh sách phân công cho chuyến bay
+    flightOpt.get().setCrewAssignments(newAssignments);
     flightRepository.save(flightOpt.get());
   }
 
