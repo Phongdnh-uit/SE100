@@ -1,5 +1,10 @@
 package uit.se100.hooks.flight;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import uit.se100.dtos.PageResponse;
@@ -19,12 +24,6 @@ import uit.se100.repositories.aircraft.AircraftRepository;
 import uit.se100.repositories.flight.FlightSeatRepository;
 import uit.se100.repositories.route.RouteRepository;
 import uit.se100.repositories.seat.SeatRepository;
-
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
@@ -75,67 +74,98 @@ public class FlightHook implements GenericHook<Flight, Long, FlightRequest, Flig
     entity.setDurationMinutes(duration / 60);
   }
 
-    // create flight seat from flight
-    @Override
-    public void afterCreate(Flight entity, FlightResponse response, Map<String, Object> context) {
+  // create flight seat from flight
+  @Override
+  public void afterCreate(Flight entity, FlightResponse response, Map<String, Object> context) {
 
-        List<PriceSeatClassDto> priceSeatClassDtos =
-                (List<PriceSeatClassDto>) context.getOrDefault("priceSeatClass", new ArrayList<>());
+    List<PriceSeatClassDto> priceSeatClassDtos =
+        (List<PriceSeatClassDto>) context.getOrDefault("priceSeatClass", new ArrayList<>());
 
-        Map<SeatClass, BigDecimal> priceMap =
-                priceSeatClassDtos.stream()
-                        .collect(
-                                Collectors.toMap(PriceSeatClassDto::getSeatClass, PriceSeatClassDto::getPrice));
+    Map<SeatClass, BigDecimal> priceMap =
+        priceSeatClassDtos.stream()
+            .collect(
+                Collectors.toMap(PriceSeatClassDto::getSeatClass, PriceSeatClassDto::getPrice));
 
-        List<Seat> seats =
-                seatRepository.findAll(
-                        (root, query, criteriaBuilder) ->
-                                criteriaBuilder.equal(
-                                        root.get("aircraft").get("id"), response.getAircraft().getId()));
+    List<Seat> seats =
+        seatRepository.findAll(
+            (root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(
+                    root.get("aircraft").get("id"), response.getAircraft().getId()));
 
-        seats.forEach(
-                seat -> {
-                    flightSeatRepository.save(this.createFlightSeat(entity, seat, priceMap));
-                });
+    seats.forEach(
+        seat -> {
+          flightSeatRepository.save(this.createFlightSeat(entity, seat, priceMap));
+        });
+  }
+
+  private FlightSeat createFlightSeat(
+      Flight flight, Seat seat, Map<SeatClass, BigDecimal> priceMap) {
+
+    SeatClass seatClass = seat.getSeatClass();
+
+    BigDecimal price = priceMap.get(seatClass);
+    if (price == null) {
+      throw new ApiException(
+          ErrorCode.RESOURCE_NOT_FOUND, "Missing price for seat class: " + seatClass);
     }
 
-    private FlightSeat createFlightSeat(
-            Flight flight, Seat seat, Map<SeatClass, BigDecimal> priceMap) {
+    FlightSeat flightSeat = new FlightSeat();
+    flightSeat.setFlight(flight);
+    flightSeat.setSeat(seat);
+    flightSeat.setSeatClass(seatClass);
+    flightSeat.setPrice(price);
+    flightSeat.setStatus(SeatStatus.AVAILABLE);
 
-        SeatClass seatClass = seat.getSeatClass();
+    return flightSeat;
+  }
 
-        BigDecimal price = priceMap.get(seatClass);
-        if (price == null) {
-            throw new ApiException(
-                    ErrorCode.RESOURCE_NOT_FOUND, "Missing price for seat class: " + seatClass);
-        }
+  @Override
+  public void afterUpdate(Flight entity, FlightResponse response, Map<String, Object> context) {
+    // drop all flight seats and recreate
+    List<Long> flightSeatIds = entity.getFlightSeats().stream().map(FlightSeat::getId).toList();
+    flightSeatRepository.deleteAllById(flightSeatIds);
+    // recreate flight seats
+    List<PriceSeatClassDto> priceSeatClassDtos =
+        (List<PriceSeatClassDto>) context.getOrDefault("priceSeatClass", new ArrayList<>());
 
-        FlightSeat flightSeat = new FlightSeat();
-        flightSeat.setFlight(flight);
-        flightSeat.setSeat(seat);
-        flightSeat.setSeatClass(seatClass);
-        flightSeat.setPrice(price);
-        flightSeat.setStatus(SeatStatus.AVAILABLE);
+    Map<SeatClass, BigDecimal> priceMap =
+        priceSeatClassDtos.stream()
+            .collect(
+                Collectors.toMap(PriceSeatClassDto::getSeatClass, PriceSeatClassDto::getPrice));
 
-        return flightSeat;
-    }
+    List<Seat> seats =
+        seatRepository.findAll(
+            (root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(
+                    root.get("aircraft").get("id"), response.getAircraft().getId()));
 
-    @Override
-    public void enrichFindAll(PageResponse<FlightResponse> response) {
-        //add info for available flight seat number
-        var result = response.getContent().stream().map(item -> {
-            enrichFindById(item);
+    seats.forEach(
+        seat -> {
+          flightSeatRepository.save(this.createFlightSeat(entity, seat, priceMap));
+        });
+  }
 
-            return item;
-        }).toList();
+  @Override
+  public void enrichFindAll(PageResponse<FlightResponse> response) {
+    // add info for available flight seat number
+    var result =
+        response.getContent().stream()
+            .map(
+                item -> {
+                  enrichFindById(item);
 
-        response.setContent(result);
-    }
+                  return item;
+                })
+            .toList();
 
-    @Override
-    public void enrichFindById(FlightResponse response) {
-        List<SeatAvailableProjection> seatSummary = flightSeatRepository.countSeatsByClass(response.getId());
+    response.setContent(result);
+  }
 
-        response.setSeatSummary(seatSummary);
-    }
+  @Override
+  public void enrichFindById(FlightResponse response) {
+    List<SeatAvailableProjection> seatSummary =
+        flightSeatRepository.countSeatsByClass(response.getId());
+
+    response.setSeatSummary(seatSummary);
+  }
 }
