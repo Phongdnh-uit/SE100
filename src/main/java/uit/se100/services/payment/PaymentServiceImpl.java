@@ -64,8 +64,6 @@ public class PaymentServiceImpl implements PaymentService {
 
             PaymentRequest paymentRequest = PaymentRequest.builder()
                     .amount(ticket.getPrice())
-                    .cancelUrl(payTicketRequest.getCancelUrl())
-                    .returnUrl(payTicketRequest.getReturnUrl())
                     .ticketId(ticketId)
                     .build();
 

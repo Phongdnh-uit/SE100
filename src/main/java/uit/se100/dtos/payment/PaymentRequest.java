@@ -14,7 +14,5 @@ public class PaymentRequest {
     private Long ticketId;
     private BigDecimal amount;
     private PaymentMethod paymentMethod;
-    private String returnUrl;
-    private String cancelUrl;
 }
 

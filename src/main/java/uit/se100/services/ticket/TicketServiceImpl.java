@@ -108,10 +108,11 @@ public class TicketServiceImpl implements TicketService {
                 .orElseThrow(() -> new ApiException(ErrorCode.RESOURCE_NOT_FOUND, "Flight not found"));
 
         // Try to find available seat
-        FlightSeat seat = flightSeatRepository.findAvailableSeat(request.flightId(), request.seatClass()).orElse(null);
+        FlightSeat seat = flightSeatRepository.findFirstBySeatClassAndFlightIdOrderByPriceAsc(request.seatClass(), flight.getId()).orElse(null);
 
+        if (seat == null) throw new ApiException(ErrorCode.RESOURCE_NOT_FOUND, "Seat not found");
 
-        var price = this.getPriceFromSeatClass(request.seatClass());
+        var price = seat.getPrice();
 
         // Create ticket
         Ticket ticket = new Ticket();
@@ -148,15 +149,11 @@ public class TicketServiceImpl implements TicketService {
         return PageResponse.fromPage(result.map(ticketMapper::toResponse));
     }
 
-    BigDecimal getPriceFromSeatClass(SeatClass seatClass) {
-//        // Set price based on class (example prices)
-//        BigDecimal price = switch (seatClass) {
-//            case ECONOMY -> AppConstant.PRICE_TICKET_ECONOMY;
-//            case BUSINESS -> AppConstant.PRICE_TICKET_BUSINESS;
-//            case FIRST_CLASS -> AppConstant.PRICE_TICKET_FIRST_CLASS;
-//        };
+    BigDecimal getPriceFromSeatClass(SeatClass seatClass, Long flightId) {
+        FlightSeat flightSeat = flightSeatRepository.findFirstBySeatClassAndFlightIdOrderByPriceAsc(seatClass, flightId).orElse(null);
 
-        return seatClass.getPrice();
+
+        return flightSeat == null ? BigDecimal.valueOf(100000) : flightSeat.getPrice();
     }
 
     Passenger getCurrentPassenger() {

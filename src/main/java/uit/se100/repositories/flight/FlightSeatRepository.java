@@ -11,18 +11,18 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FlightSeatRepository extends SimpleRepository<FlightSeat, Long> {
-    @Query("""
-            SELECT s
-            FROM FlightSeat s
-            WHERE s.flight.id = :flightId
-              AND s.seatClass = :seatClass
-              AND s.status = 'AVAILABLE'
-            ORDER BY s.id
-            """)
-    Optional<FlightSeat> findAvailableSeat(
-            @Param("flightId") Long flightId,
-            @Param("seatClass") SeatClass seatClass
-    );
+//    @Query("""
+//            SELECT s
+//            FROM FlightSeat s
+//            WHERE s.flight.id = :flightId
+//              AND s.seatClass = :seatClass
+//              AND s.status = 'AVAILABLE'
+//            ORDER BY s.id
+//            """)
+//    Optional<FlightSeat> findAvailableSeat(
+//            @Param("flightId") Long flightId,
+//            @Param("seatClass") SeatClass seatClass
+//    );
 
     @Query("""
                 SELECT 
@@ -34,5 +34,10 @@ public interface FlightSeatRepository extends SimpleRepository<FlightSeat, Long>
             """)
     List<SeatAvailableProjection> countSeatsByClass(
             @Param("flightId") Long flightId
+    );
+
+    Optional<FlightSeat> findFirstBySeatClassAndFlightIdOrderByPriceAsc(
+            SeatClass seatClass,
+            Long flightId
     );
 }

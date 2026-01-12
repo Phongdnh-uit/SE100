@@ -8,12 +8,14 @@ public interface SecurityConstant {
     String[] PUBLIC_GET_URLS = {
             "/passengers/{id}",
             "/passengers",
+            "/api/v1/payments/vnpay-callback"
 
 
     };
 
     String[] PUBLIC_POST_URLS = {
             "/passengers",
+            "/api/v1/payments/vnpay-callback"
     };
 
     String[] PUBLIC_PUT_URLS = {

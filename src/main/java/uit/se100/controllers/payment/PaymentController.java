@@ -1,13 +1,24 @@
 package uit.se100.controllers.payment;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.view.RedirectView;
 import uit.se100.entities.payment.Transaction;
+import uit.se100.entities.ticket.Ticket;
 import uit.se100.enums.payments.PaymentMethod;
+import uit.se100.enums.payments.TransactionStatus;
 import uit.se100.services.payment.PaymentServiceImpl;
+
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * PaymentController
@@ -18,9 +29,13 @@ import uit.se100.services.payment.PaymentServiceImpl;
 @RestController
 @RequestMapping("/api/v1/payments")
 @RequiredArgsConstructor
+@Getter
+@Setter
 public class PaymentController {
 
     private final PaymentServiceImpl paymentService;
+    @Value("${app.client.base-url}")
+    private String clientUrl;
 
     /**
      * Callback từ VNPay
@@ -30,29 +45,45 @@ public class PaymentController {
      * GET /api/v1/payments/vnpay-callback?vnp_TxnRef=...&vnp_Amount=...&vnp_ResponseCode=...&vnp_SecureHash=...
      */
     @GetMapping("/vnpay-callback")
-    public ResponseEntity<String> vnpayCallback(
-            @RequestParam String vnp_TxnRef,
-            @RequestParam Long vnp_Amount,
-            @RequestParam String vnp_ResponseCode,
-            @RequestParam String vnp_SecureHash,
-            @RequestParam(required = false) String vnp_TransactionNo) {
-
-        log.info("VNPay callback received - txnRef: {}, responseCode: {}", vnp_TxnRef, vnp_ResponseCode);
+    @ResponseStatus(HttpStatus.OK)
+    public RedirectView vnpayCallback(
+            @RequestParam Map<String, String> allParams) {
+        String callbackData = allParams.entrySet().stream()
+                .map(entry -> entry.getKey() + "=" + URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8))
+                .collect(Collectors.joining("&"));
+        log.info("VNPay callback received - txnRef: {}, responseCode: {}", allParams.get("txnRef"), allParams.get("responseCode"));
 
         try {
-            // Verify callback signature and update transaction
-            // TODO: Implement callback verification and transaction update
+            Transaction transaction = paymentService.verifyPaymentCallback(PaymentMethod.VNPAY, callbackData);
 
-            if ("00".equals(vnp_ResponseCode)) {
-                return ResponseEntity.ok("Payment successful");
+
+            if ("00".equals(allParams.get("responseCode"))) {
+                if (transaction != null && transaction.getStatus() == TransactionStatus.SUCCESS) {
+                    Ticket ticket = transaction.getTicket(); // Giả sử Transaction có @ManyToOne Ticket
+                    String ticketCode = URLEncoder.encode(String.valueOf(ticket.getId()), StandardCharsets.UTF_8);
+                    String url = clientUrl + "/payment/success" + "?ticketId=" + ticket.getId() +
+                            "&ticketCode=" + ticketCode +
+                            "&status=success";
+
+                    return new RedirectView(url);
+                }
             } else {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Payment failed");
+                String failReason = URLEncoder.encode(
+                        transaction != null ? transaction.getFailReason() : "Thanh toán thất bại",
+                        StandardCharsets.UTF_8
+                );
+                String url = clientUrl + "/payment/failed?reason=" + failReason;
+
+                return new RedirectView(url);
             }
 
         } catch (Exception e) {
-            log.error("Error processing VNPay callback", e);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Callback processing failed");
+            log.error("VNPay callback processing failed", e);
+            String errorMsg = URLEncoder.encode("Lỗi xử lý callback: " + e.getMessage(), StandardCharsets.UTF_8);
+            String url = clientUrl + "/payment/failed?message=" + errorMsg;
+            return new RedirectView(url);
         }
+        return new RedirectView();
     }
 
 //    /**
