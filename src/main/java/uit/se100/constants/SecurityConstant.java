@@ -15,7 +15,9 @@ public interface SecurityConstant {
 
     String[] PUBLIC_POST_URLS = {
             "/passengers",
-            "/api/v1/payments/vnpay-callback"
+            "/api/v1/payments/vnpay-callback",
+            "/auth/send-reset-password-email",
+            "/auth/reset-password"
     };
 
     String[] PUBLIC_PUT_URLS = {

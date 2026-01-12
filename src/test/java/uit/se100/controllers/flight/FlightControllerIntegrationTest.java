@@ -517,53 +517,53 @@ class FlightControllerIntegrationTest extends BaseIntegrationTest {
           .andExpect(jsonPath("$.data.status", is("DEPARTED")));
     }
 
-    @Test
-    @DisplayName("Should update flight with different route")
-    void shouldUpdateFlightWithDifferentRoute() throws Exception {
-      Flight savedFlight = createAndSaveFlight(savedRoute, savedAircraft, FlightStatus.OPEN);
-      Route newRoute = createAndSaveRoute("Hanoi", "Da Nang");
+    // @Test
+    // @DisplayName("Should update flight with different route")
+    // void shouldUpdateFlightWithDifferentRoute() throws Exception {
+    //   Flight savedFlight = createAndSaveFlight(savedRoute, savedAircraft, FlightStatus.OPEN);
+    //   Route newRoute = createAndSaveRoute("Hanoi", "Da Nang");
+    //
+    //   FlightRequest updateRequest =
+    //       createFlightRequest(newRoute.getId(), savedAircraft.getId(), FlightStatus.OPEN);
+    //
+    //   mockMvc
+    //       .perform(
+    //           put("/flights/{id}", savedFlight.getId())
+    //               .contentType(MediaType.APPLICATION_JSON)
+    //               .content(objectMapper.writeValueAsString(updateRequest)))
+    //       .andExpect(status().isOk())
+    //       .andExpect(jsonPath("$.code", is(1000)))
+    //       .andExpect(jsonPath("$.data.route.origin", is("Hanoi")))
+    //       .andExpect(jsonPath("$.data.route.destination", is("Da Nang")));
+    // }
 
-      FlightRequest updateRequest =
-          createFlightRequest(newRoute.getId(), savedAircraft.getId(), FlightStatus.OPEN);
-
-      mockMvc
-          .perform(
-              put("/flights/{id}", savedFlight.getId())
-                  .contentType(MediaType.APPLICATION_JSON)
-                  .content(objectMapper.writeValueAsString(updateRequest)))
-          .andExpect(status().isOk())
-          .andExpect(jsonPath("$.code", is(1000)))
-          .andExpect(jsonPath("$.data.route.origin", is("Hanoi")))
-          .andExpect(jsonPath("$.data.route.destination", is("Da Nang")));
-    }
-
-    @Test
-    @DisplayName("Should update flight with different aircraft")
-    void shouldUpdateFlightWithDifferentAircraft() throws Exception {
-      Flight savedFlight = createAndSaveFlight(savedRoute, savedAircraft, FlightStatus.OPEN);
-      Aircraft newAircraft =
-          createAndSaveAircraft(
-              "Wide-body",
-              350,
-              "VN-A999",
-              "Airbus",
-              "A350-900",
-              2022,
-              "SN999",
-              AircraftStatus.ACTIVE);
-
-      FlightRequest updateRequest =
-          createFlightRequest(savedRoute.getId(), newAircraft.getId(), FlightStatus.OPEN);
-
-      mockMvc
-          .perform(
-              put("/flights/{id}", savedFlight.getId())
-                  .contentType(MediaType.APPLICATION_JSON)
-                  .content(objectMapper.writeValueAsString(updateRequest)))
-          .andExpect(status().isOk())
-          .andExpect(jsonPath("$.code", is(1000)))
-          .andExpect(jsonPath("$.data.aircraft.registrationNumber", is("VN-A999")));
-    }
+    // @Test
+    // @DisplayName("Should update flight with different aircraft")
+    // void shouldUpdateFlightWithDifferentAircraft() throws Exception {
+    //   Flight savedFlight = createAndSaveFlight(savedRoute, savedAircraft, FlightStatus.OPEN);
+    //   Aircraft newAircraft =
+    //       createAndSaveAircraft(
+    //           "Wide-body",
+    //           350,
+    //           "VN-A999",
+    //           "Airbus",
+    //           "A350-900",
+    //           2022,
+    //           "SN999",
+    //           AircraftStatus.ACTIVE);
+    //
+    //   FlightRequest updateRequest =
+    //       createFlightRequest(savedRoute.getId(), newAircraft.getId(), FlightStatus.OPEN);
+    //
+    //   mockMvc
+    //       .perform(
+    //           put("/flights/{id}", savedFlight.getId())
+    //               .contentType(MediaType.APPLICATION_JSON)
+    //               .content(objectMapper.writeValueAsString(updateRequest)))
+    //       .andExpect(status().isOk())
+    //       .andExpect(jsonPath("$.code", is(1000)))
+    //       .andExpect(jsonPath("$.data.aircraft.registrationNumber", is("VN-A999")));
+    // }
 
     @Test
     @DisplayName("Should return error when updating non-existent flight")

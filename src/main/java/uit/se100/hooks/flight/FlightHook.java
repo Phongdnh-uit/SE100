@@ -39,11 +39,12 @@ public class FlightHook implements GenericHook<Flight, Long, FlightRequest, Flig
     context.put("priceSeatClass", input.getPriceSeatClass());
   }
 
-  @Override
-  public void enrichUpdate(FlightRequest input, Flight entity, Map<String, Object> context) {
-    enrich(input, entity);
-    context.put("priceSeatClass", input.getPriceSeatClass());
-  }
+  // Chỉ cập nhật các trường cơ bản của Flight, không xử lý liên quan đến FlightSeat
+  // @Override
+  // public void enrichUpdate(FlightRequest input, Flight entity, Map<String, Object> context) {
+  //   enrich(input, entity);
+  //   context.put("priceSeatClass", input.getPriceSeatClass());
+  // }
 
   private void enrich(FlightRequest input, Flight entity) {
     var route =
@@ -119,31 +120,32 @@ public class FlightHook implements GenericHook<Flight, Long, FlightRequest, Flig
     return flightSeat;
   }
 
-  @Override
-  public void afterUpdate(Flight entity, FlightResponse response, Map<String, Object> context) {
-    // drop all flight seats and recreate
-    List<Long> flightSeatIds = entity.getFlightSeats().stream().map(FlightSeat::getId).toList();
-    flightSeatRepository.deleteAllById(flightSeatIds);
-    // recreate flight seats
-    List<PriceSeatClassDto> priceSeatClassDtos =
-        (List<PriceSeatClassDto>) context.getOrDefault("priceSeatClass", new ArrayList<>());
-
-    Map<SeatClass, BigDecimal> priceMap =
-        priceSeatClassDtos.stream()
-            .collect(
-                Collectors.toMap(PriceSeatClassDto::getSeatClass, PriceSeatClassDto::getPrice));
-
-    List<Seat> seats =
-        seatRepository.findAll(
-            (root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(
-                    root.get("aircraft").get("id"), response.getAircraft().getId()));
-
-    seats.forEach(
-        seat -> {
-          flightSeatRepository.save(this.createFlightSeat(entity, seat, priceMap));
-        });
-  }
+    // Chỉ cập nhật các trường cơ bản của Flight, không xử lý liên quan đến FlightSeat
+  // @Override
+  // public void afterUpdate(Flight entity, FlightResponse response, Map<String, Object> context) {
+  //   // drop all flight seats and recreate
+  //   List<Long> flightSeatIds = entity.getFlightSeats().stream().map(FlightSeat::getId).toList();
+  //   flightSeatRepository.deleteAllById(flightSeatIds);
+  //   // recreate flight seats
+  //   List<PriceSeatClassDto> priceSeatClassDtos =
+  //       (List<PriceSeatClassDto>) context.getOrDefault("priceSeatClass", new ArrayList<>());
+  //
+  //   Map<SeatClass, BigDecimal> priceMap =
+  //       priceSeatClassDtos.stream()
+  //           .collect(
+  //               Collectors.toMap(PriceSeatClassDto::getSeatClass, PriceSeatClassDto::getPrice));
+  //
+  //   List<Seat> seats =
+  //       seatRepository.findAll(
+  //           (root, query, criteriaBuilder) ->
+  //               criteriaBuilder.equal(
+  //                   root.get("aircraft").get("id"), response.getAircraft().getId()));
+  //
+  //   seats.forEach(
+  //       seat -> {
+  //         flightSeatRepository.save(this.createFlightSeat(entity, seat, priceMap));
+  //       });
+  // }
 
   @Override
   public void enrichFindAll(PageResponse<FlightResponse> response) {
