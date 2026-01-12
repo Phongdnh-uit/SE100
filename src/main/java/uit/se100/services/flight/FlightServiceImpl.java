@@ -2,8 +2,10 @@ package uit.se100.services.flight;
 
 import java.time.Instant;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,14 +14,17 @@ import uit.se100.enums.flight.FlightStatus;
 import uit.se100.enums.seat.SeatStatus;
 import uit.se100.exceptions.errors.ApiException;
 import uit.se100.exceptions.errors.ErrorCode;
+import uit.se100.repositories.employee.EmployeeRepository;
 import uit.se100.repositories.flight.FlightRepository;
 import uit.se100.services.general.MailService;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class FlightServiceImpl implements FlightService {
   private final MailService mailService;
   private final FlightRepository flightRepository;
+  private final EmployeeRepository employeeRepository;
 
   @Async
   @Transactional
@@ -56,6 +61,7 @@ public class FlightServiceImpl implements FlightService {
     flight.setStatus(FlightStatus.DELAYED);
     flight.setDepartureTime(flight.getDepartureTime().plusSeconds(delayMinutes * 60));
     flight.setArrivalTime(flight.getArrivalTime().plusSeconds(delayMinutes * 60));
+    flight.setDurationMinutes(flight.getDurationMinutes() + Math.toIntExact(delayMinutes));
     var newflight = flightRepository.save(flight);
 
     // Gửi mail tới tất cả hành khách trên chuyến bay thông báo về delay chuyến bay
@@ -104,5 +110,53 @@ public class FlightServiceImpl implements FlightService {
               model);
           // Cần hoàn tiền vé ở đây
         });
+  }
+
+  @Transactional
+  @Override
+  public void updateFlightsToDeparted() {
+    Instant currentTime = Instant.now();
+    List<FlightStatus> eligibleStatuses =
+        List.of(FlightStatus.OPEN, FlightStatus.FULL, FlightStatus.DELAYED);
+
+    var flights = flightRepository.findFlightsReadyToDepart(currentTime, eligibleStatuses);
+
+    if (!flights.isEmpty()) {
+      log.info("Auto updating {} flight(s) to DEPARTED status", flights.size());
+      flights.forEach(
+          flight -> {
+            flight.setStatus(FlightStatus.DEPARTED);
+            flightRepository.save(flight);
+            log.info("Flight {} has been updated to DEPARTED status", flight.getId());
+          });
+    }
+  }
+
+  @Transactional
+  @Override
+  public void updateFlightsToCompleted() {
+    Instant currentTime = Instant.now();
+
+    var flights = flightRepository.findFlightsReadyToComplete(currentTime, FlightStatus.DEPARTED);
+
+    if (!flights.isEmpty()) {
+      log.info("Auto updating {} flight(s) to COMPLETED status", flights.size());
+      flights.forEach(
+          flight -> {
+            flight.setStatus(FlightStatus.COMPLETED);
+            flightRepository.save(flight);
+            log.info("Flight {} has been updated to COMPLETED status", flight.getId());
+            // Cập nhật số giờ bay cho phi hành đoàn
+            var crews = flight.getCrewAssignments().stream().map(ca -> ca.getEmployee()).toList();
+            crews.forEach(
+                crew -> {
+                  Integer totalHours =
+                      Math.toIntExact(
+                          crew.getTotalFlightHours() + flight.getDurationMinutes() / 60);
+                  crew.setTotalFlightHours(totalHours);
+                });
+            employeeRepository.saveAll(crews);
+          });
+    }
   }
 }
