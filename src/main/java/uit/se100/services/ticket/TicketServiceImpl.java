@@ -22,6 +22,7 @@ import uit.se100.repositories.flight.FlightSeatRepository;
 import uit.se100.repositories.passenger.PassengerRepository;
 import uit.se100.repositories.ticket.TicketRepository;
 import uit.se100.securities.CustomUserDetails;
+import uit.se100.services.flight.FlightService;
 import uit.se100.utils.SecurityUtils;
 
 import java.math.BigDecimal;
@@ -36,6 +37,7 @@ public class TicketServiceImpl implements TicketService {
     private final PassengerRepository passengerRepository;
     private final FlightRepository flightRepository;
     private final TicketMapper ticketMapper;
+    private final FlightService flightService;
 
     /**
      * Đặt giữ chỗ vé cho một chuyến bay.
@@ -125,7 +127,8 @@ public class TicketServiceImpl implements TicketService {
             // seat.setStatus(SeatStatus.RESERVED);
             ticket.setSeat(seat);
             ticket.setStatus(TicketStatus.RESERVED);
-            flightSeatRepository.save(seat);
+            seat = flightSeatRepository.save(seat);
+            flightService.updateFlightStatusWhenSeatChanged(seat);
         } else {
             // No seat available, add to waiting list
             ticket.setStatus(TicketStatus.WAITING);

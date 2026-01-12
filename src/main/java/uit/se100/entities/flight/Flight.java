@@ -10,6 +10,7 @@ import uit.se100.entities.BaseEntity;
 import uit.se100.entities.aircraft.Aircraft;
 import uit.se100.entities.assign.CrewAssignment;
 import uit.se100.entities.route.Route;
+import uit.se100.entities.ticket.Ticket;
 import uit.se100.enums.flight.FlightStatus;
 
 @Getter
@@ -50,4 +51,7 @@ public class Flight extends BaseEntity {
       orphanRemoval = true,
       fetch = FetchType.LAZY)
   private List<CrewAssignment> crewAssignments = new ArrayList<>();
+
+  @OneToMany(mappedBy = "flight", fetch = FetchType.LAZY)
+  private List<Ticket> tickets = new ArrayList<>();
 }
