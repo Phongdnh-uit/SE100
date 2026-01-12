@@ -1,9 +1,12 @@
 package uit.se100.repositories.flight;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import uit.se100.entities.flight.FlightSeat;
 import uit.se100.enums.seat.SeatClass;
+import uit.se100.enums.seat.SeatStatus;
 import uit.se100.projections.SeatAvailableProjection;
 import uit.se100.repositories.SimpleRepository;
 
@@ -40,4 +43,8 @@ public interface FlightSeatRepository extends SimpleRepository<FlightSeat, Long>
             SeatClass seatClass,
             Long flightId
     );
+
+    Page<FlightSeat> findBySeatClassAndFlightIdAndStatusOrderById(SeatClass seatClass, SeatStatus status, Long flightId, Pageable pageable);
+
+
 }
