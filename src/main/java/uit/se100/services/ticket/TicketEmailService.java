@@ -7,7 +7,9 @@ import org.springframework.transaction.annotation.Transactional;
 import uit.se100.entities.authentication.User;
 import uit.se100.entities.flight.Flight;
 import uit.se100.entities.passenger.Passenger;
+import uit.se100.entities.payment.Transaction;
 import uit.se100.entities.ticket.Ticket;
+import uit.se100.enums.payments.TransactionType;
 import uit.se100.enums.ticket.TicketStatus;
 import uit.se100.exceptions.errors.ApiException;
 import uit.se100.exceptions.errors.ErrorCode;
@@ -72,5 +74,62 @@ public class TicketEmailService {
         );
 
         log.info("Payment success email sent to: {} for ticket: {}", user.getEmail(), ticket.getId());
+    }
+
+    @Transactional(readOnly = true)
+    public void sendRefundRequestSuccessEmail(Transaction refundTransaction) {
+        if (refundTransaction.getType() != TransactionType.REFUND) {
+            log.warn("Transaction {} is not REFUND type, skip sending refund email", refundTransaction.getId());
+            return;
+        }
+
+        Ticket ticket = refundTransaction.getTicket();
+        if (ticket == null) {
+            log.warn("No ticket found for refund transaction {}", refundTransaction.getId());
+            return;
+        }
+
+        Passenger passenger = ticket.getPassenger();
+        User user = passenger.getUser();
+
+        if (user == null || user.getEmail() == null) {
+            log.warn("No user/email found for ticket {}", ticket.getId());
+            return;
+        }
+
+        Flight flight = ticket.getFlight();
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("username", user.getUsername());
+        params.put("ticketCode", ticket.getId());
+        params.put("passengerName", passenger.getFullName());
+        params.put("flightNumber", flight.getId());
+        params.put("from", flight.getRoute().getOrigin());
+        params.put("to", flight.getRoute().getDestination());
+        params.put("departure", flight.getDepartureTime());
+        params.put("class", ticket.getTicketClass().name());
+        params.put("originalPrice", ticket.getPrice().toString());
+        params.put("refundAmount", refundTransaction.getAmount().toString());
+        params.put("refundTransactionRef", refundTransaction.getProviderTxnRef());
+        params.put("requestTime", refundTransaction.getCreatedAt());
+        params.put("status", refundTransaction.getStatus().name());
+
+        // Nếu bạn muốn hiển thị thời gian dự kiến hoàn tiền
+        params.put("estimatedRefundDays", "3-7"); // Có thể config sau
+
+        String subject = String.format(
+                "Yêu cầu hoàn tiền vé thành công - Mã vé: %s",
+                ticket.getId()
+        );
+
+        mailService.sendEmailFromTemplate(
+                user.getEmail(),
+                subject,
+                "ticket-refund-request-success",  // tên template mới cần tạo
+                params
+        );
+
+        log.info("Refund request success email sent to: {} for ticket: {}, amount: {}",
+                user.getEmail(), ticket.getId(), refundTransaction.getAmount());
     }
 }

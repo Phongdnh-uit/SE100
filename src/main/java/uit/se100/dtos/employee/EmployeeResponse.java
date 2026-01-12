@@ -12,6 +12,8 @@ public record EmployeeResponse(
 
         String workExperience,
 
-        Long totalFlightHours
+        Long totalFlightHours,
+
+        Integer maxFlightHoursPerMonth
 ) {
 }

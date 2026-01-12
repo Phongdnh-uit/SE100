@@ -82,4 +82,10 @@ public class TickerController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
         }
     }
+
+    @PostMapping("/tickets/{id}/refund")
+    public ResponseEntity<Void> refundTicket(@PathVariable Long id) {
+        ticketService.refundTicket(id);
+        return ResponseEntity.ok().build();
+    }
 }
