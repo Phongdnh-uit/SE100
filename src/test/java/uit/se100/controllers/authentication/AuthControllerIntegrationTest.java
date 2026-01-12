@@ -5,23 +5,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import uit.se100.BaseIntegrationTest;
 
-@SpringBootTest(
-    properties = {
-      "spring.datasource.url=jdbc:h2:mem:authdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE",
-      "spring.datasource.driverClassName=org.h2.Driver",
-      "spring.datasource.username=sa",
-      "spring.datasource.password=",
-      "spring.jpa.hibernate.ddl-auto=create-drop",
-      "spring.jpa.show-sql=true",
-      "spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.H2Dialect",
-      "jwt.secret=xin_chao_ban!_day_la_du_an_uit_land_cho_do_an_1_cua_minh!_xin_cam_on_ban_da_doc_du_an_nay",
-      "jwt.refresh-token.expiration=172800",
-      "jwt.access-token.expiration=18000"
-    })
 @AutoConfigureMockMvc
-class AuthControllerIntegrationTest {
+class AuthControllerIntegrationTest extends BaseIntegrationTest {
 
   //  @Autowired private MockMvc mockMvc;
   //
