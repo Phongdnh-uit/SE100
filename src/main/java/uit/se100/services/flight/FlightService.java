@@ -9,4 +9,10 @@ public interface FlightService {
   void delayFlight(Long flightId, Long delayMinutes);
 
   void cancelFlight(Long flightId);
+
+  // Auto update flights to DEPARTED status when departure time has passed
+  void updateFlightsToDeparted();
+
+  // Auto update flights to COMPLETED status when arrival time has passed
+  void updateFlightsToCompleted();
 }

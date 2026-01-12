@@ -18,6 +18,13 @@ spring:
     port: ${MAIL_PORT}
     username: ${MAIL_USERNAME}
     password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
 
 logging:
   level:
@@ -42,3 +49,4 @@ payment:
     tmnCode: ${VNPAY_TMN_CODE}
     secretKey: ${VNPAY_SECRET_KEY}
     expiredTime: 15 #minutes
+
