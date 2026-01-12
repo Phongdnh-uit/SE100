@@ -1,0 +1,41 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driverClassName: org.h2.Driver
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: test@gmail.com
+    password: password
+    sender: password
+
+jwt:
+  secret: xin_chao_ban!_day_la_du_an_uit_land_cho_do_an_1_cua_minh!_xin_cam_on_ban_da_doc_du_an_nay
+  refresh-token:
+    expiration: 172800
+  access-token:
+    expiration: 18000
+
+app:
+  client:
+    base-url: http://localhost:3000
+
+payment:
+  vnPay:
+    url: https://sandbox.vnpayment.vn/paymentv2/vpcpay.html
+    returnUrl: http://localhost:8080/api/v1/payment/vnpay-return
+    tmnCode: TEST123
+    secretKey: TEST_SECRET_KEY
+    expiredTime: 15
+
