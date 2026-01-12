@@ -2,6 +2,7 @@ package uit.se100.services;
 
 import uit.se100.dtos.payment.PayTicketRequest;
 import uit.se100.dtos.payment.PaymentResponse;
+import uit.se100.entities.payment.Transaction;
 
 /**
  * PaymentService Interface
@@ -19,4 +20,6 @@ public interface PaymentService {
      * @return PaymentResponse chứa URL thanh toán và thông tin giao dịch
      */
     PaymentResponse createPaymentForTicket(Long ticketId, PayTicketRequest paymentRequest);
+
+    Transaction refundTransaction(Long transactionId);
 }

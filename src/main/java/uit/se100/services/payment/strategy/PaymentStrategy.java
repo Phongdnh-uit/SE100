@@ -36,7 +36,7 @@ public interface PaymentStrategy {
      * @param amount        - Số tiền hoàn tiền
      * @return Transaction refund mới
      */
-    Transaction refundTransaction(Long transactionId, java.math.BigDecimal amount);
+    Transaction refundTransaction(Long transactionId);
 
     /**
      * Kiểm tra trạng thái giao dịch từ payment provider

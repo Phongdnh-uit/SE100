@@ -10,7 +10,6 @@ import java.time.LocalDate;
 
 public record PassengerRequest(
 
-        @NotNull
         UserRequest accountRequest,
 
         @NotBlank

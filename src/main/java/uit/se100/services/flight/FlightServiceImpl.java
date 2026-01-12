@@ -1,9 +1,5 @@
 package uit.se100.services.flight;
 
-import java.time.Instant;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -253,3 +249,4 @@ public class FlightServiceImpl implements FlightService {
     }
   }
 }
+

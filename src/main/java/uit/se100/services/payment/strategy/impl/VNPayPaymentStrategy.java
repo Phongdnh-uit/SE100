@@ -11,6 +11,7 @@ import uit.se100.dtos.payment.PaymentResponse;
 import uit.se100.entities.payment.Transaction;
 import uit.se100.enums.payments.PaymentMethod;
 import uit.se100.enums.payments.TransactionStatus;
+import uit.se100.enums.payments.TransactionType;
 import uit.se100.exceptions.errors.ApiException;
 import uit.se100.exceptions.errors.ErrorCode;
 import uit.se100.repositories.payment.TransactionRepository;
@@ -233,15 +234,37 @@ public class VNPayPaymentStrategy implements PaymentStrategy {
     }
 
     @Override
-    public Transaction refundTransaction(Long transactionId, BigDecimal amount) {
+    public Transaction refundTransaction(Long transactionId) {
         log.info("Processing VNPay refund for transaction: {}", transactionId);
+
+        Transaction oldTransaction = transactionRepository.findById(transactionId).orElseThrow(() -> new ApiException(ErrorCode.RESOURCE_NOT_FOUND, "Transaction Not Found"));
 
         // Gọi VNPay API để thực hiện hoàn tiền
         // POST đến: apiUrl + "/refund"
-        // Cần include transaction ID, amount, signature
 
-        // Cần implement chi tiết
+        //New Transaction record
+        Transaction newTransaction = new Transaction();
+
+        newTransaction.setAmount(calculateRefundAmount(oldTransaction.getAmount()));
+        newTransaction.setStatus(TransactionStatus.PENDING);
+        newTransaction.setProviderTxnRef(oldTransaction.getProviderTxnRef());
+        newTransaction.setType(TransactionType.REFUND);
+
+        transactionRepository.save(newTransaction);
+
+        //send email after success
+
+        try {
+            ticketEmailService.sendRefundRequestSuccessEmail(newTransaction);
+        } catch (Exception e) {
+            log.error("Failed to send refund request success email for transaction {}",
+                    newTransaction.getId(), e);
+        }
         return null;
+    }
+
+    private BigDecimal calculateRefundAmount(BigDecimal amount) {
+        return amount;
     }
 
     @Override
