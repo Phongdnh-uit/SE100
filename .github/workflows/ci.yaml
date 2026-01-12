@@ -30,33 +30,31 @@ jobs:
       - name: Test all modules
         run: ./gradlew test --no-daemon
 
-  # build-and-push:
-  #   runs-on: ubuntu-latest
-  #
-  #   steps:
-  #     # 1️⃣ Checkout source
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-  #
-  #     # 2️⃣ Login Docker Hub
-  #     - name: Login to Docker Hub
-  #       uses: docker/login-action@v2
-  #       with:
-  #         username: ${{ secrets.DOCKERHUB_USERNAME }}
-  #         password: ${{ secrets.DOCKERHUB_PASSWORD }}
-  #
-  #     # 3️⃣ Setup Buildx
-  #     - name: Set up Docker Build
-  #       uses: docker/setup-buildx-action@v3
-  #
-  #     # 4️⃣ Build & Push Image (each service builds only itself)
-  #     - name: Build & Push ${{ matrix.service }} Image
-  #       uses: docker/build-push-action@v5
-  #       with:
-  #         context: . # build toàn project nhưng Dockerfile chỉ dùng đúng service
-  #         file: infrastructure/pro/Dockerfile
-  #         push: true
-  #         tags: ${{ secrets.DOCKERHUB_USERNAME }}/${{ matrix.service }}:latest
-  #         build-args: |
-  #           SERVICE=${{ matrix.service }}
-  #           JAVA_VERSION=${{ matrix.java-version }}
+  build-and-push:
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout source
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2️⃣ Login Docker Hub
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      # 3️⃣ Setup Buildx
+      - name: Set up Docker Build
+        uses: docker/setup-buildx-action@v3
+
+      # 4️⃣ Build & Push Image (each service builds only itself)
+      - name: Build & Push Image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/se100:latest
