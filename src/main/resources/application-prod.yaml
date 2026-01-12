@@ -38,7 +38,7 @@ payment:
   vnPay:
     url:
       ${VNPAY_URL:https://sandbox.vnpayment.vn/paymentv2/vpcpay.html}
-    returnUrl: ${VNPAY_RETURN_URL:http://localhost:8080/api/v1/payment/vnpay-return}
+    returnUrl: ${VNPAY_RETURN_URL:http://localhost:8080/api/v1/payments/vnpay-callback}
     tmnCode: ${VNPAY_TMN_CODE}
     secretKey: ${VNPAY_SECRET_KEY}
     expiredTime: 15 #minutes
