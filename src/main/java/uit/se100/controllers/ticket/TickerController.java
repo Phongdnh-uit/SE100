@@ -84,26 +84,8 @@ public class TickerController {
     }
 
     @PostMapping("/tickets/{id}/refund")
-    public ResponseEntity<PaymentResponse> refundTicket() {
-
-
-        try {
-            PaymentResponse response = paymentService.createPaymentForTicket(
-                    id,
-                    paymentRequest
-            );
-
-            return ResponseEntity.ok(response);
-
-        } catch (Exception e) {
-            log.error("Error creating payment", e);
-
-            PaymentResponse errorResponse = PaymentResponse.builder()
-                    .message("Payment creation failed: " + e.getMessage())
-                    .timestamp(System.currentTimeMillis())
-                    .build();
-
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-        }
+    public ResponseEntity<Void> refundTicket(@PathVariable Long id) {
+        ticketService.refundTicket(id);
+        return ResponseEntity.ok().build();
     }
 }

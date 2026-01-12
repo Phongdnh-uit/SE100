@@ -34,5 +34,4 @@ public class Employee extends BaseEntity {
     private Integer totalFlightHours;
 
     private Integer maxFlightHoursPerMonth;
-
 }
