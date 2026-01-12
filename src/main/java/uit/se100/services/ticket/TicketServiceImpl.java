@@ -163,7 +163,7 @@ public class TicketServiceImpl implements TicketService {
         Long currentUserId = currentUser.getId();
 
         // Get passenger
-        Passenger passenger = passengerRepository.findById(currentUserId)
+        Passenger passenger = passengerRepository.findByUserId(currentUserId)
                 .orElseThrow(() -> new ApiException(ErrorCode.RESOURCE_NOT_FOUND, "Passenger not found"));
 
         return passenger;
