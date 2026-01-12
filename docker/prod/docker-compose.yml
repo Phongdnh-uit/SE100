@@ -1,9 +1,9 @@
 services:
   server-se110:
-    image: dnhphong2005/se100:latest
-    # build:
-    #   context: ../..
-    #   dockerfile: Dockerfile
+    # image: dnhphong2005/se100:latest
+    build:
+      context: ../..
+      dockerfile: Dockerfile
     container_name: server-se100
     env_file: .env
     ports:
