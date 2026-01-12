@@ -17,6 +17,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import uit.se100.BaseIntegrationTest;
@@ -33,6 +34,7 @@ import uit.se100.repositories.flight.FlightRepository;
 import uit.se100.repositories.route.RouteRepository;
 
 @AutoConfigureMockMvc
+@WithMockUser
 class FlightControllerIntegrationTest extends BaseIntegrationTest {
 
   @Autowired private MockMvc mockMvc;

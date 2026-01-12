@@ -1,9 +1,11 @@
 package uit.se100.services.ticket;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uit.se100.constants.AppConstant;
+import uit.se100.dtos.PageResponse;
 import uit.se100.dtos.ticket.ReserveTicketRequest;
 import uit.se100.dtos.ticket.TicketResponse;
 import uit.se100.entities.flight.Flight;
@@ -82,14 +84,16 @@ public class TicketServiceImpl implements TicketService {
     @Transactional
     public TicketResponse reserveTicket(ReserveTicketRequest request) {
 
-        CustomUserDetails currentUser = SecurityUtils.getCurrentUser();
-        if (currentUser == null) throw new ApiException(ErrorCode.AUTHENTICATION_REQUIRED, "Current user not found");
+//        CustomUserDetails currentUser = SecurityUtils.getCurrentUser();
+//        if (currentUser == null) throw new ApiException(ErrorCode.AUTHENTICATION_REQUIRED, "Current user not found");
+//
+//        Long currentUserId = currentUser.getId();
+//
+//        // Get passenger
+//        Passenger passenger = passengerRepository.findById(currentUserId)
+//                .orElseThrow(() -> new ApiException(ErrorCode.RESOURCE_NOT_FOUND, "Passenger not found"));
 
-        Long currentUserId = currentUser.getId();
-
-        // Get passenger
-        Passenger passenger = passengerRepository.findById(currentUserId)
-                .orElseThrow(() -> new ApiException(ErrorCode.RESOURCE_NOT_FOUND, "Passenger not found"));
+        Passenger passenger = this.getCurrentPassenger();
 
         // Check max tickets per flight
         int reservedCount = ticketRepository.countActiveTickets(passenger.getId(), request.flightId());
@@ -131,15 +135,39 @@ public class TicketServiceImpl implements TicketService {
         return ticketMapper.toResponse(ticket);
     }
 
-    BigDecimal getPriceFromSeatClass(SeatClass seatClass) {
-        // Set price based on class (example prices)
-        BigDecimal price = switch (seatClass) {
-            case ECONOMY -> AppConstant.PRICE_TICKET_ECONOMY;
-            case BUSINESS -> AppConstant.PRICE_TICKET_BUSINESS;
-            case FIRST_CLASS -> AppConstant.PRICE_TICKET_FIRST_CLASS;
-        };
+    @Override
+    public PageResponse<TicketResponse> findByPassengerId(Pageable pageable) {
 
-        return price;
+        Passenger passenger = this.getCurrentPassenger();
+
+        var result = this.ticketRepository.findByPassengerId(passenger.getId(), pageable);
+
+        return PageResponse.fromPage(result.map(ticketMapper::toResponse));
     }
+
+    BigDecimal getPriceFromSeatClass(SeatClass seatClass) {
+//        // Set price based on class (example prices)
+//        BigDecimal price = switch (seatClass) {
+//            case ECONOMY -> AppConstant.PRICE_TICKET_ECONOMY;
+//            case BUSINESS -> AppConstant.PRICE_TICKET_BUSINESS;
+//            case FIRST_CLASS -> AppConstant.PRICE_TICKET_FIRST_CLASS;
+//        };
+
+        return seatClass.getPrice();
+    }
+
+    Passenger getCurrentPassenger() {
+        CustomUserDetails currentUser = SecurityUtils.getCurrentUser();
+        if (currentUser == null) throw new ApiException(ErrorCode.AUTHENTICATION_REQUIRED, "Current user not found");
+
+        Long currentUserId = currentUser.getId();
+
+        // Get passenger
+        Passenger passenger = passengerRepository.findById(currentUserId)
+                .orElseThrow(() -> new ApiException(ErrorCode.RESOURCE_NOT_FOUND, "Passenger not found"));
+
+        return passenger;
+    }
+
 
 }

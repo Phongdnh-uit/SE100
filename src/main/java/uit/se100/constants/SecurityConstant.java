@@ -13,7 +13,7 @@ public interface SecurityConstant {
     };
 
     String[] PUBLIC_POST_URLS = {
-            "/passengers"
+            "/passengers",
     };
 
     String[] PUBLIC_PUT_URLS = {
