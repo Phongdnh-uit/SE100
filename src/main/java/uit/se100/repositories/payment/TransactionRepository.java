@@ -70,5 +70,7 @@ public interface TransactionRepository extends SimpleRepository<Transaction, Lon
      * Đếm số giao dịch thành công
      */
     long countByStatusAndType(TransactionStatus status, TransactionType type);
+
+    Transaction findByTicketIdAndStatusOrderById(Long ticketId, TransactionStatus status);
 }
 

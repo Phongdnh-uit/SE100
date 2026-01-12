@@ -6,12 +6,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uit.se100.constants.AppConstant;
 import uit.se100.dtos.PageResponse;
+import uit.se100.dtos.passenger.PassengerRequest;
+import uit.se100.dtos.passenger.PassengerResponse;
 import uit.se100.dtos.ticket.ReserveTicketRequest;
 import uit.se100.dtos.ticket.TicketResponse;
 import uit.se100.entities.flight.Flight;
 import uit.se100.entities.flight.FlightSeat;
 import uit.se100.entities.passenger.Passenger;
+import uit.se100.entities.payment.Transaction;
 import uit.se100.entities.ticket.Ticket;
+import uit.se100.enums.RoleEnum;
+import uit.se100.enums.payments.TransactionStatus;
 import uit.se100.enums.seat.SeatClass;
 import uit.se100.enums.ticket.TicketStatus;
 import uit.se100.exceptions.errors.ApiException;
@@ -20,8 +25,11 @@ import uit.se100.mappers.ticket.TicketMapper;
 import uit.se100.repositories.flight.FlightRepository;
 import uit.se100.repositories.flight.FlightSeatRepository;
 import uit.se100.repositories.passenger.PassengerRepository;
+import uit.se100.repositories.payment.TransactionRepository;
 import uit.se100.repositories.ticket.TicketRepository;
 import uit.se100.securities.CustomUserDetails;
+import uit.se100.services.CrudService;
+import uit.se100.services.PaymentService;
 import uit.se100.services.flight.FlightService;
 import uit.se100.utils.SecurityUtils;
 
@@ -38,6 +46,9 @@ public class TicketServiceImpl implements TicketService {
     private final FlightRepository flightRepository;
     private final TicketMapper ticketMapper;
     private final FlightService flightService;
+    private final CrudService<Passenger, Long, PassengerRequest, PassengerResponse> passengerService;
+    private final PaymentService paymentService;
+    private final TransactionRepository transactionRepository;
 
     /**
      * Đặt giữ chỗ vé cho một chuyến bay.
@@ -147,6 +158,31 @@ public class TicketServiceImpl implements TicketService {
         var result = this.ticketRepository.findByPassengerId(passenger.getId(), pageable);
 
         return PageResponse.fromPage(result.map(ticketMapper::toResponse));
+    }
+
+    @Override
+    public void refundTicket(Long ticketId) {
+        //check ticket
+        Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new ApiException(ErrorCode.RESOURCE_NOT_FOUND, "Ticket not found"));
+
+        CustomUserDetails currentUser = SecurityUtils.getCurrentUser();
+
+        assert currentUser != null;
+        if (!canRefundTicket(currentUser, ticket)) throw new ApiException(ErrorCode.FORBIDDEN);
+
+        Transaction transaction = transactionRepository.findByTicketIdAndStatusOrderById(ticketId, TransactionStatus.SUCCESS);
+
+        if (transaction == null) throw new ApiException(ErrorCode.RESOURCE_NOT_FOUND, "Transaction not found");
+
+
+        paymentService.refundTransaction(ticketId);
+    }
+
+    private boolean canRefundTicket(CustomUserDetails currentUser, Ticket ticket) {
+        if (currentUser.getRole() == RoleEnum.PASSENGER) {
+            return ticket.getPassenger().getId().equals(currentUser.getId());
+        }
+        return currentUser.getRole() == RoleEnum.ADMIN || currentUser.getRole() == RoleEnum.EMPLOYEE;
     }
 
     BigDecimal getPriceFromSeatClass(SeatClass seatClass, Long flightId) {

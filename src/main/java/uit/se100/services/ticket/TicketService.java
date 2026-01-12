@@ -10,10 +10,12 @@ public interface TicketService {
     TicketResponse reserveTicket(ReserveTicketRequest request);
 
     PageResponse<TicketResponse> findByPassengerId(Pageable pageable);
+
     //
 //    void payTicket(Long ticketId);
 //
 //    void cancelTicket(Long ticketId);
+    void refundTicket(Long ticketId);
 
 //    SeatSummaryResponse getSeatSummary(Long flightId);
 }

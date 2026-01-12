@@ -35,10 +35,8 @@ public class PaymentServiceImpl implements PaymentService {
 
     private final TransactionRepository transactionRepository;
     private final TicketRepository ticketRepository;
-
     // Inject tất cả payment strategies
     private final Map<PaymentMethod, PaymentStrategy> paymentStrategies;
-
 
     /**
      * Tạo thanh toán cho một vé
@@ -140,8 +138,7 @@ public class PaymentServiceImpl implements PaymentService {
             );
 
             Transaction refundTransaction = strategy.refundTransaction(
-                    transactionId,
-                    originalTransaction.getAmount()
+                    transactionId
             );
 
             if (refundTransaction != null) {
