@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thông báo hủy chuyến bay</title>
+</head>
+<body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0;">
+    <div style="max-width: 600px; margin: 20px auto; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden;">
+        <div style="background-color: #d9534f; color: white; padding: 20px; text-align: center;">
+            <h2 style="margin: 0;">THÔNG BÁO HỦY CHUYẾN BAY</h2>
+        </div>
+        <div style="padding: 20px;">
+            <p>Kính gửi <strong th:text="${customerName}">Khách hàng</strong>,</p>
+            <p>Vì lý do bất khả kháng, chúng tôi rất tiếc phải thông báo chuyến bay <strong th:text="${flightNumber}">VN456</strong> từ <span th:text="${departure}">Hà Nội</span> đi <span th:text="${arrival}">TP.HCM</span> vào ngày <span th:text="${flightDate}">21/10/2023</span> đã bị <strong>HỦY</strong>.</p>
+            
+            <div style="background-color: #fdf7f7; border-left: 5px solid #d9534f; padding: 15px; margin: 20px 0;">
+                <p style="margin: 0;"><strong>Các lựa chọn dành cho Quý khách:</strong></p>
+                <ul style="margin: 10px 0;">
+                    <li>Thay đổi sang chuyến bay kế tiếp miễn phí.</li>
+                    <li>Yêu cầu hoàn vé dưới dạng Voucher hoặc tiền mặt.</li>
+                    <li>Thay đổi lộ trình bay khác.</li>
+                </ul>
+            </div>
+
+            <p>Để thực hiện thay đổi hoặc yêu cầu hỗ trợ, Quý khách vui lòng nhấn vào nút bên dưới hoặc liên hệ tổng đài 1900xxxx.</p>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <a th:href="${supportLink}" style="background-color: #d9534f; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;">Xử lý yêu cầu của tôi</a>
+            </div>
+        </div>
+        <div style="background-color: #f4f4f4; padding: 15px; text-align: center; font-size: 12px; color: #777;">
+            Cảm ơn Quý khách đã thông cảm. Đội ngũ hỗ trợ khách hàng.
+        </div>
+    </div>
+</body>
+</html>
