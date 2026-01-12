@@ -168,6 +168,10 @@ public class FlightServiceImpl implements FlightService {
                     "Only PAID tickets can be checked in. Current status: " + ticket.getStatus());
         }
 
+
+        FlightSeat oldSeat = ticket.getSeat();
+        oldSeat.setStatus(SeatStatus.AVAILABLE);
+
         // ...validate seat exists and belongs to the flight
         FlightSeat seat = flightSeatRepository.findById(seatId)
                 .orElseThrow(() -> new ApiException(ErrorCode.RESOURCE_NOT_FOUND, "Seat not found"));
