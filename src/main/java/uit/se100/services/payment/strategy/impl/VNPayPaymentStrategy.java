@@ -25,8 +25,13 @@ import uit.se100.utils.VNPayUtil;
 import java.math.BigDecimal;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -291,14 +296,17 @@ public class VNPayPaymentStrategy implements PaymentStrategy {
         vnpParamsMap.put("vnp_OrderType", "other");
         vnpParamsMap.put("vnp_Locale", "vn");
         vnpParamsMap.put("vnp_ReturnUrl", this.vnp_ReturnUrl);
-        Calendar calendar = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-        String vnpCreateDate = formatter.format(calendar.getTime());
+
+        ZonedDateTime now = ZonedDateTime.now(ZoneId.of("Asia/Ho_Chi_Minh"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+
+        String vnpCreateDate = now.format(formatter);
         vnpParamsMap.put("vnp_CreateDate", vnpCreateDate);
 
-        calendar.add(Calendar.MINUTE, expiredTime);
-        String vnp_ExpireDate = formatter.format(calendar.getTime());
-        vnpParamsMap.put("vnp_ExpireDate", vnp_ExpireDate);
+        String vnpExpireDate = now.plusMinutes(expiredTime).format(formatter);
+        vnpParamsMap.put("vnp_ExpireDate", vnpExpireDate);
+
+
         return vnpParamsMap;
     }
 
