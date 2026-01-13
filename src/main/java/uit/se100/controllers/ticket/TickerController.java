@@ -37,6 +37,12 @@ public class TickerController {
         return this.ticketService.findByPassengerId(pageable);
     }
 
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public TicketResponse findById(@PathVariable Long id) {
+        return this.ticketService.findById(id);
+    }
+
 
     /**
      * Tạo yêu cầu thanh toán cho một vé

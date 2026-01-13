@@ -17,5 +17,7 @@ public interface TicketService {
 //    void cancelTicket(Long ticketId);
     void refundTicket(Long ticketId);
 
+    TicketResponse findById(Long ticketId);
+
 //    SeatSummaryResponse getSeatSummary(Long flightId);
 }

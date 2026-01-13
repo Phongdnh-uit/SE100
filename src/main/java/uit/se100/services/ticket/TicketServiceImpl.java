@@ -173,6 +173,12 @@ public class TicketServiceImpl implements TicketService {
         paymentService.refundTransaction(ticketId);
     }
 
+    @Override
+    public TicketResponse findById(Long ticketId) {
+        var result = ticketRepository.findById(ticketId).orElseThrow(() -> new ApiException(ErrorCode.RESOURCE_NOT_FOUND, "Ticket not found"));
+        return ticketMapper.toResponse(result);
+    }
+
     private boolean canRefundTicket(CustomUserDetails currentUser, Ticket ticket) {
         if (currentUser.getRole() == RoleEnum.PASSENGER) {
             return ticket.getPassenger().getId().equals(currentUser.getId());
