@@ -139,7 +139,7 @@ public class TicketServiceImpl implements TicketService {
         ticket.setPrice(price);
         ticket.setBookedAt(Instant.now());
 
-        ticket.setSeat(seat);
+//        ticket.setSeat(seat);
         ticket.setStatus(TicketStatus.RESERVED);
 //        seat.setStatus(SeatStatus.RESERVED);
 //        flightSeatRepository.save(seat);
