@@ -180,6 +180,8 @@ public class TicketServiceImpl implements TicketService {
             flightSeatRepository.save(seat);
         }
 
+        ticket.setStatus(TicketStatus.CANCELED);
+        ticketRepository.save(ticket);
         paymentService.refundTransaction(transaction.getId());
     }
 
