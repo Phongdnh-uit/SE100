@@ -1,5 +1,7 @@
 package uit.se100.dtos.passenger;
 
+import uit.se100.enums.passenger.TierEnum;
+
 import java.time.LocalDate;
 
 public record PassengerResponse(
@@ -15,6 +17,8 @@ public record PassengerResponse(
 
         String address,
 
-        String phone
+        String phone,
+
+        TierEnum tier
 ) {
 }

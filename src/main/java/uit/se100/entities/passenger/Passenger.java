@@ -34,7 +34,7 @@ public class Passenger extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
-    private TierEnum tier;
+    private TierEnum tier = TierEnum.ECONOMY;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinColumn(name = "user_id", nullable = true)
