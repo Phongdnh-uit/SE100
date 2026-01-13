@@ -57,7 +57,7 @@
       "username": "manager1",
       "password": "Password@123",
       "role": "EMPLOYEE",
-      "phone": "0912345687"
+      "phone": "0912345680"
     },
     "fullName": "Võ Thị Mai",
     "position": "OPERATOR",
@@ -66,8 +66,8 @@
   },
   {
     "accountRequest": {
-      "email": "pilot1@airline.com",
-      "username": "pilot1",
+      "email": "pilot10@airline.com",
+      "username": "pilot10",
       "password": "Password@123",
       "role": "EMPLOYEE",
       "phone": "0912345687"
