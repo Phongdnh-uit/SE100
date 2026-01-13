@@ -22,7 +22,9 @@ import uit.se100.repositories.employee.EmployeeRepository;
 import uit.se100.repositories.flight.FlightRepository;
 import uit.se100.repositories.flight.FlightSeatRepository;
 import uit.se100.repositories.ticket.TicketRepository;
+import uit.se100.securities.CustomUserDetails;
 import uit.se100.services.general.MailService;
+import uit.se100.utils.SecurityUtils;
 
 import java.time.Instant;
 import java.util.HashMap;
@@ -161,9 +163,14 @@ public class FlightServiceImpl implements FlightService {
                         .findById(ticketId)
                         .orElseThrow(() -> new ApiException(ErrorCode.RESOURCE_NOT_FOUND, "Ticket not found"));
 
-        if (ticket.getPassenger() != null
-                && ticket.getPassenger().getUser() != null
-                && !ticket.getPassenger().getUser().getEmail().equals(seatRequest.getPassengerEmail())) {
+        if (ticket.getSeat() != null) {
+            throw new ApiException(
+                    ErrorCode.OPERATION_NOT_ALLOWED, "Seat has already been assigned for this ticket");
+        }
+
+        CustomUserDetails currentUser = SecurityUtils.getCurrentUser();
+        if (
+                !canAssignSeat(currentUser, ticket)) {
             throw new ApiException(
                     ErrorCode.OPERATION_NOT_ALLOWED, "You are not allowed to assign seat for this ticket");
         }
@@ -212,6 +219,11 @@ public class FlightServiceImpl implements FlightService {
                         .orElseThrow(() -> new ApiException(ErrorCode.RESOURCE_NOT_FOUND, "Flight not found"));
 
         return flightMapper.entityToResponse(flight);
+    }
+
+    private boolean canAssignSeat(CustomUserDetails currentUser, Ticket ticket) {
+        return ticket.getPassenger() == null
+                || ticket.getPassenger().getUser() == null || currentUser.getId() == ticket.getPassenger().getUser().getId();
     }
 
     @Transactional

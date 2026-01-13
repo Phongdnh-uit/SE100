@@ -7,6 +7,5 @@ import lombok.Setter;
 @Setter
 public class AssignSeatRequest {
     Long ticketId;
-    Long passengerEmail;
     Long seatId;
 }
