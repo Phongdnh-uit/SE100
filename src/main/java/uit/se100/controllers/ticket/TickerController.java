@@ -90,8 +90,8 @@ public class TickerController {
     }
 
     @PostMapping("/{id}/refund")
-    public ResponseEntity<Void> refundTicket(@PathVariable Long id) {
+    public ResponseEntity<String> refundTicket(@PathVariable Long id) {
         ticketService.refundTicket(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok("Success");
     }
 }

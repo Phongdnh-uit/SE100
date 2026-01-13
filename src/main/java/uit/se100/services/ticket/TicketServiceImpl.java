@@ -18,6 +18,7 @@ import uit.se100.entities.ticket.Ticket;
 import uit.se100.enums.RoleEnum;
 import uit.se100.enums.payments.TransactionStatus;
 import uit.se100.enums.seat.SeatClass;
+import uit.se100.enums.seat.SeatStatus;
 import uit.se100.enums.ticket.TicketStatus;
 import uit.se100.exceptions.errors.ApiException;
 import uit.se100.exceptions.errors.ErrorCode;
@@ -26,6 +27,7 @@ import uit.se100.repositories.flight.FlightRepository;
 import uit.se100.repositories.flight.FlightSeatRepository;
 import uit.se100.repositories.passenger.PassengerRepository;
 import uit.se100.repositories.payment.TransactionRepository;
+import uit.se100.repositories.seat.SeatRepository;
 import uit.se100.repositories.ticket.TicketRepository;
 import uit.se100.securities.CustomUserDetails;
 import uit.se100.services.CrudService;
@@ -49,6 +51,7 @@ public class TicketServiceImpl implements TicketService {
     private final CrudService<Passenger, Long, PassengerRequest, PassengerResponse> passengerService;
     private final PaymentService paymentService;
     private final TransactionRepository transactionRepository;
+    private final SeatRepository seatRepository;
 
     /**
      * Đặt giữ chỗ vé cho một chuyến bay.
@@ -160,15 +163,22 @@ public class TicketServiceImpl implements TicketService {
         //check ticket
         Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new ApiException(ErrorCode.RESOURCE_NOT_FOUND, "Ticket not found"));
 
+
         CustomUserDetails currentUser = SecurityUtils.getCurrentUser();
 
         assert currentUser != null;
         if (!canRefundTicket(currentUser, ticket)) throw new ApiException(ErrorCode.FORBIDDEN);
 
+
         Transaction transaction = transactionRepository.findByTicketIdAndStatusOrderById(ticketId, TransactionStatus.SUCCESS);
 
         if (transaction == null) throw new ApiException(ErrorCode.RESOURCE_NOT_FOUND, "Transaction not found");
 
+        FlightSeat seat = ticket.getSeat();
+        if (seat != null) {
+            seat.setStatus(SeatStatus.AVAILABLE);
+            flightSeatRepository.save(seat);
+        }
 
         paymentService.refundTransaction(transaction.getId());
     }
