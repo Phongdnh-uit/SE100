@@ -188,25 +188,25 @@ public class StatisticsService {
      * 
      * @return List of RevenueByFlightDTO with revenue per flight
      */
-//    public List<RevenueByFlightDTO> getRevenueByFlight() {
-//        List<Object[]> results = statisticsRepository.findRevenueByFlight();
-//
-//        if (results == null || results.isEmpty()) {
-//            return Collections.emptyList();
-//        }
-//
-//        return results.stream()
-//                .map(row -> RevenueByFlightDTO.builder()
-//                        .flightId(((Number) row[0]).longValue())
-//                        .origin((String) row[1])
-//                        .destination((String) row[2])
-//                        .departureTime((Instant) row[3])
-//                        .flightStatus(row[4] != null ? row[4].toString() : null)
-//                        .ticketsSold(((Number) row[5]).longValue())
-//                        .totalRevenue(row[6] != null ? new BigDecimal(row[6].toString()) : BigDecimal.ZERO)
-//                        .build())
-//                .collect(Collectors.toList());
-//    }
+    public List<RevenueByFlightDTO> getRevenueByFlight() {
+        List<Object[]> results = statisticsRepository.findRevenueByFlight();
+
+        if (results == null || results.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        return results.stream()
+                .map(row -> RevenueByFlightDTO.builder()
+                        .flightId(((Number) row[0]).longValue())
+                        .origin((String) row[1])
+                        .destination((String) row[2])
+                        .departureTime((Instant) row[3])
+                        .flightStatus(row[4] != null ? row[4].toString() : null)
+                        .ticketsSold(((Number) row[5]).longValue())
+                        .totalRevenue(row[6] != null ? new BigDecimal(row[6].toString()) : BigDecimal.ZERO)
+                        .build())
+                .collect(Collectors.toList());
+    }
 
     // ==================== REPORT 5b: Revenue by route ====================
     /**
@@ -218,25 +218,25 @@ public class StatisticsService {
      * 
      * @return List of RevenueByRouteDTO with revenue per route
      */
-//    public List<RevenueByRouteDTO> getRevenueByRoute() {
-//        List<Object[]> results = statisticsRepository.findRevenueByRoute();
-//
-//        if (results == null || results.isEmpty()) {
-//            return Collections.emptyList();
-//        }
-//
-//        return results.stream()
-//                .map(row -> RevenueByRouteDTO.builder()
-//                        .routeId(((Number) row[0]).longValue())
-//                        .origin((String) row[1])
-//                        .destination((String) row[2])
-//                        .isExternal((Boolean) row[3])
-//                        .totalFlights(((Number) row[4]).longValue())
-//                        .totalTicketsSold(((Number) row[5]).longValue())
-//                        .totalRevenue(row[6] != null ? new BigDecimal(row[6].toString()) : BigDecimal.ZERO)
-//                        .build())
-//                .collect(Collectors.toList());
-//    }
+    public List<RevenueByRouteDTO> getRevenueByRoute() {
+        List<Object[]> results = statisticsRepository.findRevenueByRoute();
+
+        if (results == null || results.isEmpty()) {
+            return Collections.emptyList();
+        }
+
+        return results.stream()
+                .map(row -> RevenueByRouteDTO.builder()
+                        .routeId(((Number) row[0]).longValue())
+                        .origin((String) row[1])
+                        .destination((String) row[2])
+                        .isExternal((Boolean) row[3])
+                        .totalFlights(((Number) row[4]).longValue())
+                        .totalTicketsSold(((Number) row[5]).longValue())
+                        .totalRevenue(row[6] != null ? new BigDecimal(row[6].toString()) : BigDecimal.ZERO)
+                        .build())
+                .collect(Collectors.toList());
+    }
 
     // ==================== REPORT 5c: Revenue by time range ====================
     /**
@@ -251,39 +251,39 @@ public class StatisticsService {
      * @param toDate End of time range (inclusive)
      * @return RevenueByTimeRangeDTO with aggregated revenue data
      */
-//    public RevenueByTimeRangeDTO getRevenueByTimeRange(Instant fromDate, Instant toDate) {
-//        if (fromDate == null || toDate == null) {
-//            throw new IllegalArgumentException("fromDate and toDate are required");
-//        }
-//
-//        if (fromDate.isAfter(toDate)) {
-//            throw new IllegalArgumentException("fromDate must be before or equal to toDate");
-//        }
-//
-//        Object[] result = statisticsRepository.findRevenueByTimeRange(fromDate, toDate);
-//
-//        if (result == null || result[0] == null) {
-//            return RevenueByTimeRangeDTO.builder()
-//                    .fromDate(fromDate)
-//                    .toDate(toDate)
-//                    .totalTicketsSold(0L)
-//                    .totalRevenue(BigDecimal.ZERO)
-//                    .averageTicketPrice(BigDecimal.ZERO)
-//                    .build();
-//        }
-//
-//        Long totalTickets = ((Number) result[0]).longValue();
-//        BigDecimal totalRevenue = result[1] != null ? new BigDecimal(result[1].toString()) : BigDecimal.ZERO;
-//        BigDecimal avgPrice = result[2] != null ? new BigDecimal(result[2].toString()).setScale(2, RoundingMode.HALF_UP) : BigDecimal.ZERO;
-//
-//        return RevenueByTimeRangeDTO.builder()
-//                .fromDate(fromDate)
-//                .toDate(toDate)
-//                .totalTicketsSold(totalTickets)
-//                .totalRevenue(totalRevenue)
-//                .averageTicketPrice(avgPrice)
-//                .build();
-//    }
+    public RevenueByTimeRangeDTO getRevenueByTimeRange(Instant fromDate, Instant toDate) {
+        if (fromDate == null || toDate == null) {
+            throw new IllegalArgumentException("fromDate and toDate are required");
+        }
+
+        if (fromDate.isAfter(toDate)) {
+            throw new IllegalArgumentException("fromDate must be before or equal to toDate");
+        }
+
+        Object[] result = statisticsRepository.findRevenueByTimeRange(fromDate, toDate);
+
+        if (result == null || result[0] == null) {
+            return RevenueByTimeRangeDTO.builder()
+                    .fromDate(fromDate)
+                    .toDate(toDate)
+                    .totalTicketsSold(0L)
+                    .totalRevenue(BigDecimal.ZERO)
+                    .averageTicketPrice(BigDecimal.ZERO)
+                    .build();
+        }
+
+        Long totalTickets = ((Number) result[0]).longValue();
+        BigDecimal totalRevenue = result[1] != null ? new BigDecimal(result[1].toString()) : BigDecimal.ZERO;
+        BigDecimal avgPrice = result[2] != null ? new BigDecimal(result[2].toString()).setScale(2, RoundingMode.HALF_UP) : BigDecimal.ZERO;
+
+        return RevenueByTimeRangeDTO.builder()
+                .fromDate(fromDate)
+                .toDate(toDate)
+                .totalTicketsSold(totalTickets)
+                .totalRevenue(totalRevenue)
+                .averageTicketPrice(avgPrice)
+                .build();
+    }
 
     // ==================== REPORT 6: Baggage statistics ====================
     /**
@@ -296,29 +296,29 @@ public class StatisticsService {
      * 
      * @return BaggageStatisticsDTO with aggregated baggage data
      */
-//    public BaggageStatisticsDTO getBaggageStatistics() {
-//        Object[] result = statisticsRepository.findBaggageStatistics();
-//
-//        if (result == null || result[0] == null || ((Number) result[0]).longValue() == 0) {
-//            return BaggageStatisticsDTO.builder()
-//                    .totalBaggageCount(0L)
-//                    .totalWeight(BigDecimal.ZERO)
-//                    .overweightCount(0L)
-//                    .totalExtraFee(BigDecimal.ZERO)
-//                    .carryOnCount(0L)
-//                    .checkedCount(0L)
-//                    .build();
-//        }
-//
-//        return BaggageStatisticsDTO.builder()
-//                .totalBaggageCount(((Number) result[0]).longValue())
-//                .totalWeight(result[1] != null ? new BigDecimal(result[1].toString()) : BigDecimal.ZERO)
-//                .overweightCount(result[2] != null ? ((Number) result[2]).longValue() : 0L)
-//                .totalExtraFee(result[3] != null ? new BigDecimal(result[3].toString()) : BigDecimal.ZERO)
-//                .carryOnCount(result[4] != null ? ((Number) result[4]).longValue() : 0L)
-//                .checkedCount(result[5] != null ? ((Number) result[5]).longValue() : 0L)
-//                .build();
-//    }
+    public BaggageStatisticsDTO getBaggageStatistics() {
+        Object[] result = statisticsRepository.findBaggageStatistics();
+
+        if (result == null || result[0] == null || ((Number) result[0]).longValue() == 0) {
+            return BaggageStatisticsDTO.builder()
+                    .totalBaggageCount(0L)
+                    .totalWeight(BigDecimal.ZERO)
+                    .overweightCount(0L)
+                    .totalExtraFee(BigDecimal.ZERO)
+                    .carryOnCount(0L)
+                    .checkedCount(0L)
+                    .build();
+        }
+
+        return BaggageStatisticsDTO.builder()
+                .totalBaggageCount(((Number) result[0]).longValue())
+                .totalWeight(result[1] != null ? new BigDecimal(result[1].toString()) : BigDecimal.ZERO)
+                .overweightCount(result[2] != null ? ((Number) result[2]).longValue() : 0L)
+                .totalExtraFee(result[3] != null ? new BigDecimal(result[3].toString()) : BigDecimal.ZERO)
+                .carryOnCount(result[4] != null ? ((Number) result[4]).longValue() : 0L)
+                .checkedCount(result[5] != null ? ((Number) result[5]).longValue() : 0L)
+                .build();
+    }
 
     // ==================== REPORT 7: Aircraft status statistics ====================
     /**
