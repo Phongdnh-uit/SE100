@@ -262,7 +262,7 @@ public class StatisticsService {
 
         Object[] result = statisticsRepository.findRevenueByTimeRange(fromDate, toDate);
 
-        if (result == null || result[0] == null) {
+        if (result == null || result.length == 0) {
             return RevenueByTimeRangeDTO.builder()
                     .fromDate(fromDate)
                     .toDate(toDate)
@@ -272,9 +272,25 @@ public class StatisticsService {
                     .build();
         }
 
-        Long totalTickets = ((Number) result[0]).longValue();
-        BigDecimal totalRevenue = result[1] != null ? new BigDecimal(result[1].toString()) : BigDecimal.ZERO;
-        BigDecimal avgPrice = result[2] != null ? new BigDecimal(result[2].toString()).setScale(2, RoundingMode.HALF_UP) : BigDecimal.ZERO;
+        // Handle JPA result wrapping - may return Object[] or Object[][] depending on provider
+        Object[] row = result;
+        if (result.length == 1 && result[0] instanceof Object[]) {
+            row = (Object[]) result[0];
+        }
+
+        if (row[0] == null) {
+            return RevenueByTimeRangeDTO.builder()
+                    .fromDate(fromDate)
+                    .toDate(toDate)
+                    .totalTicketsSold(0L)
+                    .totalRevenue(BigDecimal.ZERO)
+                    .averageTicketPrice(BigDecimal.ZERO)
+                    .build();
+        }
+
+        Long totalTickets = ((Number) row[0]).longValue();
+        BigDecimal totalRevenue = row[1] != null ? new BigDecimal(row[1].toString()) : BigDecimal.ZERO;
+        BigDecimal avgPrice = row[2] != null ? new BigDecimal(row[2].toString()).setScale(2, RoundingMode.HALF_UP) : BigDecimal.ZERO;
 
         return RevenueByTimeRangeDTO.builder()
                 .fromDate(fromDate)
@@ -299,7 +315,24 @@ public class StatisticsService {
     public BaggageStatisticsDTO getBaggageStatistics() {
         Object[] result = statisticsRepository.findBaggageStatistics();
 
-        if (result == null || result[0] == null || ((Number) result[0]).longValue() == 0) {
+        if (result == null || result.length == 0) {
+            return BaggageStatisticsDTO.builder()
+                    .totalBaggageCount(0L)
+                    .totalWeight(BigDecimal.ZERO)
+                    .overweightCount(0L)
+                    .totalExtraFee(BigDecimal.ZERO)
+                    .carryOnCount(0L)
+                    .checkedCount(0L)
+                    .build();
+        }
+
+        // Handle JPA result wrapping - may return Object[] or Object[][] depending on provider
+        Object[] row = result;
+        if (result.length == 1 && result[0] instanceof Object[]) {
+            row = (Object[]) result[0];
+        }
+
+        if (row[0] == null || ((Number) row[0]).longValue() == 0) {
             return BaggageStatisticsDTO.builder()
                     .totalBaggageCount(0L)
                     .totalWeight(BigDecimal.ZERO)
@@ -311,12 +344,12 @@ public class StatisticsService {
         }
 
         return BaggageStatisticsDTO.builder()
-                .totalBaggageCount(((Number) result[0]).longValue())
-                .totalWeight(result[1] != null ? new BigDecimal(result[1].toString()) : BigDecimal.ZERO)
-                .overweightCount(result[2] != null ? ((Number) result[2]).longValue() : 0L)
-                .totalExtraFee(result[3] != null ? new BigDecimal(result[3].toString()) : BigDecimal.ZERO)
-                .carryOnCount(result[4] != null ? ((Number) result[4]).longValue() : 0L)
-                .checkedCount(result[5] != null ? ((Number) result[5]).longValue() : 0L)
+                .totalBaggageCount(((Number) row[0]).longValue())
+                .totalWeight(row[1] != null ? new BigDecimal(row[1].toString()) : BigDecimal.ZERO)
+                .overweightCount(row[2] != null ? ((Number) row[2]).longValue() : 0L)
+                .totalExtraFee(row[3] != null ? new BigDecimal(row[3].toString()) : BigDecimal.ZERO)
+                .carryOnCount(row[4] != null ? ((Number) row[4]).longValue() : 0L)
+                .checkedCount(row[5] != null ? ((Number) row[5]).longValue() : 0L)
                 .build();
     }
 
