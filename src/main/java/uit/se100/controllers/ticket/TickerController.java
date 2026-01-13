@@ -62,7 +62,7 @@ public class TickerController {
      * }
      */
 
-    @PostMapping("/tickets/{id}/payments")
+    @PostMapping("/{id}/payments")
     public ResponseEntity<PaymentResponse> createPaymentForTicket(
             @RequestBody PayTicketRequest paymentRequest,
             @PathVariable Long id) {
@@ -89,7 +89,7 @@ public class TickerController {
         }
     }
 
-    @PostMapping("/tickets/{id}/refund")
+    @PostMapping("/{id}/refund")
     public ResponseEntity<Void> refundTicket(@PathVariable Long id) {
         ticketService.refundTicket(id);
         return ResponseEntity.ok().build();

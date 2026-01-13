@@ -170,7 +170,7 @@ public class TicketServiceImpl implements TicketService {
         if (transaction == null) throw new ApiException(ErrorCode.RESOURCE_NOT_FOUND, "Transaction not found");
 
 
-        paymentService.refundTransaction(ticketId);
+        paymentService.refundTransaction(transaction.getId());
     }
 
     @Override
@@ -181,7 +181,7 @@ public class TicketServiceImpl implements TicketService {
 
     private boolean canRefundTicket(CustomUserDetails currentUser, Ticket ticket) {
         if (currentUser.getRole() == RoleEnum.PASSENGER) {
-            return ticket.getPassenger().getId().equals(currentUser.getId());
+            return ticket.getPassenger().getUser().getId().equals(currentUser.getId());
         }
         return currentUser.getRole() == RoleEnum.ADMIN || currentUser.getRole() == RoleEnum.EMPLOYEE;
     }

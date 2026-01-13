@@ -17,7 +17,7 @@ import java.time.Instant;
 @Table(name = "transactions")
 public class Transaction extends BaseEntity {
     @ManyToOne()
-    @JoinColumn(name = "ticket_id", nullable = false)
+    @JoinColumn(name = "ticket_id", nullable = true)
     private Ticket ticket;
 
     @Enumerated(EnumType.STRING)
@@ -29,7 +29,7 @@ public class Transaction extends BaseEntity {
     private TransactionStatus status;
 
     // Mã giao dịch do hệ thống bạn tạo
-    @Column(name = "provider_txn_ref", nullable = false, unique = true)
+    @Column(name = "provider_txn_ref", nullable = false)
     private String providerTxnRef;
 
     // Mã giao dịch do VNPay / MoMo trả về

@@ -258,7 +258,9 @@ public class VNPayPaymentStrategy implements PaymentStrategy {
         newTransaction.setProviderTxnRef(oldTransaction.getProviderTxnRef());
         newTransaction.setType(TransactionType.REFUND);
 
+
         transactionRepository.save(newTransaction);
+
 
         //send email after success
 

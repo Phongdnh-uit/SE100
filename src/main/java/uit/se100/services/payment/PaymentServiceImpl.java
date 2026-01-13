@@ -134,7 +134,7 @@ public class PaymentServiceImpl implements PaymentService {
 
         try {
             PaymentStrategy strategy = getPaymentStrategy(
-                    PaymentMethod.fromCode(originalTransaction.getType().name())
+                    PaymentMethod.fromCode(String.valueOf(PaymentMethod.VNPAY))
             );
 
             Transaction refundTransaction = strategy.refundTransaction(
