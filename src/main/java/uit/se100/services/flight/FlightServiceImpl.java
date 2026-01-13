@@ -228,8 +228,9 @@ public class FlightServiceImpl implements FlightService {
     }
 
     private boolean canAssignSeat(CustomUserDetails currentUser, Ticket ticket) {
-        return ticket.getPassenger() == null
-                || ticket.getPassenger().getUser() == null || currentUser.getId() == ticket.getPassenger().getUser().getId();
+        return true;
+//        return ticket.getPassenger() == null
+//                || ticket.getPassenger().getUser() == null || currentUser.getId() == ticket.getPassenger().getUser().getId();
     }
 
     @Transactional

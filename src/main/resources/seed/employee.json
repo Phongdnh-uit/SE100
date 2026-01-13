@@ -10,7 +10,7 @@
     "fullName": "Nguyễn Hoàng Phi",
     "position": "PILOT",
     "workExperience": "10 years flying Airbus A320",
-    "totalFlightHours": 8500
+    "totalFlightHours": 85
   },
   {
     "accountRequest": {
@@ -23,7 +23,7 @@
     "fullName": "Trần Minh Quân",
     "position": "COPILOT",
     "workExperience": "6 years as co-pilot Boeing 737",
-    "totalFlightHours": 4200
+    "totalFlightHours": 42
   },
   {
     "accountRequest": {
@@ -36,7 +36,7 @@
     "fullName": "Lê Thị Hồng",
     "position": "ATTENDANT",
     "workExperience": "4 years cabin crew",
-    "totalFlightHours": 1500
+    "totalFlightHours": 15
   },
   {
     "accountRequest": {
@@ -63,5 +63,174 @@
     "position": "OPERATOR",
     "workExperience": "12 years airline management",
     "totalFlightHours": 0
+  },
+  {
+    "accountRequest": {
+      "email": "pilot1@airline.com",
+      "username": "pilot1",
+      "password": "Password@123",
+      "role": "EMPLOYEE",
+      "phone": "0912345687"
+    },
+    "fullName": "Trần Văn Nam",
+    "position": "PILOT",
+    "workExperience": "12 years airline management",
+    "totalFlightHours": 30
+  },
+  {
+    "accountRequest": {
+      "email": "pilot3@airline.com",
+      "username": "pilot3",
+      "password": "Password@123",
+      "role": "EMPLOYEE",
+      "phone": "0912345701"
+    },
+    "fullName": "Đặng Quốc Huy",
+    "position": "PILOT",
+    "workExperience": "15 years flying Boeing 787",
+    "totalFlightHours": 98
+  },
+  {
+    "accountRequest": {
+      "email": "pilot4@airline.com",
+      "username": "pilot4",
+      "password": "Password@123",
+      "role": "EMPLOYEE",
+      "phone": "0912345702"
+    },
+    "fullName": "Ngô Thành Long",
+    "position": "PILOT",
+    "workExperience": "9 years flying Airbus A350",
+    "totalFlightHours": 67
+  },
+  {
+    "accountRequest": {
+      "email": "copilot2@airline.com",
+      "username": "copilot2",
+      "password": "Password@123",
+      "role": "EMPLOYEE",
+      "phone": "0912345710"
+    },
+    "fullName": "Phan Nhật Minh",
+    "position": "COPILOT",
+    "workExperience": "5 years co-pilot Airbus A320",
+    "totalFlightHours": 36
+  },
+  {
+    "accountRequest": {
+      "email": "copilot3@airline.com",
+      "username": "copilot3",
+      "password": "Password@123",
+      "role": "EMPLOYEE",
+      "phone": "0912345711"
+    },
+    "fullName": "Lý Hoàng Anh",
+    "position": "COPILOT",
+    "workExperience": "7 years co-pilot Boeing 737",
+    "totalFlightHours": 48
+  },
+  {
+    "accountRequest": {
+      "email": "attendant2@airline.com",
+      "username": "attendant2",
+      "password": "Password@123",
+      "role": "EMPLOYEE",
+      "phone": "0912345720"
+    },
+    "fullName": "Nguyễn Thị Thanh Trúc",
+    "position": "ATTENDANT",
+    "workExperience": "6 years cabin crew international flights",
+    "totalFlightHours": 22
+  },
+  {
+    "accountRequest": {
+      "email": "attendant3@airline.com",
+      "username": "attendant3",
+      "password": "Password@123",
+      "role": "EMPLOYEE",
+      "phone": "0912345721"
+    },
+    "fullName": "Bùi Thị Mỹ Linh",
+    "position": "ATTENDANT",
+    "workExperience": "3 years domestic flight attendant",
+    "totalFlightHours": 11
+  },
+  {
+    "accountRequest": {
+      "email": "pilot5@airline.com",
+      "username": "pilot5",
+      "password": "Password@123",
+      "role": "EMPLOYEE",
+      "phone": "0912345801"
+    },
+    "fullName": "Lưu Quốc Bảo",
+    "position": "PILOT",
+    "workExperience": "7 years flying Airbus A321",
+    "totalFlightHours": 72
+  },
+  {
+    "accountRequest": {
+      "email": "pilot6@airline.com",
+      "username": "pilot6",
+      "password": "Password@123",
+      "role": "EMPLOYEE",
+      "phone": "0912345802"
+    },
+    "fullName": "Nguyễn Thanh Tùng",
+    "position": "PILOT",
+    "workExperience": "5 years flying ATR 72",
+    "totalFlightHours": 55
+  },
+  {
+    "accountRequest": {
+      "email": "copilot4@airline.com",
+      "username": "copilot4",
+      "password": "Password@123",
+      "role": "EMPLOYEE",
+      "phone": "0912345810"
+    },
+    "fullName": "Trịnh Hoàng Nam",
+    "position": "COPILOT",
+    "workExperience": "4 years co-pilot Airbus A320",
+    "totalFlightHours": 34
+  },
+  {
+    "accountRequest": {
+      "email": "copilot5@airline.com",
+      "username": "copilot5",
+      "password": "Password@123",
+      "role": "EMPLOYEE",
+      "phone": "0912345811"
+    },
+    "fullName": "Đỗ Minh Khánh",
+    "position": "COPILOT",
+    "workExperience": "6 years co-pilot Boeing 787",
+    "totalFlightHours": 59
+  },
+  {
+    "accountRequest": {
+      "email": "attendant4@airline.com",
+      "username": "attendant4",
+      "password": "Password@123",
+      "role": "EMPLOYEE",
+      "phone": "0912345820"
+    },
+    "fullName": "Phạm Thị Ngọc Anh",
+    "position": "ATTENDANT",
+    "workExperience": "5 years cabin crew regional flights",
+    "totalFlightHours": 38
+  },
+  {
+    "accountRequest": {
+      "email": "attendant5@airline.com",
+      "username": "attendant5",
+      "password": "Password@123",
+      "role": "EMPLOYEE",
+      "phone": "0912345821"
+    },
+    "fullName": "Hoàng Thị Thu Hà",
+    "position": "ATTENDANT",
+    "workExperience": "2 years cabin crew domestic flights",
+    "totalFlightHours": 19
   }
 ]
