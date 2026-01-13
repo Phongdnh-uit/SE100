@@ -1,6 +1,7 @@
 package uit.se100.controllers.statistics;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import uit.se100.dtos.ApiResponse;
 import uit.se100.dtos.statistics.*;
 import uit.se100.services.statistics.StatisticsService;
 
+import java.time.Instant;
 import java.util.List;
 
 @Tag(name = "Statistics")
@@ -90,30 +92,30 @@ public class StatisticsController {
      * 
      * Returns total revenue (sum of paid ticket prices) for each flight.
      */
-//    @Operation(
-//            summary = "Get revenue by flight",
-//            description = "Returns total revenue from paid tickets grouped by flight"
-//    )
-//    @GetMapping("/revenue/by-flight")
-//    public ResponseEntity<ApiResponse<List<RevenueByFlightDTO>>> getRevenueByFlight() {
-//        List<RevenueByFlightDTO> result = statisticsService.getRevenueByFlight();
-//        return ResponseEntity.ok(ApiResponse.ok("Revenue by flight retrieved successfully", result));
-//    }
+    @Operation(
+            summary = "Get revenue by flight",
+            description = "Returns total revenue from paid tickets grouped by flight"
+    )
+    @GetMapping("/revenue/by-flight")
+    public ResponseEntity<ApiResponse<List<RevenueByFlightDTO>>> getRevenueByFlight() {
+        List<RevenueByFlightDTO> result = statisticsService.getRevenueByFlight();
+        return ResponseEntity.ok(ApiResponse.ok("Revenue by flight retrieved successfully", result));
+    }
 
     /**
      * Report 5b: Revenue by route
      * 
      * Returns total revenue (sum of paid ticket prices) for each route.
      */
-//    @Operation(
-//            summary = "Get revenue by route",
-//            description = "Returns total revenue from paid tickets grouped by route"
-//    )
-//    @GetMapping("/revenue/by-route")
-//    public ResponseEntity<ApiResponse<List<RevenueByRouteDTO>>> getRevenueByRoute() {
-//        List<RevenueByRouteDTO> result = statisticsService.getRevenueByRoute();
-//        return ResponseEntity.ok(ApiResponse.ok("Revenue by route retrieved successfully", result));
-//    }
+    @Operation(
+            summary = "Get revenue by route",
+            description = "Returns total revenue from paid tickets grouped by route"
+    )
+    @GetMapping("/revenue/by-route")
+    public ResponseEntity<ApiResponse<List<RevenueByRouteDTO>>> getRevenueByRoute() {
+        List<RevenueByRouteDTO> result = statisticsService.getRevenueByRoute();
+        return ResponseEntity.ok(ApiResponse.ok("Revenue by route retrieved successfully", result));
+    }
 
     /**
      * Report 5c: Revenue by time range
@@ -123,19 +125,19 @@ public class StatisticsController {
      * @param fromDate Start of time range (ISO-8601 format, e.g., 2024-01-01T00:00:00Z)
      * @param toDate End of time range (ISO-8601 format, e.g., 2024-12-31T23:59:59Z)
      */
-//    @Operation(
-//            summary = "Get revenue by time range",
-//            description = "Returns total revenue from paid tickets within the specified date range"
-//    )
-//    @GetMapping("/revenue/by-time-range")
-//    public ResponseEntity<ApiResponse<RevenueByTimeRangeDTO>> getRevenueByTimeRange(
-//            @Parameter(description = "Start date (ISO-8601 format)", example = "2024-01-01T00:00:00Z")
-//            @RequestParam Instant fromDate,
-//            @Parameter(description = "End date (ISO-8601 format)", example = "2024-12-31T23:59:59Z")
-//            @RequestParam Instant toDate) {
-//        RevenueByTimeRangeDTO result = statisticsService.getRevenueByTimeRange(fromDate, toDate);
-//        return ResponseEntity.ok(ApiResponse.ok("Revenue by time range retrieved successfully", result));
-//    }
+    @Operation(
+            summary = "Get revenue by time range",
+            description = "Returns total revenue from paid tickets within the specified date range"
+    )
+    @GetMapping("/revenue/by-time-range")
+    public ResponseEntity<ApiResponse<RevenueByTimeRangeDTO>> getRevenueByTimeRange(
+            @Parameter(description = "Start date (ISO-8601 format)", example = "2024-01-01T00:00:00Z")
+            @RequestParam Instant fromDate,
+            @Parameter(description = "End date (ISO-8601 format)", example = "2024-12-31T23:59:59Z")
+            @RequestParam Instant toDate) {
+        RevenueByTimeRangeDTO result = statisticsService.getRevenueByTimeRange(fromDate, toDate);
+        return ResponseEntity.ok(ApiResponse.ok("Revenue by time range retrieved successfully", result));
+    }
 
     // ==================== BAGGAGE REPORTS ====================
 
@@ -148,15 +150,15 @@ public class StatisticsController {
      * - Overweight count (checked > 23kg, carry-on > 7kg)
      * - Total extra fees
      */
-//    @Operation(
-//            summary = "Get baggage statistics",
-//            description = "Returns aggregated baggage data: total count, weight, overweight count, and extra fees"
-//    )
-//    @GetMapping("/baggage")
-//    public ResponseEntity<ApiResponse<BaggageStatisticsDTO>> getBaggageStatistics() {
-//        BaggageStatisticsDTO result = statisticsService.getBaggageStatistics();
-//        return ResponseEntity.ok(ApiResponse.ok("Baggage statistics retrieved successfully", result));
-//    }
+    @Operation(
+            summary = "Get baggage statistics",
+            description = "Returns aggregated baggage data: total count, weight, overweight count, and extra fees"
+    )
+    @GetMapping("/baggage")
+    public ResponseEntity<ApiResponse<BaggageStatisticsDTO>> getBaggageStatistics() {
+        BaggageStatisticsDTO result = statisticsService.getBaggageStatistics();
+        return ResponseEntity.ok(ApiResponse.ok("Baggage statistics retrieved successfully", result));
+    }
 
     // ==================== OPERATIONS REPORTS ====================
 
