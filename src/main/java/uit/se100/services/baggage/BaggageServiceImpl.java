@@ -159,6 +159,14 @@ public class BaggageServiceImpl implements BaggageService {
                         .findById(request.getFlightId())
                         .orElseThrow(() -> new ApiException(ErrorCode.RESOURCE_NOT_FOUND, "Flight not found"));
 
+        List<Baggage> baggages = this.baggageRepository.findByPassengerIdAndFlightId(passenger.getId(), flight.getId());
+
+        baggages.forEach(baggage -> {
+            if (baggage.getType() == request.getType()) {
+                throw new ApiException(ErrorCode.OPERATION_NOT_ALLOWED, "Baggage of this type already exists for the passenger on this flight");
+            }
+        });
+
         Baggage baggage = new Baggage();
         baggage.setType(request.getType());
         baggage.setWeight(request.getWeight());
