@@ -101,16 +101,16 @@ public interface StatisticsRepository extends SimpleRepository<Flight, Long> {
      * Filters tickets with status = 'PAID'
      * Sums ticket prices grouped by flight
      */
-//    @Query("""
-//            SELECT f.id, r.origin, r.destination, f.departureTime, f.status,
-//                   COUNT(t.id), COALESCE(SUM(t.price), 0)
-//            FROM Flight f
-//            JOIN f.route r
-//            LEFT JOIN Ticket t ON t.flight.id = f.id AND t.status = 'PAID'
-//            GROUP BY f.id, r.origin, r.destination, f.departureTime, f.status
-//            ORDER BY f.departureTime DESC
-//            """)
-//    List<Object[]> findRevenueByFlight();
+    @Query("""
+            SELECT f.id, r.origin, r.destination, f.departureTime, f.status,
+                   COUNT(t.id), COALESCE(SUM(t.price), 0)
+            FROM Flight f
+            JOIN f.route r
+            LEFT JOIN Ticket t ON t.flight.id = f.id AND t.status = 'PAID'
+            GROUP BY f.id, r.origin, r.destination, f.departureTime, f.status
+            ORDER BY f.departureTime DESC
+            """)
+    List<Object[]> findRevenueByFlight();
 
     // ==================== REPORT 5b: Revenue by route ====================
     /**
@@ -119,16 +119,16 @@ public interface StatisticsRepository extends SimpleRepository<Flight, Long> {
      * JPQL joins route -> flight -> ticket
      * Groups by route
      */
-//    @Query("""
-//            SELECT r.id, r.origin, r.destination, r.isExternal,
-//                   COUNT(DISTINCT f.id), COUNT(t.id), COALESCE(SUM(t.price), 0)
-//            FROM Route r
-//            LEFT JOIN r.flights f
-//            LEFT JOIN Ticket t ON t.flight.id = f.id AND t.status = 'PAID'
-//            GROUP BY r.id, r.origin, r.destination, r.isExternal
-//            ORDER BY SUM(t.price) DESC NULLS LAST
-//            """)
-//    List<Object[]> findRevenueByRoute();
+    @Query("""
+            SELECT r.id, r.origin, r.destination, r.isExternal,
+                   COUNT(DISTINCT f.id), COUNT(t.id), COALESCE(SUM(t.price), 0)
+            FROM Route r
+            LEFT JOIN r.flights f
+            LEFT JOIN Ticket t ON t.flight.id = f.id AND t.status = 'PAID'
+            GROUP BY r.id, r.origin, r.destination, r.isExternal
+            ORDER BY SUM(t.price) DESC NULLS LAST
+            """)
+    List<Object[]> findRevenueByRoute();
 
     // ==================== REPORT 5c: Revenue by time range ====================
     /**
@@ -137,17 +137,17 @@ public interface StatisticsRepository extends SimpleRepository<Flight, Long> {
      * Filters tickets by paidAt within fromDate - toDate
      * Only counts PAID tickets
      */
-//    @Query("""
-//            SELECT COUNT(t.id), COALESCE(SUM(t.price), 0), COALESCE(AVG(t.price), 0)
-//            FROM Ticket t
-//            WHERE t.status = 'PAID'
-//              AND t.paidAt >= :fromDate
-//              AND t.paidAt <= :toDate
-//            """)
-//    Object[] findRevenueByTimeRange(
-//            @Param("fromDate") Instant fromDate,
-//            @Param("toDate") Instant toDate
-//    );
+    @Query("""
+            SELECT COUNT(t.id), COALESCE(SUM(t.price), 0), COALESCE(AVG(t.price), 0)
+            FROM Ticket t
+            WHERE t.status = 'PAID'
+              AND t.paidAt >= :fromDate
+              AND t.paidAt <= :toDate
+            """)
+    Object[] findRevenueByTimeRange(
+            @Param("fromDate") Instant fromDate,
+            @Param("toDate") Instant toDate
+    );
 
     // ==================== REPORT 6: Baggage statistics ====================
     /**
@@ -155,20 +155,20 @@ public interface StatisticsRepository extends SimpleRepository<Flight, Long> {
      * Total count, total weight, overweight count, total extra fees.
      * Overweight: checked baggage > 23kg, carry-on > 7kg (standard limits)
      */
-//    @Query("""
-//            SELECT COUNT(b.id),
-//                   COALESCE(SUM(b.weight), 0),
-//                   SUM(CASE
-//                       WHEN (b.type = 'CHECKED' AND b.weight > 23) OR
-//                            (b.type = 'CARRY_ON' AND b.weight > 7) THEN 1
-//                       ELSE 0
-//                   END),
-//                   COALESCE(SUM(b.extraFee), 0),
-//                   SUM(CASE WHEN b.type = 'CARRY_ON' THEN 1 ELSE 0 END),
-//                   SUM(CASE WHEN b.type = 'CHECKED' THEN 1 ELSE 0 END)
-//            FROM Baggage b
-//            """)
-//    Object[] findBaggageStatistics();
+    @Query("""
+            SELECT COUNT(b.id),
+                   COALESCE(SUM(b.weight), 0),
+                   SUM(CASE
+                       WHEN (b.type = 'CHECKED' AND b.weight > 23) OR
+                            (b.type = 'CARRY_ON' AND b.weight > 7) THEN 1
+                       ELSE 0
+                   END),
+                   COALESCE(SUM(b.extraFee), 0),
+                   SUM(CASE WHEN b.type = 'CARRY_ON' THEN 1 ELSE 0 END),
+                   SUM(CASE WHEN b.type = 'CHECKED' THEN 1 ELSE 0 END)
+            FROM Baggage b
+            """)
+    Object[] findBaggageStatistics();
 
     // ==================== REPORT 7: Aircraft status statistics ====================
     /**

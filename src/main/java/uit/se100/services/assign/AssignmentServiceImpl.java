@@ -131,8 +131,8 @@ public class AssignmentServiceImpl implements AssignmentService {
     assignmentRepository.saveAll(newAssignments);
     // Cập nhật lại giờ bay của nhân viên
     employeeRepository.saveAll(employees);
-    // Cập nhật lại danh sách phân công cho chuyến bay
-    flightOpt.get().setCrewAssignments(newAssignments);
+    // Cập nhật lại danh sách phân công cho chuyến bay - add to existing collection instead of replacing
+    flightOpt.get().getCrewAssignments().addAll(newAssignments);
     flightRepository.save(flightOpt.get());
   }
 
