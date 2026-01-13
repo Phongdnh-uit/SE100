@@ -9,9 +9,11 @@ import org.springframework.context.annotation.Configuration;
 import uit.se100.dtos.payment.PaymentRequest;
 import uit.se100.dtos.payment.PaymentResponse;
 import uit.se100.entities.payment.Transaction;
+import uit.se100.entities.ticket.Ticket;
 import uit.se100.enums.payments.PaymentMethod;
 import uit.se100.enums.payments.TransactionStatus;
 import uit.se100.enums.payments.TransactionType;
+import uit.se100.enums.ticket.TicketStatus;
 import uit.se100.exceptions.errors.ApiException;
 import uit.se100.exceptions.errors.ErrorCode;
 import uit.se100.repositories.payment.TransactionRepository;
@@ -178,7 +180,8 @@ public class VNPayPaymentStrategy implements PaymentStrategy {
                 transaction.setProviderTxnNo(vnp_TransactionNo);
                 transaction.setUpdatedAt(new Date().toInstant());
                 log.info("VNPay payment SUCCESS for txnRef: {}", vnp_TxnRef);
-
+                Ticket ticket = transaction.getTicket();
+                ticket.setStatus(TicketStatus.PAID);
                 ticketEmailService.sendPaymentSuccessEmail(transaction.getTicket().getId());
             }
         } else {
