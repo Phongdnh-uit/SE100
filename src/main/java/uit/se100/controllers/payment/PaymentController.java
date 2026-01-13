@@ -45,7 +45,6 @@ public class PaymentController {
      * GET /api/v1/payments/vnpay-callback?vnp_TxnRef=...&vnp_Amount=...&vnp_ResponseCode=...&vnp_SecureHash=...
      */
     @GetMapping("/vnpay-callback")
-    @ResponseStatus(HttpStatus.OK)
     public RedirectView vnpayCallback(
             @RequestParam Map<String, String> allParams) {
         String callbackData = allParams.entrySet().stream()
@@ -57,7 +56,7 @@ public class PaymentController {
             Transaction transaction = paymentService.verifyPaymentCallback(PaymentMethod.VNPAY, callbackData);
 
 
-            if ("00".equals(allParams.get("responseCode"))) {
+            if ("00".equals(allParams.get("vnp_ResponseCode"))) {
                 if (transaction != null && transaction.getStatus() == TransactionStatus.SUCCESS) {
                     Ticket ticket = transaction.getTicket(); // Giả sử Transaction có @ManyToOne Ticket
                     String ticketCode = URLEncoder.encode(String.valueOf(ticket.getId()), StandardCharsets.UTF_8);
