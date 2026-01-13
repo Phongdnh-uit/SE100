@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Xác nhận yêu cầu hoàn tiền</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f4f6f9;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .wrapper {
+            width: 100%;
+            padding: 24px 0;
+        }
+
+        .container {
+            max-width: 620px;
+            margin: auto;
+            background-color: #ffffff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+        }
+
+        .header {
+            background: linear-gradient(135deg, #f59f00, #fab005);
+            color: #ffffff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .header h2 {
+            margin: 0;
+            font-size: 22px;
+        }
+
+        .content {
+            padding: 24px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .info-box {
+            margin-top: 18px;
+            background-color: #f9fafb;
+            border-radius: 8px;
+            padding: 16px 18px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            font-size: 14px;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            color: #555;
+        }
+
+        .value {
+            font-weight: 600;
+            color: #222;
+            text-align: right;
+        }
+
+        .notice {
+            margin-top: 18px;
+            background-color: #fff7e6;
+            border-left: 4px solid #f59f00;
+            padding: 14px;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .footer {
+            background-color: #f1f3f5;
+            padding: 16px;
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <div class="container">
+
+        <!-- Header -->
+        <div class="header">
+            <h2>💰 Xác nhận yêu cầu hoàn tiền</h2>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <p>Xin chào <strong>[[${username}]]</strong>,</p>
+
+            <p>
+                Chúng tôi đã <strong>tiếp nhận thành công yêu cầu hoàn tiền</strong>
+                cho vé máy bay của bạn. Thông tin chi tiết như sau:
+            </p>
+
+            <div class="info-box">
+                <div class="info-row">
+                    <span class="label">Mã vé</span>
+                    <span class="value">[[${ticketCode}]]</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Hành khách</span>
+                    <span class="value">[[${passengerName}]]</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Chuyến bay</span>
+                    <span class="value">[[${flightNumber}]]</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Tuyến bay</span>
+                    <span class="value">[[${from}]] → [[${to}]]</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Khởi hành</span>
+                    <span class="value">[[${departure}]]</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Hạng vé</span>
+                    <span class="value">[[${class}]]</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Giá vé ban đầu</span>
+                    <span class="value">[[${originalPrice}]] VND</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Số tiền hoàn</span>
+                    <span class="value">[[${refundAmount}]] VND</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Mã giao dịch</span>
+                    <span class="value">[[${refundTransactionRef}]]</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Thời gian yêu cầu</span>
+                    <span class="value">[[${requestTime}]]</span>
+                </div>
+                <div class="info-row">
+                    <span class="label">Trạng thái</span>
+                    <span class="value">[[${status}]]</span>
+                </div>
+            </div>
+
+            <div class="notice">
+                ⏳ Số tiền hoàn dự kiến sẽ được xử lý trong
+                <strong>[[${estimatedRefundDays}]] ngày làm việc</strong>.
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p>Nếu có thắc mắc, vui lòng liên hệ bộ phận hỗ trợ.</p>
+            <p><strong>SE100 Airline</strong> ✈️</p>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
