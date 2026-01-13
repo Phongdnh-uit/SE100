@@ -1,6 +1,7 @@
 package uit.se100.dtos.flight;
 
 import uit.se100.enums.seat.SeatClass;
+import uit.se100.enums.seat.SeatStatus;
 
 import java.math.BigDecimal;
 import java.time.Instant;
@@ -9,6 +10,7 @@ public record FlightSeatResponse(
         Long id,
         SeatClass seatClass,
         BigDecimal price,
-        Instant createdAt
+        Instant createdAt,
+        SeatStatus status
 ) {
 }
