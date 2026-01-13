@@ -8,7 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 import uit.se100.dtos.seat.BatchCreateSeatRequest;
 import uit.se100.dtos.seat.SeatLayout;
 import uit.se100.dtos.seat.SeatResponse;
+import uit.se100.entities.aircraft.Aircraft;
 import uit.se100.enums.seat.SeatClass;
+import uit.se100.repositories.aircraft.AircraftRepository;
 import uit.se100.services.seat.SeatService;
 
 import java.util.HashMap;
@@ -21,62 +23,91 @@ import java.util.Map;
 public class SeatSeedService {
 
     private final SeatService seatService;
+    private final AircraftRepository aircraftRepository;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void seed() {
-        // Seed Aircraft 1 & 2 (A320 - 180 seats)
-        seedAircraft(1L, 1, 5, SeatLayout.ECONOMY_3_3);
-        seedAircraft(2L, 1, 5, SeatLayout.ECONOMY_3_3);
 
-        // Seed Aircraft 3 (A321 - 220 seats)
-        seedAircraft(3L, 1, 5, SeatLayout.ECONOMY_3_3);
+        List<Aircraft> aircrafts = aircraftRepository.findAll();
 
-        // Seed Aircraft 5 (B787 - 300 seats)
-        seedAircraft(5L, 1, 5, SeatLayout.WIDE_2_4_2);
+        if (aircrafts.isEmpty()) {
+            log.warn("No aircraft found, skip seat seeding");
+            return;
+        }
 
-        log.info("Seeded seats for all aircraft");
+        for (Aircraft aircraft : aircrafts) {
+            SeatLayout layout = resolveLayout(aircraft);
+            seedAircraft(aircraft.getId(), layout);
+        }
+
+        log.info("Seeded seats for {} aircraft(s)", aircrafts.size());
     }
 
-    private void seedAircraft(Long aircraftId, int fromRow, int toRow, SeatLayout layout) {
+    private void seedAircraft(Long aircraftId, SeatLayout layout) {
+
         Map<SeatClass, BatchCreateSeatRequest.ClassSeatRequest> classSeatRequests = new HashMap<>();
 
-        // First Class: Row 1 only
+        // FIRST CLASS
         classSeatRequests.put(
                 SeatClass.FIRST_CLASS,
                 new BatchCreateSeatRequest.ClassSeatRequest(
                         1,
                         1,
-                        layout == SeatLayout.WIDE_2_4_2 ? SeatLayout.BUSINESS_2_2 : SeatLayout.BUSINESS_2_2,
+                        SeatLayout.BUSINESS_2_2,
                         List.of()
                 )
         );
 
-        // Business: Row 1 (second part) or Row 2 start
+        // BUSINESS
         classSeatRequests.put(
                 SeatClass.BUSINESS,
                 new BatchCreateSeatRequest.ClassSeatRequest(
-                        1,
                         layout == SeatLayout.WIDE_2_4_2 ? 2 : 1,
-                        layout == SeatLayout.WIDE_2_4_2 ? SeatLayout.SMALL_1_2 : SeatLayout.BUSINESS_2_2,
-                        layout == SeatLayout.WIDE_2_4_2 ? List.of() : List.of()
+                        layout == SeatLayout.WIDE_2_4_2 ? 2 : 1,
+                        layout == SeatLayout.WIDE_2_4_2
+                                ? SeatLayout.SMALL_1_2
+                                : SeatLayout.BUSINESS_2_2,
+                        List.of()
                 )
         );
 
-        // Economy: Rows 2-5
+        // ECONOMY
         classSeatRequests.put(
                 SeatClass.ECONOMY,
                 new BatchCreateSeatRequest.ClassSeatRequest(
                         layout == SeatLayout.WIDE_2_4_2 ? 3 : 2,
-                        5,
+                        resolveLastRow(layout),
                         layout,
                         List.of()
                 )
         );
 
-        BatchCreateSeatRequest request = new BatchCreateSeatRequest(aircraftId, classSeatRequests);
+        BatchCreateSeatRequest request =
+                new BatchCreateSeatRequest(aircraftId, classSeatRequests);
+
         List<SeatResponse> responses = seatService.batchCreate(request);
 
-        log.info("Created {} seats for aircraft {}", responses.size(), aircraftId);
+        log.info("Aircraft {} → created {} seats", aircraftId, responses.size());
+    }
+
+    /**
+     * Quyết định layout theo aircraft
+     */
+    private SeatLayout resolveLayout(Aircraft aircraft) {
+        String model = aircraft.getModel().toUpperCase();
+
+        if (model.contains("787") || model.contains("777") || aircraft.getSeatCapacity() >= 280) {
+            return SeatLayout.WIDE_2_4_2;
+        }
+
+        return SeatLayout.ECONOMY_3_3; // A320 / A321 / B737
+    }
+
+    private int resolveLastRow(SeatLayout layout) {
+        return switch (layout) {
+            case WIDE_2_4_2 -> 30;
+            default -> 25;
+        };
     }
 }
 
