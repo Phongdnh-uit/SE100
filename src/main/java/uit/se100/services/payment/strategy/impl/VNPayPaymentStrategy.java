@@ -265,7 +265,7 @@ public class VNPayPaymentStrategy implements PaymentStrategy {
         //send email after success
 
         try {
-            ticketEmailService.sendRefundRequestSuccessEmail(newTransaction);
+            ticketEmailService.sendRefundRequestSuccessEmail(newTransaction, oldTransaction.getTicket());
         } catch (Exception e) {
             log.error("Failed to send refund request success email for transaction {}",
                     newTransaction.getId(), e);

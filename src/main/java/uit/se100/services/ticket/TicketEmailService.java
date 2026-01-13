@@ -9,7 +9,6 @@ import uit.se100.entities.flight.Flight;
 import uit.se100.entities.passenger.Passenger;
 import uit.se100.entities.payment.Transaction;
 import uit.se100.entities.ticket.Ticket;
-import uit.se100.enums.payments.TransactionType;
 import uit.se100.enums.ticket.TicketStatus;
 import uit.se100.exceptions.errors.ApiException;
 import uit.se100.exceptions.errors.ErrorCode;
@@ -77,13 +76,13 @@ public class TicketEmailService {
     }
 
     @Transactional(readOnly = true)
-    public void sendRefundRequestSuccessEmail(Transaction refundTransaction) {
-        if (refundTransaction.getType() != TransactionType.REFUND) {
-            log.warn("Transaction {} is not REFUND type, skip sending refund email", refundTransaction.getId());
-            return;
-        }
+    public void sendRefundRequestSuccessEmail(Transaction refundTransaction, Ticket ticket) {
+//        if (refundTransaction.getType() != TransactionType.REFUND) {
+//            log.warn("Transaction {} is not REFUND type, skip sending refund email", refundTransaction.getId());
+//            return;
+//        }
 
-        Ticket ticket = refundTransaction.getTicket();
+//        Ticket ticket = refundTransaction.getTicket();
         if (ticket == null) {
             log.warn("No ticket found for refund transaction {}", refundTransaction.getId());
             return;
