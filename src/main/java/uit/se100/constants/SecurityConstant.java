@@ -2,7 +2,8 @@ package uit.se100.constants;
 
 public interface SecurityConstant {
     String[] PUBLIC_URLS = {
-            "/auth/login", "auth/register", "auth/refresh", "/v3/api-docs/**", "/swagger-ui/**"
+            "/auth/login", "auth/register", "auth/refresh", "/v3/api-docs/**", "/swagger-ui/**",
+            "/admin/seed"
     };
 
     String[] PUBLIC_GET_URLS = {

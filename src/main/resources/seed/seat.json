@@ -1,0 +1,603 @@
+[
+  {
+    "aircraftId": 1,
+    "seatNumber": "1A",
+    "seatClass": "FIRST_CLASS"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "1B",
+    "seatClass": "FIRST_CLASS"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "1C",
+    "seatClass": "BUSINESS"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "1D",
+    "seatClass": "BUSINESS"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "1E",
+    "seatClass": "BUSINESS"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "1F",
+    "seatClass": "BUSINESS"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "2A",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "2B",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "2C",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "2D",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "2E",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "2F",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "3A",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "3B",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "3C",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "3D",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "3E",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "3F",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "4A",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "4B",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "4C",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "4D",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "4E",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "4F",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "5A",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "5B",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "5C",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "5D",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "5E",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 1,
+    "seatNumber": "5F",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "1A",
+    "seatClass": "FIRST_CLASS"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "1B",
+    "seatClass": "FIRST_CLASS"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "1C",
+    "seatClass": "BUSINESS"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "1D",
+    "seatClass": "BUSINESS"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "1E",
+    "seatClass": "BUSINESS"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "1F",
+    "seatClass": "BUSINESS"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "2A",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "2B",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "2C",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "2D",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "2E",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "2F",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "3A",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "3B",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "3C",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "3D",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "3E",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "3F",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "4A",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "4B",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "4C",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "4D",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "4E",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "4F",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "5A",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "5B",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "5C",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "5D",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "5E",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 2,
+    "seatNumber": "5F",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "1A",
+    "seatClass": "FIRST_CLASS"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "1B",
+    "seatClass": "FIRST_CLASS"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "1C",
+    "seatClass": "FIRST_CLASS"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "1D",
+    "seatClass": "BUSINESS"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "1E",
+    "seatClass": "BUSINESS"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "1F",
+    "seatClass": "BUSINESS"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "2A",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "2B",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "2C",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "2D",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "2E",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "2F",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "3A",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "3B",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "3C",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "3D",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "3E",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "3F",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "4A",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "4B",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "4C",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "4D",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "4E",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "4F",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "5A",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "5B",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "5C",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "5D",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "5E",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 3,
+    "seatNumber": "5F",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "1A",
+    "seatClass": "FIRST_CLASS"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "1B",
+    "seatClass": "FIRST_CLASS"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "1C",
+    "seatClass": "FIRST_CLASS"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "1D",
+    "seatClass": "FIRST_CLASS"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "1E",
+    "seatClass": "BUSINESS"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "1F",
+    "seatClass": "BUSINESS"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "2A",
+    "seatClass": "BUSINESS"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "2B",
+    "seatClass": "BUSINESS"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "2C",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "2D",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "2E",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "2F",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "3A",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "3B",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "3C",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "3D",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "3E",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "3F",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "4A",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "4B",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "4C",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "4D",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "4E",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "4F",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "5A",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "5B",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "5C",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "5D",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "5E",
+    "seatClass": "ECONOMY"
+  },
+  {
+    "aircraftId": 5,
+    "seatNumber": "5F",
+    "seatClass": "ECONOMY"
+  }
+]
+

@@ -1,0 +1,171 @@
+[
+  {
+    "routeId": 1,
+    "aircraftId": 1,
+    "status": "OPEN",
+    "priceSeatClass": [
+      {
+        "seatClass": "ECONOMY",
+        "price": 1000000
+      },
+      {
+        "seatClass": "BUSINESS",
+        "price": 3000000
+      },
+      {
+        "seatClass": "FIRST_CLASS",
+        "price": 5000000
+      }
+    ],
+    "departureTime": "2026-01-20T08:00:00Z",
+    "arrivalTime": "2026-01-20T11:30:00Z"
+  },
+  {
+    "routeId": 2,
+    "aircraftId": 2,
+    "status": "OPEN",
+    "priceSeatClass": [
+      {
+        "seatClass": "ECONOMY",
+        "price": 1200000
+      },
+      {
+        "seatClass": "BUSINESS",
+        "price": 3200000
+      },
+      {
+        "seatClass": "FIRST_CLASS",
+        "price": 5200000
+      }
+    ],
+    "departureTime": "2026-01-20T14:00:00Z",
+    "arrivalTime": "2026-01-20T17:30:00Z"
+  },
+  {
+    "routeId": 3,
+    "aircraftId": 3,
+    "status": "OPEN",
+    "priceSeatClass": [
+      {
+        "seatClass": "ECONOMY",
+        "price": 800000
+      },
+      {
+        "seatClass": "BUSINESS",
+        "price": 2500000
+      },
+      {
+        "seatClass": "FIRST_CLASS",
+        "price": 4500000
+      }
+    ],
+    "departureTime": "2026-01-21T06:00:00Z",
+    "arrivalTime": "2026-01-21T08:00:00Z"
+  },
+  {
+    "routeId": 4,
+    "aircraftId": 1,
+    "status": "OPEN",
+    "priceSeatClass": [
+      {
+        "seatClass": "ECONOMY",
+        "price": 900000
+      },
+      {
+        "seatClass": "BUSINESS",
+        "price": 2800000
+      },
+      {
+        "seatClass": "FIRST_CLASS",
+        "price": 4800000
+      }
+    ],
+    "departureTime": "2026-01-21T10:00:00Z",
+    "arrivalTime": "2026-01-21T12:00:00Z"
+  },
+  {
+    "routeId": 5,
+    "aircraftId": 5,
+    "status": "OPEN",
+    "priceSeatClass": [
+      {
+        "seatClass": "ECONOMY",
+        "price": 2500000
+      },
+      {
+        "seatClass": "BUSINESS",
+        "price": 6000000
+      },
+      {
+        "seatClass": "FIRST_CLASS",
+        "price": 9000000
+      }
+    ],
+    "departureTime": "2026-01-22T09:00:00Z",
+    "arrivalTime": "2026-01-22T14:30:00Z"
+  },
+  {
+    "routeId": 6,
+    "aircraftId": 2,
+    "status": "OPEN",
+    "priceSeatClass": [
+      {
+        "seatClass": "ECONOMY",
+        "price": 2300000
+      },
+      {
+        "seatClass": "BUSINESS",
+        "price": 5500000
+      },
+      {
+        "seatClass": "FIRST_CLASS",
+        "price": 8500000
+      }
+    ],
+    "departureTime": "2026-01-22T18:00:00Z",
+    "arrivalTime": "2026-01-23T03:00:00Z"
+  },
+  {
+    "routeId": 7,
+    "aircraftId": 3,
+    "status": "OPEN",
+    "priceSeatClass": [
+      {
+        "seatClass": "ECONOMY",
+        "price": 2800000
+      },
+      {
+        "seatClass": "BUSINESS",
+        "price": 6500000
+      },
+      {
+        "seatClass": "FIRST_CLASS",
+        "price": 9500000
+      }
+    ],
+    "departureTime": "2026-01-23T12:00:00Z",
+    "arrivalTime": "2026-01-24T08:00:00Z"
+  },
+  {
+    "routeId": 8,
+    "aircraftId": 5,
+    "status": "OPEN",
+    "priceSeatClass": [
+      {
+        "seatClass": "ECONOMY",
+        "price": 3000000
+      },
+      {
+        "seatClass": "BUSINESS",
+        "price": 7000000
+      },
+      {
+        "seatClass": "FIRST_CLASS",
+        "price": 10000000
+      }
+    ],
+    "departureTime": "2026-01-24T15:00:00Z",
+    "arrivalTime": "2026-01-25T12:00:00Z"
+  }
+]
+

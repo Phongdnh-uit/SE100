@@ -68,7 +68,7 @@ public class VNPayPaymentStrategy implements PaymentStrategy {
             Map<String, String> vnpParamsMap = this.getVNPayConfig();
             vnpParamsMap.put(
                     "vnp_Amount",
-                    request.getAmount().toBigInteger().toString()
+                    request.getAmount().multiply(new BigDecimal(100)).toBigInteger().toString()
             );
 
             vnpParamsMap.put("vnp_TxnRef", transaction.getProviderTxnRef());
