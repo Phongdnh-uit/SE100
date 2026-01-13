@@ -163,6 +163,12 @@ public class FlightServiceImpl implements FlightService {
                         .findById(ticketId)
                         .orElseThrow(() -> new ApiException(ErrorCode.RESOURCE_NOT_FOUND, "Ticket not found"));
 
+        if (ticket.getStatus() != TicketStatus.PAID) {
+            throw new ApiException(
+                    ErrorCode.OPERATION_NOT_ALLOWED,
+                    "Only PAID tickets can be assigned seats. Current status: " + ticket.getStatus());
+        }
+
         if (ticket.getSeat() != null) {
             throw new ApiException(
                     ErrorCode.OPERATION_NOT_ALLOWED, "Seat has already been assigned for this ticket");
@@ -188,10 +194,10 @@ public class FlightServiceImpl implements FlightService {
                         .findById(seatId)
                         .orElseThrow(() -> new ApiException(ErrorCode.RESOURCE_NOT_FOUND, "Seat not found"));
 
-        // Kiểm tra ghế thuộc chuyến bay
-        if (!seat.getFlight().getId().equals(flightId)) {
-            throw new ApiException(ErrorCode.VALIDATION_ERROR, "Seat does not belong to this flight");
-        }
+//        // Kiểm tra ghế thuộc chuyến bay
+//        if (!seat.getFlight().getId().equals(flightId)) {
+//            throw new ApiException(ErrorCode.VALIDATION_ERROR, "Seat does not belong to this flight");
+//        }
 
         // ...validate seat is available
         if (seat.getStatus() != SeatStatus.AVAILABLE) {
